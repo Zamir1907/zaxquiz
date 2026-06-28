@@ -85,6 +85,69 @@ body {
     overflow-x: hidden;
 }
 
+
+/* ============================================ */
+/* FIX: HILANGKAN HIGHLIGHT BIRU & PROTECTION  */
+/* ============================================ */
+
+/* Hilangkan outline biru */
+*:focus {
+    outline: none !important;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--primary) !important;
+    outline-offset: 2px;
+}
+
+/* Hilangkan tap highlight di mobile */
+* {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Cegah selection */
+::selection {
+    background: var(--primary);
+    color: white;
+}
+
+.btn, 
+.option-btn,
+.header-btn,
+button {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+
+/* Cegah drag gambar */
+img,
+svg,
+[contenteditable="true"] {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: auto;
+}
+
+/* Cegah copy seluruh halaman */
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Izinkan di input */
+input, textarea {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+q
 /* ============================================ */
 /* SCROLLBAR STYLING                          */
 /* ============================================ */
