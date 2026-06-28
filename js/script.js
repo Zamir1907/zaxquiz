@@ -193,6 +193,8 @@ class SoundManager {
     }
 }
 
+const sound = new SoundManager();
+
 // ============================================
 // THEME SYSTEM
 // ============================================
