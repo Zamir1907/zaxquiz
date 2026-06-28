@@ -271,6 +271,16 @@ class QuizEngine {
 
     initQuiz(category, difficulty, timerEnabled) {
     console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
+    console.log('📚 questionsByCategory:', Object.keys(window.questionsByCategory || {}));
+    console.log(`🔍 Mencari kategori: "${category}"`);
+    
+    // ✅ CEK APAKAH KATEGORI ADA
+    if (!window.questionsByCategory || !window.questionsByCategory[category]) {
+        console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
+        console.log('📚 Kategori yang tersedia:', Object.keys(window.questionsByCategory || {}));
+        alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
+        return;
+    }
     
     this.state.currentCategory = category;
     this.state.currentDifficulty = difficulty;
@@ -697,7 +707,6 @@ function setupEventListeners() {
     const difficulty = DOM.difficultySelect.value;
     const timerEnabled = DOM.timerToggle.checked;
 
-
     // ✅ VALIDASI LEBIH BAIK
     if (!window.questionsByCategory) {
         console.error('❌ questionsByCategory tidak ditemukan!');
@@ -924,41 +933,39 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     quizEngine.updateHomeStats();
 
-    // Load categories ke select
-    if (window.questionsByCategory) {
-        const select = DOM.categorySelect;
-        while (select.options.length > 0) {
-            select.remove(0);
-        }
+// Load categories ke select
+if (window.questionsByCategory) {
+    const select = DOM.categorySelect;
+    // ❌ HAPUS while loop ini jika ada, atau ganti dengan:
+    select.innerHTML = ''; // Lebih bersih
 
-        const categoryNames = {
-            'pengetahuan-umum': 'Pengetahuan Umum',
-            'matematika': 'Matematika',
-            'agama-islam': 'Agama Islam',
-            'nama-bendera': 'Nama Bendera Dunia',
-            'negara-ibukota': 'Negara dan Ibu Kota',
-            'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
-            'sejarah-indonesia': 'Sejarah Indonesia',
-            'sejarah-dunia': 'Sejarah Dunia'
-        };
+    const categoryNames = {
+        'pengetahuan-umum': 'Pengetahuan Umum',
+        'matematika': 'Matematika',
+        'agama-islam': 'Agama Islam',
+        'nama-bendera': 'Nama Bendera Dunia',
+        'negara-ibukota': 'Negara dan Ibu Kota',
+        'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
+        'sejarah-indonesia': 'Sejarah Indonesia',
+        'sejarah-dunia': 'Sejarah Dunia'
+    };
 
-        for (const key in window.questionsByCategory) {
+    // ✅ HANYA TAMBAHKAN KATEGORI YANG VALID
+    for (const key in window.questionsByCategory) {
+        if (window.questionsByCategory[key] && window.questionsByCategory[key].length > 0) {
             const option = document.createElement('option');
             option.value = key;
             option.textContent = categoryNames[key] || key;
             select.appendChild(option);
+        } else {
+            console.warn(`⚠️ Kategori "${key}" kosong atau tidak valid, dilewati.`);
         }
     }
-
-    // Init protection
-    initProtection();
-
-    quizEngine.showScreen('homeScreen');
-
-    console.log('✅ ZaxQuiz ready!');
-    console.log(`📚 ${Object.keys(window.questionsByCategory || {}).length} categories`);
-    console.log(`📝 ${window.totalQuestions || 0} total questions`);
-});
+    
+    console.log(`✅ ${select.options.length} kategori dimuat ke dropdown`);
+} else {
+    console.error('❌ questionsByCategory tidak ditemukan saat inisialisasi!');
+}
 
 // Global exposure
 window.ZaxQuiz = {
