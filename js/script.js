@@ -185,7 +185,7 @@ class SoundManager {
 const sound = new SoundManager();
 
 // ============================================
-// THEME SYSTEM - Menggunakan Icon Library
+// THEME SYSTEM - Menggunakan Icon Library (FIX)
 // ============================================
 class ThemeManager {
     constructor() {
@@ -196,9 +196,10 @@ class ThemeManager {
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
         if (DOM.themeToggle) {
-            DOM.themeToggle.innerHTML = this.isDark 
-                ? '<i class="fas fa-sun"></i>' 
-                : '<i class="fas fa-moon"></i>';
+            const icon = DOM.themeToggle.querySelector('i');
+            if (icon) {
+                icon.className = this.isDark ? 'fas fa-sun' : 'fas fa-moon';
+            }
             DOM.themeToggle.title = this.isDark ? 'Mode Terang' : 'Mode Gelap';
         }
     }
@@ -665,9 +666,10 @@ function setupEventListeners() {
 
     DOM.soundToggle.addEventListener('click', () => {
         const enabled = sound.toggle();
-        DOM.soundToggle.innerHTML = enabled 
-            ? '<i class="fas fa-volume-up"></i>' 
-            : '<i class="fas fa-volume-mute"></i>';
+        const icon = DOM.soundToggle.querySelector('i');
+        if (icon) {
+            icon.className = enabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
     });
@@ -768,11 +770,29 @@ function setupEventListeners() {
         }
     });
 
+    // FIX: Hilangkan efek focus/outline setelah klik
+    document.addEventListener('mousedown', function(e) {
+        const target = e.target.closest('button, .btn, .option-btn, .header-btn');
+        if (target) {
+            setTimeout(() => target.blur(), 10);
+        }
+    });
+
+    document.addEventListener('touchstart', function(e) {
+        const target = e.target.closest('button, .btn, .option-btn, .header-btn');
+        if (target) {
+            setTimeout(() => target.blur(), 10);
+        }
+    });
+
     // Load sound preference
     const soundPref = localStorage.getItem('zaxquiz-sound');
     if (soundPref === 'off') {
         sound.setEnabled(false);
-        DOM.soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        const icon = DOM.soundToggle.querySelector('i');
+        if (icon) {
+            icon.className = 'fas fa-volume-mute';
+        }
         DOM.soundToggle.title = 'Suara Nonaktif';
     }
 }
@@ -907,7 +927,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load categories ke select
     if (window.questionsByCategory) {
         const select = DOM.categorySelect;
-        // Kosongkan select terlebih dahulu
         select.innerHTML = '';
 
         const categoryNames = {
@@ -931,9 +950,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Init protection
     initProtection();
-
     quizEngine.showScreen('homeScreen');
 
     console.log('✅ ZaxQuiz ready!');
