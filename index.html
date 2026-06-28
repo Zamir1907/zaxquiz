@@ -6,8 +6,16 @@
     <meta name="description" content="ZaxQuiz - Aplikasi Quiz Interaktif dengan berbagai kategori">
     <title>ZaxQuiz - Quiz Interaktif</title>
     
+    <!-- Favicon SVG Inline -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236C63FF'/%3E%3Ctext x='16' y='22' font-family='Quicksand, sans-serif' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E">
+    
+    <!-- Theme Color untuk Mobile -->
+    <meta name="theme-color" content="#6C63FF" id="themeColor">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
     
     <!-- Font Awesome Icons (Open Source) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -29,7 +37,17 @@
         <header class="app-header">
             <div class="header-left">
                 <div class="logo">
-                    <img src="assets/icons/bubble-letter-z-pink.svg" alt="ZaxQuiz Logo" class="logo-img">
+                    <!-- Logo SVG Inline - Mirip dengan bubble letter Z -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-img">
+                        <rect width="32" height="32" rx="8" fill="url(#logoGradient)" />
+                        <text x="16" y="22" font-family="Quicksand, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">Z</text>
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#6C63FF"/>
+                                <stop offset="100%" stop-color="#FF6B9D"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
                     <span class="logo-text">ZaxQuiz</span>
                 </div>
             </div>
@@ -57,7 +75,21 @@
                 <div class="home-container">
                     <!-- Hero Section -->
                     <div class="hero">
-                        <div class="hero-emoji"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
+                        <!-- Hero Icon - SVG Inline mirip logo ZaxQuiz -->
+                        <div class="hero-emoji">
+                            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="36" cy="36" r="34" fill="#6C63FF" opacity="0.1"/>
+                                <circle cx="36" cy="36" r="26" fill="#6C63FF" opacity="0.2"/>
+                                <circle cx="36" cy="36" r="18" fill="url(#heroGradient)" opacity="0.3"/>
+                                <text x="36" y="44" font-family="Quicksand, sans-serif" font-size="32" font-weight="700" fill="#6C63FF" text-anchor="middle">Z</text>
+                                <defs>
+                                    <linearGradient id="heroGradient" x1="0" y1="0" x2="72" y2="72">
+                                        <stop offset="0%" stop-color="#6C63FF"/>
+                                        <stop offset="100%" stop-color="#FF6B9D"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                         <h1 class="hero-title">Selamat Datang di ZaxQuiz!</h1>
                         <p class="hero-subtitle">Uji pengetahuanmu dengan kuis interaktif yang seru dan menantang</p>
                     </div>
@@ -71,14 +103,7 @@
                             <div class="form-group">
                                 <label for="categorySelect" class="form-label"><i class="fas fa-book" aria-hidden="true"></i> Pilih Kategori</label>
                                 <select id="categorySelect" class="form-select">
-                                    <option value="pengetahuan-umum">Pengetahuan Umum</option>
-                                    <option value="matematika">Matematika</option>
-                                    <option value="agama-islam">Agama Islam</option>
-                                    <option value="nama-bendera">Nama Bendera Dunia</option>
-                                    <option value="negara-ibukota">Negara dan Ibu Kota</option>
-                                    <option value="provinsi-indonesia">Provinsi dan Ibu Kota Indonesia</option>
-                                    <option value="sejarah-indonesia">Sejarah Indonesia</option>
-                                    <option value="sejarah-dunia">Sejarah Dunia</option>
+                                    <!-- Akan diisi oleh JavaScript -->
                                 </select>
                             </div>
 
@@ -320,8 +345,8 @@
     <!-- ============================================ -->
     <!-- SCRIPTS                                     -->
     <!-- ============================================ -->
-    <script src="js/questions.js"></script>
-    <script src="js/script.js"></script>
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
