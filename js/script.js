@@ -1,3 +1,110 @@
+// ============================================
+// TAMBAHKAN DI SCRIPT.JS
+// ============================================
+
+/**
+ * ============================================
+ * PROTECTION - CEGAH COPY, PASTE, DRAG
+ * ============================================
+ */
+
+function initProtection() {
+    // 1. Cegah klik kanan (context menu)
+    document.addEventListener('contextmenu', function(e) {
+        // Izinkan di input/textarea
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    // 2. Cegah keyboard shortcuts untuk copy/paste
+    document.addEventListener('keydown', function(e) {
+        // Cegah Ctrl+C, Ctrl+V, Ctrl+X
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+            // Izinkan di input/textarea
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+            e.preventDefault();
+            return false;
+        }
+        
+        // Cegah F12 (DevTools)
+        if (e.key === 'F12') {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Cegah Ctrl+Shift+I (DevTools)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Cegah Ctrl+U (View Source)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // 3. Cegah drag
+    document.addEventListener('dragstart', function(e) {
+        // Izinkan di input/textarea
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    // 4. Cegah copy dari menu konteks
+    document.addEventListener('copy', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    // 5. Cegah paste
+    document.addEventListener('paste', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    // 6. Cegah cut
+    document.addEventListener('cut', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    // 7. Cegah select all
+    document.addEventListener('selectstart', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            return;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+    console.log('🛡️ Protection aktif!');
+}
+
+// Panggil di DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing code ...
+    initProtection();
+});
+
 /**
  * ============================================
  * ZAXQUIZ - Main Application Script
