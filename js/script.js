@@ -123,106 +123,82 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// SOUND SYSTEM - MENGGUNAKAN FILE MP3
+// SOUND SYSTEM
 // ============================================
 class SoundManager {
     constructor() {
+        this.audioContext = null;
         this.enabled = true;
-        this.sounds = {};
-        this.loaded = false;
-        // Jangan load otomatis di constructor
-        // Tunggu user interaction dulu
+        this.initialized = false;
     }
 
-    loadSounds() {
-        // Hanya load sekali
-        if (this.loaded) return;
-        
-        const soundFiles = {
-            click: 'assets/sounds/click.mp3',
-            correct: 'assets/sounds/correct.mp3',
-            wrong: 'assets/sounds/wrong.mp3',
-            complete: 'assets/sounds/complete.mp3'
-        };
-
-        // ✅ PERBAIKAN: Gunakan Object.entries
-        for (const [name, path] of Object.entries(soundFiles)) {
-            const audio = new Audio(path);
-            audio.preload = 'auto';
-            audio.load(); // Force load
-            this.sounds[name] = audio;
-        }
-
-        this.loaded = true;
-        console.log('🔊 Sounds loaded:', Object.keys(this.sounds));
-    }
-
-    play(name) {
-        if (!this.enabled) return;
-        
-        // Load sounds jika belum
-        if (!this.loaded) {
-            this.loadSounds();
-        }
-
-        const audio = this.sounds[name];
-        if (!audio) {
-            console.warn(`⚠️ Sound "${name}" not found`);
-            return;
-        }
-
+    init() {
+        if (this.initialized) return;
         try {
-            // Reset audio
-            audio.currentTime = 0;
-            const playPromise = audio.play();
-            if (playPromise) {
-                playPromise.catch(e => {
-                    // Silent fail - user mungkin belum interaksi
-                    console.debug('Sound play failed:', e.message);
-                });
-            }
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            this.initialized = true;
         } catch (e) {
-            console.debug('Sound error:', e.message);
+            console.warn('Web Audio API tidak didukung');
         }
     }
 
-    playClick() {
-        this.play('click');
+    playTone(frequency, duration = 200, type = 'sine', volume = 0.3) {
+        if (!this.enabled || !this.initialized) return;
+        try {
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+            gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration / 1000);
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            oscillator.start();
+            oscillator.stop(this.audioContext.currentTime + duration / 1000);
+        } catch (e) {}
     }
 
     playCorrect() {
-        this.play('correct');
+        this.playTone(523, 100, 'sine', 0.3);
+        setTimeout(() => this.playTone(659, 100, 'sine', 0.3), 100);
+        setTimeout(() => this.playTone(784, 150, 'sine', 0.3), 200);
     }
 
     playWrong() {
-        this.play('wrong');
+        this.playTone(330, 200, 'sawtooth', 0.2);
+        setTimeout(() => this.playTone(277, 300, 'sawtooth', 0.2), 200);
+    }
+
+    playClick() {
+        this.playTone(800, 50, 'sine', 0.15);
     }
 
     playComplete() {
-        this.play('complete');
+        const notes = [523, 587, 659, 784, 659, 784, 880];
+        notes.forEach((note, i) => {
+            setTimeout(() => this.playTone(note, 120, 'sine', 0.25), i * 130);
+        });
     }
 
     toggle() {
         this.enabled = !this.enabled;
-        // Simpan preferensi
-        localStorage.setItem('zaxquiz-sound', this.enabled ? 'on' : 'off');
+        if (!this.enabled && this.audioContext) {
+            try { this.audioContext.suspend(); } catch(e) {}
+        } else if (this.enabled && this.audioContext) {
+            try { this.audioContext.resume(); } catch(e) {}
+        }
         return this.enabled;
     }
 
     setEnabled(enabled) {
         this.enabled = enabled;
-        localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
+        if (!enabled && this.audioContext) {
+            try { this.audioContext.suspend(); } catch(e) {}
+        }
     }
 }
 
-// ✅ Buat instance setelah class didefinisikan
 const sound = new SoundManager();
-
-// ✅ Load sounds saat user pertama kali klik
-document.addEventListener('click', function initSound() {
-    sound.loadSounds();
-    document.removeEventListener('click', initSound);
-}, { once: true });
 
 // ============================================
 // THEME SYSTEM
@@ -357,7 +333,7 @@ class QuizEngine {
         return all;
     }
 
- getQuestionsForCategory(category) {
+    getQuestionsForCategory(category) {
     // ✅ VALIDASI LEBIH KETAT
     if (!window.questionsByCategory) {
         console.error('❌ questionsByCategory tidak ada!');
@@ -918,133 +894,6 @@ function initProtection() {
     console.log('🛡️ Protection aktif!');
 }
 
-// Di class QuizEngine, tambahkan method:
-showTimer(show) {
-    const container = DOM.timerContainer;
-    if (!container) return;
-    
-    if (show) {
-        container.style.display = 'block';
-        container.classList.add('active');
-    } else {
-        container.style.display = 'none';
-        container.classList.remove('active');
-    }
-}
-// Di initQuiz, tambahkan:
-initQuiz(category, difficulty, timerEnabled) {
-    console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
-    
-    // Load sound saat quiz dimulai
-    sound.loadSounds();
-    
-    this.state.currentCategory = category;
-    this.state.currentDifficulty = difficulty;
-    this.state.timerEnabled = timerEnabled;
-    this.state.currentIndex = 0;
-    this.state.score = 0;
-    this.state.correctAnswers = 0;
-    this.state.wrongAnswers = 0;
-    this.state.answered = false;
-    this.state.hintUsed = false;
-    this.state.startTime = Date.now();
-    this.state.endTime = null;
-    this.state.isQuizActive = true;
-
-    let questions = this.getQuestionsForCategory(category);
-    console.log(`📚 Found ${questions.length} questions for category`);
-
-    if (difficulty !== 'all') {
-        questions = questions.filter(q => q.difficulty === difficulty);
-        console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
-        if (questions.length < 50) {
-            const allQuestions = this.getAllQuestions();
-            const filtered = allQuestions.filter(q => q.difficulty === difficulty);
-            const shuffled = shuffleArray(filtered);
-            const need = 50 - questions.length;
-            const additional = shuffled.slice(0, need);
-            questions = [...questions, ...additional];
-        }
-    }
-
-    questions = shuffleArray(questions);
-    this.state.questions = questions.slice(0, 50);
-    this.state.totalQuestions = this.state.questions.length;
-    
-    console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
-
-    // Timer visibility
-    if (timerEnabled) {
-        this.showTimer(true);
-        this.startTimer();
-    } else {
-        this.showTimer(false);
-    }
-
-    this.showQuestion();
-    this.updateUI();
-    this.showScreen('quizScreen');
-    this.sound.playClick();
-}
-
-// Di showQuestion, tambahkan:
-showQuestion() {
-    const questions = this.state.questions;
-    const index = this.state.currentIndex;
-
-    if (index >= questions.length) {
-        this.finishQuiz();
-        return;
-    }
-
-    const question = questions[index];
-    this.state.answered = false;
-    this.state.hintUsed = false;
-
-    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-    DOM.questionText.textContent = question.question;
-
-    const shuffledOptions = shuffleArray(
-        question.options.map((text, i) => ({
-            text,
-            index: i,
-            isCorrect: i === question.correctIndex
-        }))
-    );
-
-    DOM.optionsContainer.innerHTML = '';
-    const letters = ['A', 'B', 'C', 'D'];
-    shuffledOptions.forEach((option, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.dataset.index = option.index;
-        btn.dataset.correct = option.isCorrect;
-        btn.innerHTML = `
-            <span class="option-letter">${letters[i]}</span>
-            <span>${option.text}</span>
-        `;
-        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-        DOM.optionsContainer.appendChild(btn);
-    });
-
-    DOM.hintContainer.style.display = 'none';
-    DOM.hintText.textContent = '';
-
-    this.updateProgress();
-    this.updateScore();
-
-    DOM.timerBar.classList.remove('warning', 'danger');
-
-    // Timer logic
-    if (this.state.timerEnabled) {
-        this.showTimer(true);
-        this.state.timeLeft = this.state.maxTime;
-        this.updateTimerUI();
-        this.startTimer();
-    } else {
-        this.showTimer(false);
-    }
-}
 // ============================================
 // INITIALIZATION
 // ============================================
