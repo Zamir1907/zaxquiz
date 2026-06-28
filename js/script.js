@@ -123,82 +123,75 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// SOUND SYSTEM
+// SOUND SYSTEM - Menggunakan File MP3
 // ============================================
 class SoundManager {
     constructor() {
-        this.audioContext = null;
+        this.sounds = {};
         this.enabled = true;
-        this.initialized = false;
+        this.loadSounds();
     }
 
-    init() {
-        if (this.initialized) return;
-        try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            this.initialized = true;
-        } catch (e) {
-            console.warn('Web Audio API tidak didukung');
+    loadSounds() {
+        const soundFiles = {
+            click: 'sounds/click.mp3',
+            correct: 'sounds/correct.mp3',
+            wrong: 'sounds/wrong.mp3',
+            complete: 'sounds/complete.mp3'
+        };
+
+        for (const [key, path] of Object.entries(soundFiles)) {
+            try {
+                const audio = new Audio(path);
+                audio.preload = 'auto';
+                this.sounds[key] = audio;
+            } catch (e) {
+                console.warn(`Gagal memuat suara ${key}:`, e);
+            }
         }
     }
 
-    playTone(frequency, duration = 200, type = 'sine', volume = 0.3) {
-        if (!this.enabled || !this.initialized) return;
+    play(soundName) {
+        if (!this.enabled) return;
         try {
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            oscillator.type = type;
-            oscillator.frequency.value = frequency;
-            gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration / 1000);
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            oscillator.start();
-            oscillator.stop(this.audioContext.currentTime + duration / 1000);
-        } catch (e) {}
+            const sound = this.sounds[soundName];
+            if (sound) {
+                sound.currentTime = 0;
+                const playPromise = sound.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => console.warn(`Gagal memutar ${soundName}:`, e));
+                }
+            }
+        } catch (e) {
+            console.warn(`Error memutar ${soundName}:`, e);
+        }
     }
 
     playCorrect() {
-        this.playTone(523, 100, 'sine', 0.3);
-        setTimeout(() => this.playTone(659, 100, 'sine', 0.3), 100);
-        setTimeout(() => this.playTone(784, 150, 'sine', 0.3), 200);
+        this.play('correct');
     }
 
     playWrong() {
-        this.playTone(330, 200, 'sawtooth', 0.2);
-        setTimeout(() => this.playTone(277, 300, 'sawtooth', 0.2), 200);
+        this.play('wrong');
     }
 
     playClick() {
-        this.playTone(800, 50, 'sine', 0.15);
+        this.play('click');
     }
 
     playComplete() {
-        const notes = [523, 587, 659, 784, 659, 784, 880];
-        notes.forEach((note, i) => {
-            setTimeout(() => this.playTone(note, 120, 'sine', 0.25), i * 130);
-        });
+        this.play('complete');
     }
 
     toggle() {
         this.enabled = !this.enabled;
-        if (!this.enabled && this.audioContext) {
-            try { this.audioContext.suspend(); } catch(e) {}
-        } else if (this.enabled && this.audioContext) {
-            try { this.audioContext.resume(); } catch(e) {}
-        }
         return this.enabled;
     }
 
     setEnabled(enabled) {
         this.enabled = enabled;
-        if (!enabled && this.audioContext) {
-            try { this.audioContext.suspend(); } catch(e) {}
-        }
     }
 }
-
-const sound = new SoundManager();
 
 // ============================================
 // THEME SYSTEM
@@ -277,53 +270,56 @@ class QuizEngine {
     }
 
     initQuiz(category, difficulty, timerEnabled) {
-        console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
-        
-        this.state.currentCategory = category;
-        this.state.currentDifficulty = difficulty;
-        this.state.timerEnabled = timerEnabled;
-        this.state.currentIndex = 0;
-        this.state.score = 0;
-        this.state.correctAnswers = 0;
-        this.state.wrongAnswers = 0;
-        this.state.answered = false;
-        this.state.hintUsed = false;
-        this.state.startTime = Date.now();
-        this.state.endTime = null;
-        this.state.isQuizActive = true;
+    console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
+    
+    this.state.currentCategory = category;
+    this.state.currentDifficulty = difficulty;
+    this.state.timerEnabled = timerEnabled;
+    this.state.currentIndex = 0;
+    this.state.score = 0;
+    this.state.correctAnswers = 0;
+    this.state.wrongAnswers = 0;
+    this.state.answered = false;
+    this.state.hintUsed = false;
+    this.state.startTime = Date.now();
+    this.state.endTime = null;
+    this.state.isQuizActive = true;
 
-        let questions = this.getQuestionsForCategory(category);
-        console.log(`📚 Found ${questions.length} questions for category`);
+    let questions = this.getQuestionsForCategory(category);
+    console.log(`📚 Found ${questions.length} questions for category`);
 
-        if (difficulty !== 'all') {
-            questions = questions.filter(q => q.difficulty === difficulty);
-            console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
-            if (questions.length < 50) {
-                const allQuestions = this.getAllQuestions();
-                const filtered = allQuestions.filter(q => q.difficulty === difficulty);
-                const shuffled = shuffleArray(filtered);
-                const need = 50 - questions.length;
-                const additional = shuffled.slice(0, need);
-                questions = [...questions, ...additional];
-            }
+    if (difficulty !== 'all') {
+        questions = questions.filter(q => q.difficulty === difficulty);
+        console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
+        if (questions.length < 50) {
+            const allQuestions = this.getAllQuestions();
+            const filtered = allQuestions.filter(q => q.difficulty === difficulty);
+            const shuffled = shuffleArray(filtered);
+            const need = 50 - questions.length;
+            const additional = shuffled.slice(0, need);
+            questions = [...questions, ...additional];
         }
-
-        questions = shuffleArray(questions);
-        this.state.questions = questions.slice(0, 50);
-        this.state.totalQuestions = this.state.questions.length;
-        
-        console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
-
-        this.showQuestion();
-        this.updateUI();
-        this.showScreen('quizScreen');
-
-        if (this.state.timerEnabled) {
-            this.startTimer();
-        }
-
-        this.sound.playClick();
     }
+
+    questions = shuffleArray(questions);
+    this.state.questions = questions.slice(0, 50);
+    this.state.totalQuestions = this.state.questions.length;
+    
+    console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
+
+    // ✅ TAMBAHKAN INI - Update visibilitas timer sebelum menampilkan
+    this.updateTimerVisibility();
+    
+    this.showQuestion();
+    this.updateUI();
+    this.showScreen('quizScreen');
+
+    if (this.state.timerEnabled) {
+        this.startTimer();
+    }
+
+    this.sound.playClick();
+}
 
     getAllQuestions() {
         const all = [];
@@ -356,58 +352,61 @@ class QuizEngine {
 }
 
     showQuestion() {
-        const questions = this.state.questions;
-        const index = this.state.currentIndex;
+    const questions = this.state.questions;
+    const index = this.state.currentIndex;
 
-        if (index >= questions.length) {
-            this.finishQuiz();
-            return;
-        }
-
-        const question = questions[index];
-        this.state.answered = false;
-        this.state.hintUsed = false;
-
-        DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-        DOM.questionText.textContent = question.question;
-
-        const shuffledOptions = shuffleArray(
-            question.options.map((text, i) => ({
-                text,
-                index: i,
-                isCorrect: i === question.correctIndex
-            }))
-        );
-
-        DOM.optionsContainer.innerHTML = '';
-        const letters = ['A', 'B', 'C', 'D'];
-        shuffledOptions.forEach((option, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.dataset.index = option.index;
-            btn.dataset.correct = option.isCorrect;
-            btn.innerHTML = `
-                <span class="option-letter">${letters[i]}</span>
-                <span>${option.text}</span>
-            `;
-            btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-            DOM.optionsContainer.appendChild(btn);
-        });
-
-        DOM.hintContainer.style.display = 'none';
-        DOM.hintText.textContent = '';
-
-        this.updateProgress();
-        this.updateScore();
-
-        DOM.timerBar.classList.remove('warning', 'danger');
-
-        if (this.state.timerEnabled) {
-            this.state.timeLeft = this.state.maxTime;
-            this.updateTimerUI();
-            this.startTimer();
-        }
+    if (index >= questions.length) {
+        this.finishQuiz();
+        return;
     }
+
+    const question = questions[index];
+    this.state.answered = false;
+    this.state.hintUsed = false;
+
+    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
+    DOM.questionText.textContent = question.question;
+
+    const shuffledOptions = shuffleArray(
+        question.options.map((text, i) => ({
+            text,
+            index: i,
+            isCorrect: i === question.correctIndex
+        }))
+    );
+
+    DOM.optionsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    shuffledOptions.forEach((option, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.dataset.index = option.index;
+        btn.dataset.correct = option.isCorrect;
+        btn.innerHTML = `
+            <span class="option-letter">${letters[i]}</span>
+            <span>${option.text}</span>
+        `;
+        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
+        DOM.optionsContainer.appendChild(btn);
+    });
+
+    DOM.hintContainer.style.display = 'none';
+    DOM.hintText.textContent = '';
+
+    this.updateProgress();
+    this.updateScore();
+
+    DOM.timerBar.classList.remove('warning', 'danger');
+
+    // ✅ TAMBAHKAN INI - Update visibilitas timer setiap ganti soal
+    this.updateTimerVisibility();
+
+    if (this.state.timerEnabled) {
+        this.state.timeLeft = this.state.maxTime;
+        this.updateTimerUI();
+        this.startTimer();
+    }
+}
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
@@ -520,6 +519,21 @@ class QuizEngine {
     updateScore() {
         DOM.currentScore.textContent = this.state.score;
     }
+    
+    // ============================================
+// TIMER VISIBILITY CONTROL
+// ============================================
+updateTimerVisibility() {
+    if (this.state.timerEnabled) {
+        // Timer aktif - tampilkan
+        DOM.timerContainer.classList.add('active');
+        DOM.timerContainer.style.display = 'block';
+    } else {
+        // Timer nonaktif - sembunyikan
+        DOM.timerContainer.classList.remove('active');
+        DOM.timerContainer.style.display = 'none';
+    }
+}
 
     updateTimerUI() {
         const percentage = (this.state.timeLeft / this.state.maxTime) * 100;
@@ -599,16 +613,21 @@ class QuizEngine {
     }
 
     resetQuiz() {
-        this.stopTimer();
-        this.state.isQuizActive = false;
-        this.state.currentIndex = 0;
-        this.state.score = 0;
-        this.state.correctAnswers = 0;
-        this.state.wrongAnswers = 0;
-        this.state.questions = [];
-        this.showScreen('homeScreen');
-        this.sound.playClick();
-    }
+    this.stopTimer();
+    this.state.isQuizActive = false;
+    this.state.currentIndex = 0;
+    this.state.score = 0;
+    this.state.correctAnswers = 0;
+    this.state.wrongAnswers = 0;
+    this.state.questions = [];
+    
+    // ✅ TAMBAHKAN INI - Sembunyikan timer saat reset
+    DOM.timerContainer.classList.remove('active');
+    DOM.timerContainer.style.display = 'none';
+    
+    this.showScreen('homeScreen');
+    this.sound.playClick();
+}
 
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => {
@@ -678,7 +697,6 @@ function setupEventListeners() {
     const difficulty = DOM.difficultySelect.value;
     const timerEnabled = DOM.timerToggle.checked;
 
-    sound.init();
 
     // ✅ VALIDASI LEBIH BAIK
     if (!window.questionsByCategory) {
