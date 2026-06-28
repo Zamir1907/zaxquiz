@@ -109,6 +109,103 @@ body {
 }
 
 /* ============================================ */
+/* PROTECTION - CEKAL COPY & DRAG             */
+/* ============================================ */
+
+/* Cegah drag gambar dan elemen */
+img,
+canvas,
+svg,
+video,
+[contenteditable="true"] {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: auto;
+}
+
+/* Cegah selection pada elemen tertentu */
+.no-select,
+.protected {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+
+/* Cegah copy pada seluruh halaman (opsional) */
+body.protected {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Tapi izinkan selection pada input dan textarea */
+input, textarea {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+
+/* ============================================ */
+/* FIX: HILANGKAN HIGHLIGHT BIRU & SELECTION  */
+/* ============================================ */
+
+/* Hilangkan outline biru pada focus */
+*:focus {
+    outline: none !important;
+}
+
+/* Tapi tetap ada focus indicator untuk aksesibilitas */
+*:focus-visible {
+    outline: 2px solid var(--primary) !important;
+    outline-offset: 2px;
+}
+
+/* Hilangkan highlight biru saat tap/klik di mobile */
+* {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Hilangkan selection (highlight biru saat drag teks) */
+::selection {
+    background: var(--primary);
+    color: white;
+}
+
+/* Untuk mencegah user select teks di tombol */
+.btn, 
+.option-btn,
+.header-btn,
+button {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+
+/* Hilangkan drag pada gambar */
+img,
+[contenteditable="true"],
+[contenteditable="true"] * {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+}
+
+/* Hilangkan default highlight pada link */
+a {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Hilangkan default outline pada button di Chrome/Safari */
+button:focus {
+    outline: none !important;
+}
+
+/* ============================================ */
 /* APP CONTAINER                              */
 /* ============================================ */
 
