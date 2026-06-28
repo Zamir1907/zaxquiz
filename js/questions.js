@@ -3408,7 +3408,6 @@ const sejarahDuniaQuestions = [
 // ============================================
 // EXPOSE KE GLOBAL
 // ============================================
-
 window.questionsByCategory = {
     'pengetahuan-umum': createCategoryQuestions(pengetahuanUmumQuestions, 'Pengetahuan Umum'),
     'matematika': createCategoryQuestions(matematikaQuestions, 'Matematika'),
@@ -3429,23 +3428,3 @@ for (const category in window.questionsByCategory) {
 console.log('✅ ZaxQuiz Loaded!');
 console.log(`📚 ${Object.keys(window.questionsByCategory).length} kategori`);
 console.log(`📝 ${window.totalQuestions} total soal`);
-
-// ============================================
-// INFORMASI UNTUK PENGEMBANG
-// ============================================
-
-/**
- * Untuk menambahkan kategori baru, tambahkan:
- * 1. Array questions baru
- * 2. Masukkan ke window.questionsByCategory
- * 
- * Pastikan setiap soal memiliki format yang konsisten:
- * {
- *   question: string,
- *   options: [string],
- *   correctIndex: number (0-3),
- *   explanation: string,
- *   difficulty: 'sedang' | 'sulit',
- *   hint: string
- * }
- */
