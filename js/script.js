@@ -1,5 +1,5 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX)
 // ============================================
 
 // ============================================
@@ -123,7 +123,7 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// SOUND SYSTEM - Menggunakan File MP3
+// SOUND SYSTEM - Dengan Fallback Silent
 // ============================================
 class SoundManager {
     constructor() {
@@ -146,7 +146,7 @@ class SoundManager {
                 audio.preload = 'auto';
                 this.sounds[key] = audio;
             } catch (e) {
-                console.warn(`Gagal memuat suara ${key}:`, e);
+                // Silent fallback - tidak ada error
             }
         }
     }
@@ -159,29 +159,18 @@ class SoundManager {
                 sound.currentTime = 0;
                 const playPromise = sound.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(e => console.warn(`Gagal memutar ${soundName}:`, e));
+                    playPromise.catch(() => {});
                 }
             }
         } catch (e) {
-            console.warn(`Error memutar ${soundName}:`, e);
+            // Silent fallback
         }
     }
 
-    playCorrect() {
-        this.play('correct');
-    }
-
-    playWrong() {
-        this.play('wrong');
-    }
-
-    playClick() {
-        this.play('click');
-    }
-
-    playComplete() {
-        this.play('complete');
-    }
+    playCorrect() { this.play('correct'); }
+    playWrong() { this.play('wrong'); }
+    playClick() { this.play('click'); }
+    playComplete() { this.play('complete'); }
 
     toggle() {
         this.enabled = !this.enabled;
@@ -196,7 +185,7 @@ class SoundManager {
 const sound = new SoundManager();
 
 // ============================================
-// THEME SYSTEM
+// THEME SYSTEM - Menggunakan Icon Library
 // ============================================
 class ThemeManager {
     constructor() {
@@ -207,7 +196,9 @@ class ThemeManager {
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
         if (DOM.themeToggle) {
-            DOM.themeToggle.innerHTML = this.isDark ? '☀️' : '🌙';
+            DOM.themeToggle.innerHTML = this.isDark 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
             DOM.themeToggle.title = this.isDark ? 'Mode Terang' : 'Mode Gelap';
         }
     }
@@ -272,66 +263,56 @@ class QuizEngine {
     }
 
     initQuiz(category, difficulty, timerEnabled) {
-    console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
-    console.log('📚 questionsByCategory:', Object.keys(window.questionsByCategory || {}));
-    console.log(`🔍 Mencari kategori: "${category}"`);
-    
-    // ✅ CEK APAKAH KATEGORI ADA
-    if (!window.questionsByCategory || !window.questionsByCategory[category]) {
-        console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
-        console.log('📚 Kategori yang tersedia:', Object.keys(window.questionsByCategory || {}));
-        alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
-        return;
-    }
-    
-    this.state.currentCategory = category;
-    this.state.currentDifficulty = difficulty;
-    this.state.timerEnabled = timerEnabled;
-    this.state.currentIndex = 0;
-    this.state.score = 0;
-    this.state.correctAnswers = 0;
-    this.state.wrongAnswers = 0;
-    this.state.answered = false;
-    this.state.hintUsed = false;
-    this.state.startTime = Date.now();
-    this.state.endTime = null;
-    this.state.isQuizActive = true;
-
-    let questions = this.getQuestionsForCategory(category);
-    console.log(`📚 Found ${questions.length} questions for category`);
-
-    if (difficulty !== 'all') {
-        questions = questions.filter(q => q.difficulty === difficulty);
-        console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
-        if (questions.length < 50) {
-            const allQuestions = this.getAllQuestions();
-            const filtered = allQuestions.filter(q => q.difficulty === difficulty);
-            const shuffled = shuffleArray(filtered);
-            const need = 50 - questions.length;
-            const additional = shuffled.slice(0, need);
-            questions = [...questions, ...additional];
+        console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
+        
+        if (!window.questionsByCategory || !window.questionsByCategory[category]) {
+            console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
+            alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
+            return;
         }
+        
+        this.state.currentCategory = category;
+        this.state.currentDifficulty = difficulty;
+        this.state.timerEnabled = timerEnabled;
+        this.state.currentIndex = 0;
+        this.state.score = 0;
+        this.state.correctAnswers = 0;
+        this.state.wrongAnswers = 0;
+        this.state.answered = false;
+        this.state.hintUsed = false;
+        this.state.startTime = Date.now();
+        this.state.endTime = null;
+        this.state.isQuizActive = true;
+
+        let questions = this.getQuestionsForCategory(category);
+
+        if (difficulty !== 'all') {
+            questions = questions.filter(q => q.difficulty === difficulty);
+            if (questions.length < 50) {
+                const allQuestions = this.getAllQuestions();
+                const filtered = allQuestions.filter(q => q.difficulty === difficulty);
+                const shuffled = shuffleArray(filtered);
+                const need = 50 - questions.length;
+                const additional = shuffled.slice(0, need);
+                questions = [...questions, ...additional];
+            }
+        }
+
+        questions = shuffleArray(questions);
+        this.state.questions = questions.slice(0, 50);
+        this.state.totalQuestions = this.state.questions.length;
+        
+        this.updateTimerVisibility();
+        this.showQuestion();
+        this.updateUI();
+        this.showScreen('quizScreen');
+
+        if (this.state.timerEnabled) {
+            this.startTimer();
+        }
+
+        this.sound.playClick();
     }
-
-    questions = shuffleArray(questions);
-    this.state.questions = questions.slice(0, 50);
-    this.state.totalQuestions = this.state.questions.length;
-    
-    console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
-
-    // ✅ TAMBAHKAN INI - Update visibilitas timer sebelum menampilkan
-    this.updateTimerVisibility();
-    
-    this.showQuestion();
-    this.updateUI();
-    this.showScreen('quizScreen');
-
-    if (this.state.timerEnabled) {
-        this.startTimer();
-    }
-
-    this.sound.playClick();
-}
 
     getAllQuestions() {
         const all = [];
@@ -342,83 +323,77 @@ class QuizEngine {
     }
 
     getQuestionsForCategory(category) {
-    // ✅ VALIDASI LEBIH KETAT
-    if (!window.questionsByCategory) {
-        console.error('❌ questionsByCategory tidak ada!');
-        return [];
+        if (!window.questionsByCategory) {
+            console.error('❌ questionsByCategory tidak ada!');
+            return [];
+        }
+        if (!window.questionsByCategory[category]) {
+            console.error(`❌ Kategori "${category}" tidak ditemukan!`);
+            return [];
+        }
+        const questions = window.questionsByCategory[category];
+        if (!questions || questions.length === 0) {
+            console.error(`❌ Kategori "${category}" kosong!`);
+            return [];
+        }
+        return questions;
     }
-
-    if (!window.questionsByCategory[category]) {
-        console.error(`❌ Kategori "${category}" tidak ditemukan!`);
-        console.log('📚 Kategori yang tersedia:', Object.keys(window.questionsByCategory));
-        return [];
-    }
-
-    const questions = window.questionsByCategory[category];
-    if (!questions || questions.length === 0) {
-        console.error(`❌ Kategori "${category}" kosong!`);
-        return [];
-    }
-
-    return questions;
-}
 
     showQuestion() {
-    const questions = this.state.questions;
-    const index = this.state.currentIndex;
+        const questions = this.state.questions;
+        const index = this.state.currentIndex;
 
-    if (index >= questions.length) {
-        this.finishQuiz();
-        return;
+        if (index >= questions.length) {
+            this.finishQuiz();
+            return;
+        }
+
+        const question = questions[index];
+        this.state.answered = false;
+        this.state.hintUsed = false;
+
+        DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
+        DOM.questionText.textContent = question.question;
+
+        const shuffledOptions = shuffleArray(
+            question.options.map((text, i) => ({
+                text,
+                index: i,
+                isCorrect: i === question.correctIndex
+            }))
+        );
+
+        DOM.optionsContainer.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+        shuffledOptions.forEach((option, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.dataset.index = option.index;
+            btn.dataset.correct = option.isCorrect;
+            btn.innerHTML = `
+                <span class="option-letter">${letters[i]}</span>
+                <span>${option.text}</span>
+            `;
+            btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
+            DOM.optionsContainer.appendChild(btn);
+        });
+
+        DOM.hintContainer.style.display = 'none';
+        DOM.hintText.textContent = '';
+
+        this.updateProgress();
+        this.updateScore();
+
+        DOM.timerBar.classList.remove('warning', 'danger');
+
+        this.updateTimerVisibility();
+
+        if (this.state.timerEnabled) {
+            this.state.timeLeft = this.state.maxTime;
+            this.updateTimerUI();
+            this.startTimer();
+        }
     }
-
-    const question = questions[index];
-    this.state.answered = false;
-    this.state.hintUsed = false;
-
-    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-    DOM.questionText.textContent = question.question;
-
-    const shuffledOptions = shuffleArray(
-        question.options.map((text, i) => ({
-            text,
-            index: i,
-            isCorrect: i === question.correctIndex
-        }))
-    );
-
-    DOM.optionsContainer.innerHTML = '';
-    const letters = ['A', 'B', 'C', 'D'];
-    shuffledOptions.forEach((option, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.dataset.index = option.index;
-        btn.dataset.correct = option.isCorrect;
-        btn.innerHTML = `
-            <span class="option-letter">${letters[i]}</span>
-            <span>${option.text}</span>
-        `;
-        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-        DOM.optionsContainer.appendChild(btn);
-    });
-
-    DOM.hintContainer.style.display = 'none';
-    DOM.hintText.textContent = '';
-
-    this.updateProgress();
-    this.updateScore();
-
-    DOM.timerBar.classList.remove('warning', 'danger');
-
-    // ✅ TAMBAHKAN INI - Update visibilitas timer setiap ganti soal
-    this.updateTimerVisibility();
-
-    if (this.state.timerEnabled) {
-        this.state.timeLeft = this.state.maxTime;
-        this.updateTimerUI();
-        this.startTimer();
-    }
-}
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
@@ -531,21 +506,16 @@ class QuizEngine {
     updateScore() {
         DOM.currentScore.textContent = this.state.score;
     }
-    
-    // ============================================
-// TIMER VISIBILITY CONTROL
-// ============================================
-updateTimerVisibility() {
-    if (this.state.timerEnabled) {
-        // Timer aktif - tampilkan
-        DOM.timerContainer.classList.add('active');
-        DOM.timerContainer.style.display = 'block';
-    } else {
-        // Timer nonaktif - sembunyikan
-        DOM.timerContainer.classList.remove('active');
-        DOM.timerContainer.style.display = 'none';
+
+    updateTimerVisibility() {
+        if (this.state.timerEnabled) {
+            DOM.timerContainer.classList.add('active');
+            DOM.timerContainer.style.display = 'block';
+        } else {
+            DOM.timerContainer.classList.remove('active');
+            DOM.timerContainer.style.display = 'none';
+        }
     }
-}
 
     updateTimerUI() {
         const percentage = (this.state.timeLeft / this.state.maxTime) * 100;
@@ -625,21 +595,20 @@ updateTimerVisibility() {
     }
 
     resetQuiz() {
-    this.stopTimer();
-    this.state.isQuizActive = false;
-    this.state.currentIndex = 0;
-    this.state.score = 0;
-    this.state.correctAnswers = 0;
-    this.state.wrongAnswers = 0;
-    this.state.questions = [];
-    
-    // ✅ TAMBAHKAN INI - Sembunyikan timer saat reset
-    DOM.timerContainer.classList.remove('active');
-    DOM.timerContainer.style.display = 'none';
-    
-    this.showScreen('homeScreen');
-    this.sound.playClick();
-}
+        this.stopTimer();
+        this.state.isQuizActive = false;
+        this.state.currentIndex = 0;
+        this.state.score = 0;
+        this.state.correctAnswers = 0;
+        this.state.wrongAnswers = 0;
+        this.state.questions = [];
+        
+        DOM.timerContainer.classList.remove('active');
+        DOM.timerContainer.style.display = 'none';
+        
+        this.showScreen('homeScreen');
+        this.sound.playClick();
+    }
 
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(s => {
@@ -696,44 +665,41 @@ function setupEventListeners() {
 
     DOM.soundToggle.addEventListener('click', () => {
         const enabled = sound.toggle();
-        DOM.soundToggle.innerHTML = enabled ? '🔊' : '🔇';
+        DOM.soundToggle.innerHTML = enabled 
+            ? '<i class="fas fa-volume-up"></i>' 
+            : '<i class="fas fa-volume-mute"></i>';
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
     });
 
     DOM.startQuizBtn.addEventListener('click', function(e) {
-    console.log('🎯 Start Quiz clicked!');
-    e.preventDefault();
-    
-    const category = DOM.categorySelect.value;
-    const difficulty = DOM.difficultySelect.value;
-    const timerEnabled = DOM.timerToggle.checked;
-
-    // ✅ VALIDASI LEBIH BAIK
-    if (!window.questionsByCategory) {
-        console.error('❌ questionsByCategory tidak ditemukan!');
-        alert('❌ Data soal belum dimuat. Silakan refresh halaman.');
-        return;
-    }
-
-    if (!window.questionsByCategory[category]) {
-        console.error('❌ Kategori tidak ditemukan:', category);
-        console.log('📚 Kategori yang tersedia:', Object.keys(window.questionsByCategory));
+        console.log('🎯 Start Quiz clicked!');
+        e.preventDefault();
         
-        // ✅ TAMPILKAN PESAN YANG LEBIH INFORMATIF
-        alert(`❌ Kategori "${category}" tidak ditemukan.\n\nKategori yang tersedia:\n${Object.keys(window.questionsByCategory).join('\n')}\n\nSilakan pilih kategori lain atau refresh halaman.`);
-        return;
-    }
+        const category = DOM.categorySelect.value;
+        const difficulty = DOM.difficultySelect.value;
+        const timerEnabled = DOM.timerToggle.checked;
 
-    const questions = window.questionsByCategory[category];
-    if (!questions || questions.length === 0) {
-        alert(`❌ Kategori "${category}" tidak memiliki soal.\n\nSilakan pilih kategori lain.`);
-        return;
-    }
+        if (!window.questionsByCategory) {
+            console.error('❌ questionsByCategory tidak ditemukan!');
+            alert('❌ Data soal belum dimuat. Silakan refresh halaman.');
+            return;
+        }
 
-    // ✅ LANJUTKAN QUIZ
-    quizEngine.initQuiz(category, difficulty, timerEnabled);
-});
+        if (!window.questionsByCategory[category]) {
+            console.error('❌ Kategori tidak ditemukan:', category);
+            alert(`❌ Kategori "${category}" tidak ditemukan.\n\nSilakan pilih kategori lain.`);
+            return;
+        }
+
+        const questions = window.questionsByCategory[category];
+        if (!questions || questions.length === 0) {
+            alert(`❌ Kategori "${category}" tidak memiliki soal.\n\nSilakan pilih kategori lain.`);
+            return;
+        }
+
+        quizEngine.initQuiz(category, difficulty, timerEnabled);
+    });
 
     DOM.exitQuizBtn.addEventListener('click', () => {
         if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
@@ -791,6 +757,10 @@ function setupEventListeners() {
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
             quizEngine.showHint();
         }
+        if (e.key === 't' || e.key === 'T') {
+            theme.toggle();
+            e.preventDefault();
+        }
         if (e.key >= '1' && e.key <= '4' && quizEngine.state.isQuizActive && !quizEngine.state.answered) {
             const btns = DOM.optionsContainer.querySelectorAll('.option-btn');
             const idx = parseInt(e.key) - 1;
@@ -798,14 +768,13 @@ function setupEventListeners() {
         }
     });
 
+    // Load sound preference
     const soundPref = localStorage.getItem('zaxquiz-sound');
     if (soundPref === 'off') {
         sound.setEnabled(false);
-        DOM.soundToggle.innerHTML = '🔇';
+        DOM.soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
         DOM.soundToggle.title = 'Suara Nonaktif';
     }
-
-    console.log('✅ Event listeners ready!');
 }
 
 function renderHistory() {
@@ -938,9 +907,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load categories ke select
     if (window.questionsByCategory) {
         const select = DOM.categorySelect;
-        while (select.options.length > 0) {
-            select.remove(0);
-        }
+        // Kosongkan select terlebih dahulu
+        select.innerHTML = '';
 
         const categoryNames = {
             'pengetahuan-umum': 'Pengetahuan Umum',
@@ -954,10 +922,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         for (const key in window.questionsByCategory) {
-            const option = document.createElement('option');
-            option.value = key;
-            option.textContent = categoryNames[key] || key;
-            select.appendChild(option);
+            if (window.questionsByCategory[key] && window.questionsByCategory[key].length > 0) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = categoryNames[key] || key;
+                select.appendChild(option);
+            }
         }
     }
 
