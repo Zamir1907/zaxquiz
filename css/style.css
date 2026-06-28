@@ -85,9 +85,9 @@ body {
     overflow-x: hidden;
 }
 
-/* ============================================
-   LOGO & ICONS
-   ============================================ */
+/* ============================================ */
+/* LOGO & ICONS                               */
+/* ============================================ */
 .logo-img {
     width: 32px;
     height: 32px;
@@ -109,7 +109,6 @@ body {
     50% { transform: translateY(-10px); }
 }
 
-/* Hero Icon Wrapper */
 .hero-icon-wrapper {
     display: flex;
     justify-content: center;
@@ -117,16 +116,17 @@ body {
     margin-bottom: 16px;
 }
 
-/* Settings Icon */
 .settings-icon {
     font-size: 1.5rem;
     margin-right: 8px;
 }
 
-/* Hint Section */
-..hint-section {
+/* ============================================ */
+/* HINT SECTION & QUIZ ACTIONS                */
+/* ============================================ */
+.hint-section {
     margin-top: 16px;
-    position: relative; /* Tambahkan ini */
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -138,8 +138,8 @@ body {
     justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
-    position: relative; /* Tambahkan ini untuk konsistensi */
-    z-index: 1; /* Pastikan di bawah hint */
+    position: relative;
+    z-index: 1;
 }
 
 /* Timer Container - Hidden by default */
@@ -191,6 +191,8 @@ button {
 /* Cegah drag gambar */
 img,
 svg,
+canvas,
+video,
 [contenteditable="true"] {
     -webkit-user-drag: none !important;
     -khtml-user-drag: none !important;
@@ -214,6 +216,16 @@ input, textarea {
     -webkit-user-select: text !important;
 }
 
+/* Hilangkan default highlight pada link */
+a {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Hilangkan default outline pada button di Chrome/Safari */
+button:focus {
+    outline: none !important;
+}
+
 /* ============================================ */
 /* SCROLLBAR STYLING                          */
 /* ============================================ */
@@ -235,103 +247,6 @@ input, textarea {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
-}
-
-/* ============================================ */
-/* PROTECTION - CEKAL COPY & DRAG             */
-/* ============================================ */
-
-/* Cegah drag gambar dan elemen */
-img,
-canvas,
-svg,
-video,
-[contenteditable="true"] {
-    -webkit-user-drag: none !important;
-    -khtml-user-drag: none !important;
-    -moz-user-drag: none !important;
-    -o-user-drag: none !important;
-    user-drag: none !important;
-    pointer-events: auto;
-}
-
-/* Cegah selection pada elemen tertentu */
-.no-select,
-.protected {
-    user-select: none !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-}
-
-/* Cegah copy pada seluruh halaman (opsional) */
-body.protected {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Tapi izinkan selection pada input dan textarea */
-input, textarea {
-    user-select: text !important;
-    -webkit-user-select: text !important;
-}
-
-/* ============================================ */
-/* FIX: HILANGKAN HIGHLIGHT BIRU & SELECTION  */
-/* ============================================ */
-
-/* Hilangkan outline biru pada focus */
-*:focus {
-    outline: none !important;
-}
-
-/* Tapi tetap ada focus indicator untuk aksesibilitas */
-*:focus-visible {
-    outline: 2px solid var(--primary) !important;
-    outline-offset: 2px;
-}
-
-/* Hilangkan highlight biru saat tap/klik di mobile */
-* {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-touch-callout: none !important;
-}
-
-/* Hilangkan selection (highlight biru saat drag teks) */
-::selection {
-    background: var(--primary);
-    color: white;
-}
-
-/* Untuk mencegah user select teks di tombol */
-.btn, 
-.option-btn,
-.header-btn,
-button {
-    user-select: none !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-}
-
-/* Hilangkan drag pada gambar */
-img,
-[contenteditable="true"],
-[contenteditable="true"] * {
-    -webkit-user-drag: none !important;
-    user-drag: none !important;
-}
-
-/* Hilangkan default highlight pada link */
-a {
-    -webkit-tap-highlight-color: transparent !important;
-}
-
-/* Hilangkan default outline pada button di Chrome/Safari */
-button:focus {
-    outline: none !important;
 }
 
 /* ============================================ */
@@ -978,13 +893,14 @@ button:focus {
 }
 
 /* Question Area */
-..question-area {
+.question-area {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     padding: 30px;
     box-shadow: 0 4px 20px var(--shadow-color);
     transition: background var(--transition), box-shadow var(--transition);
-    position: relative; /* Tambahkan ini agar absolute bekerja */
+    position: relative;
+    animation: fadeSlideIn 0.3s ease;
 }
 
 .question-number {
@@ -1098,19 +1014,19 @@ button:focus {
 }
 
 /* Hint */
-..hint-container {
-    position: absolute; /* Tambahkan ini */
-    top: calc(100% + 12px); /* Muncul di bawah tombol hint */
+.hint-container {
+    position: absolute;
+    top: calc(100% + 12px);
     left: 0;
     right: 0;
     z-index: 10;
-    margin-top: 0; /* Hapus margin-top */
+    margin-top: 0;
     padding: 16px 20px;
     background: var(--bg-card);
     border-radius: var(--radius-sm);
     border-left: 4px solid var(--accent);
     animation: fadeSlideIn 0.3s ease;
-    box-shadow: 0 4px 20px var(--shadow-color); /* Tambahkan shadow agar menonjol */
+    box-shadow: 0 4px 20px var(--shadow-color);
 }
 
 .hint-content {
@@ -1130,8 +1046,6 @@ button:focus {
     color: var(--text-secondary);
     line-height: 1.5;
 }
-
-
 
 /* ============================================ */
 /* EXPLANATION SCREEN                        */
@@ -1460,7 +1374,7 @@ button:focus {
 
     .app-header {
         padding: 10px 16px;
-        top: 12px;
+        top: 16px;
         border-radius: var(--radius-sm);
     }
 
@@ -1786,10 +1700,6 @@ button:focus {
 }
 
 /* ============================================ */
-/* TAMBAHKAN DI STYLE.CSS                     */
-/* ============================================ */
-
-/* ============================================ */
 /* RIPPLE EFFECT                             */
 /* ============================================ */
 
@@ -1964,25 +1874,6 @@ button:focus {
 
 .error-toast button:hover {
     background: rgba(255, 255, 255, 0.2);
-}
-
-/* ============================================ */
-/* TRANSISI SOAL YANG LEBIH HALUS           */
-/* ============================================ */
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-}
-
-.question-area {
-    animation: fadeSlideIn 0.3s ease;
 }
 
 /* ============================================ */
