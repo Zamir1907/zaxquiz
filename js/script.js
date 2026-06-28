@@ -969,14 +969,3 @@ if (window.questionsByCategory) {
     console.error('❌ questionsByCategory tidak ditemukan saat inisialisasi!');
 }
 
-// Global exposure
-window.ZaxQuiz = {
-    AppState,
-    quizEngine,
-    sound,
-    theme,
-    StorageManager,
-    shuffleArray,
-    formatTime,
-    getScoreEmoji
-};
