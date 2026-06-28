@@ -124,20 +124,22 @@ body {
 }
 
 /* Hint Section */
-.hint-section {
+..hint-section {
     margin-top: 16px;
+    position: relative; /* Tambahkan ini */
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* Quiz Actions - Tombol di bagian bawah */
 .quiz-actions {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
+    position: relative; /* Tambahkan ini untuk konsistensi */
+    z-index: 1; /* Pastikan di bawah hint */
 }
 
 /* Timer Container - Hidden by default */
@@ -976,12 +978,13 @@ button:focus {
 }
 
 /* Question Area */
-.question-area {
+..question-area {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     padding: 30px;
     box-shadow: 0 4px 20px var(--shadow-color);
     transition: background var(--transition), box-shadow var(--transition);
+    position: relative; /* Tambahkan ini agar absolute bekerja */
 }
 
 .question-number {
@@ -1095,13 +1098,19 @@ button:focus {
 }
 
 /* Hint */
-.hint-container {
-    margin-top: 16px;
+..hint-container {
+    position: absolute; /* Tambahkan ini */
+    top: calc(100% + 12px); /* Muncul di bawah tombol hint */
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin-top: 0; /* Hapus margin-top */
     padding: 16px 20px;
-    background: var(--bg-input);
+    background: var(--bg-card);
     border-radius: var(--radius-sm);
     border-left: 4px solid var(--accent);
     animation: fadeSlideIn 0.3s ease;
+    box-shadow: 0 4px 20px var(--shadow-color); /* Tambahkan shadow agar menonjol */
 }
 
 .hint-content {
@@ -1121,6 +1130,8 @@ button:focus {
     color: var(--text-secondary);
     line-height: 1.5;
 }
+
+
 
 /* ============================================ */
 /* EXPLANATION SCREEN                        */
