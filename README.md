@@ -369,4 +369,3 @@ Jika Anda menyukai proyek ini, berikan ⭐ di GitHub!
 ---
 
 *Terakhir diperbarui: Desember 2024*
-```
