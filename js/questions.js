@@ -1400,31 +1400,2171 @@ const agamaIslamQuestions = [
     }
 ];
 
+        // ============================================
+// KATEGORI 4: NAMA BENDERA DUNIA (50 Soal)
+// ============================================
+const namaBenderaQuestions = [
+    {
+        question: '🇮🇩 Bendera ini milik negara mana?',
+        options: ['Indonesia', 'Malaysia', 'Singapura', 'Filipina'],
+        correctIndex: 0,
+        explanation: 'Bendera Indonesia terdiri dari dua warna: merah di atas dan putih di bawah, yang dikenal sebagai Sang Saka Merah Putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara kepulauan terbesar di dunia.'
+    },
+    {
+        question: '🇺🇸 Bendera ini adalah bendera dari negara mana?',
+        options: ['Amerika Serikat', 'Inggris', 'Kanada', 'Australia'],
+        correctIndex: 0,
+        explanation: 'Bendera Amerika Serikat memiliki 13 garis merah-putih dan 50 bintang putih di bidang biru, melambangkan 50 negara bagian.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal sebagai "Negeri Paman Sam".'
+    },
+    {
+        question: '🇯🇵 Bendera ini milik negara mana?',
+        options: ['Jepang', 'Korea Selatan', 'China', 'Taiwan'],
+        correctIndex: 0,
+        explanation: 'Bendera Jepang, yang disebut Hinomaru, memiliki lingkaran merah di tengah yang melambangkan matahari terbit.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal sebagai "Negeri Matahari Terbit".'
+    },
+    {
+        question: '🇨🇳 Bendera ini adalah bendera dari negara mana?',
+        options: ['China', 'Vietnam', 'Korea Utara', 'Taiwan'],
+        correctIndex: 0,
+        explanation: 'Bendera China memiliki latar merah dengan lima bintang kuning di sudut kiri atas, melambangkan persatuan di bawah kepemimpinan komunis.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki populasi terbesar di dunia.'
+    },
+    {
+        question: '🇬🇧 Bendera ini milik negara mana?',
+        options: ['Inggris', 'Amerika Serikat', 'Australia', 'Selandia Baru'],
+        correctIndex: 0,
+        explanation: 'Bendera Inggris, yang disebut Union Jack, menggabungkan salib dari tiga santo pelindung: St. George, St. Andrew, dan St. Patrick.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah bagian dari Britania Raya.'
+    },
+    {
+        question: '🇫🇷 Bendera ini adalah bendera dari negara mana?',
+        options: ['Prancis', 'Italia', 'Belanda', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Prancis, yang disebut Tricolore, memiliki tiga warna vertikal: biru, putih, dan merah yang melambangkan kebebasan, kesetaraan, dan persaudaraan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Menara Eiffel.'
+    },
+    {
+        question: '🇩🇪 Bendera ini milik negara mana?',
+        options: ['Jerman', 'Belgia', 'Austria', 'Swiss'],
+        correctIndex: 0,
+        explanation: 'Bendera Jerman memiliki tiga garis horizontal: hitam, merah, dan emas yang melambangkan persatuan dan kebebasan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu negara terbesar di Eropa.'
+    },
+    {
+        question: '🇮🇹 Bendera ini adalah bendera dari negara mana?',
+        options: ['Italia', 'Prancis', 'Irlandia', 'Meksiko'],
+        correctIndex: 0,
+        explanation: 'Bendera Italia memiliki tiga warna vertikal: hijau, putih, dan merah yang melambangkan harapan, iman, dan cinta.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan bentuknya yang seperti sepatu bot.'
+    },
+    {
+        question: '🇪🇸 Bendera ini milik negara mana?',
+        options: ['Spanyol', 'Portugal', 'Andorra', 'Meksiko'],
+        correctIndex: 0,
+        explanation: 'Bendera Spanyol memiliki tiga garis horizontal: merah-kuning-merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan tomatina dan sepak bola.'
+    },
+    {
+        question: '🇵🇹 Bendera ini adalah bendera dari negara mana?',
+        options: ['Portugal', 'Spanyol', 'Brasil', 'Angola'],
+        correctIndex: 0,
+        explanation: 'Bendera Portugal memiliki dua warna: hijau dan merah dengan lambang negara di tengah yang melambangkan penjelajahan samudra.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung barat Eropa.'
+    },
+    {
+        question: '🇳🇱 Bendera ini milik negara mana?',
+        options: ['Belanda', 'Prancis', 'Rusia', 'Luksemburg'],
+        correctIndex: 0,
+        explanation: 'Bendera Belanda memiliki tiga garis horizontal: merah, putih, dan biru yang merupakan salah satu bendera tertua di dunia.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan kincir angin dan bunga tulip.'
+    },
+    {
+        question: '🇧🇪 Bendera ini adalah bendera dari negara mana?',
+        options: ['Belgia', 'Jerman', 'Prancis', 'Belanda'],
+        correctIndex: 0,
+        explanation: 'Bendera Belgia memiliki tiga warna vertikal: hitam, kuning, dan merah yang melambangkan perjuangan kemerdekaan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan cokelat dan wafel.'
+    },
+    {
+        question: '🇨🇭 Bendera ini milik negara mana?',
+        options: ['Swiss', 'Swedia', 'Norwegia', 'Finlandia'],
+        correctIndex: 0,
+        explanation: 'Bendera Swiss berbentuk persegi dengan latar merah dan salib putih di tengah, melambangkan netralitas dan perdamaian.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan gunung Alpen dan cokelat.'
+    },
+    {
+        question: '🇦🇹 Bendera ini adalah bendera dari negara mana?',
+        options: ['Austria', 'Jerman', 'Hungaria', 'Swiss'],
+        correctIndex: 0,
+        explanation: 'Bendera Austria memiliki tiga garis horizontal: merah-putih-merah yang melambangkan darah dan kedamaian.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan musik klasiknya.'
+    },
+    {
+        question: '🇬🇷 Bendera ini milik negara mana?',
+        options: ['Yunani', 'Siprus', 'Malta', 'Turki'],
+        correctIndex: 0,
+        explanation: 'Bendera Yunani memiliki sembilan garis biru-putih dan salib di sudut kiri atas, melambangkan kebebasan dan laut.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah tempat lahirnya demokrasi.'
+    },
+    {
+        question: '🇹🇷 Bendera ini adalah bendera dari negara mana?',
+        options: ['Turki', 'Mesir', 'Arab Saudi', 'Iran'],
+        correctIndex: 0,
+        explanation: 'Bendera Turki memiliki latar merah dengan bulan sabit dan bintang putih yang melambangkan Islam dan kemerdekaan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di antara Eropa dan Asia.'
+    },
+    {
+        question: '🇪🇬 Bendera ini milik negara mana?',
+        options: ['Mesir', 'Libya', 'Sudan', 'Yordania'],
+        correctIndex: 0,
+        explanation: 'Bendera Mesir memiliki tiga garis horizontal: merah, putih, dan hitam dengan lambang elang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan piramida dan Sungai Nil.'
+    },
+    {
+        question: '🇸🇦 Bendera ini adalah bendera dari negara mana?',
+        options: ['Arab Saudi', 'Uni Emirat Arab', 'Yaman', 'Oman'],
+        correctIndex: 0,
+        explanation: 'Bendera Arab Saudi memiliki latar hijau dengan tulisan syahadat dan pedang putih, melambangkan Islam dan keadilan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah tempat kelahiran Islam.'
+    },
+    {
+        question: '🇮🇷 Bendera ini milik negara mana?',
+        options: ['Iran', 'Irak', 'Afghanistan', 'Pakistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Iran memiliki tiga garis horizontal: hijau, putih, dan merah dengan lambang Allah di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dulunya dikenal sebagai Persia.'
+    },
+    {
+        question: '🇮🇳 Bendera ini adalah bendera dari negara mana?',
+        options: ['India', 'Pakistan', 'Bangladesh', 'Sri Lanka'],
+        correctIndex: 0,
+        explanation: 'Bendera India memiliki tiga warna: saffron, putih, dan hijau dengan roda Ashoka di tengah melambangkan hukum dan dharma.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara demokrasi terbesar di dunia.'
+    },
+    {
+        question: '🇵🇰 Bendera ini milik negara mana?',
+        options: ['Pakistan', 'India', 'Bangladesh', 'Afghanistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Pakistan memiliki latar hijau dengan bulan sabit dan bintang putih, melambangkan Islam dan kemajuan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini merdeka dari India pada tahun 1947.'
+    },
+    {
+        question: '🇧🇩 Bendera ini adalah bendera dari negara mana?',
+        options: ['Bangladesh', 'Pakistan', 'India', 'Nepal'],
+        correctIndex: 0,
+        explanation: 'Bendera Bangladesh memiliki latar hijau dengan lingkaran merah yang melambangkan darah perjuangan kemerdekaan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di delta sungai Ganges.'
+    },
+    {
+        question: '🇯🇵 Bendera ini milik negara mana?',
+        options: ['Jepang', 'Korea Selatan', 'Vietnam', 'Kamboja'],
+        correctIndex: 0,
+        explanation: 'Bendera Jepang adalah Hinomaru, yang berarti "lingkaran matahari", dengan warna merah dan putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara kepulauan di Asia Timur.'
+    },
+    {
+        question: '🇰🇷 Bendera ini adalah bendera dari negara mana?',
+        options: ['Korea Selatan', 'Korea Utara', 'Jepang', 'China'],
+        correctIndex: 0,
+        explanation: 'Bendera Korea Selatan, yang disebut Taegukgi, memiliki simbol yin-yang di tengah dengan trigram di setiap sudut.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan K-Pop dan Samsung.'
+    },
+    {
+        question: '🇻🇳 Bendera ini milik negara mana?',
+        options: ['Vietnam', 'Kamboja', 'Laos', 'Thailand'],
+        correctIndex: 0,
+        explanation: 'Bendera Vietnam memiliki latar merah dengan bintang kuning di tengah, melambangkan revolusi dan persatuan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Perang Vietnam.'
+    },
+    {
+        question: '🇹🇭 Bendera ini adalah bendera dari negara mana?',
+        options: ['Thailand', 'Laos', 'Kamboja', 'Malaysia'],
+        correctIndex: 0,
+        explanation: 'Bendera Thailand memiliki tiga warna: merah, putih, dan biru yang melambangkan tanah air, agama, dan raja.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dulunya dikenal sebagai Siam.'
+    },
+    {
+        question: '🇲🇾 Bendera ini milik negara mana?',
+        options: ['Malaysia', 'Indonesia', 'Filipina', 'Singapura'],
+        correctIndex: 0,
+        explanation: 'Bendera Malaysia, yang disebut Jalur Gemilang, memiliki 14 garis merah-putih dan bulan sabit dengan bintang.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terbagi menjadi dua bagian: Semenanjung dan Kalimantan.'
+    },
+    {
+        question: '🇸🇬 Bendera ini adalah bendera dari negara mana?',
+        options: ['Singapura', 'Malaysia', 'Indonesia', 'Filipina'],
+        correctIndex: 0,
+        explanation: 'Bendera Singapura memiliki dua warna: merah di atas dan putih di bawah dengan bulan sabit dan lima bintang.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah kota-negara di Asia Tenggara.'
+    },
+    {
+        question: '🇵🇭 Bendera ini milik negara mana?',
+        options: ['Filipina', 'Indonesia', 'Malaysia', 'Thailand'],
+        correctIndex: 0,
+        explanation: 'Bendera Filipina memiliki tiga warna: biru, merah, dan putih dengan matahari dan tiga bintang di segitiga putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki lebih dari 7.000 pulau.'
+    },
+    {
+        question: '🇦🇺 Bendera ini adalah bendera dari negara mana?',
+        options: ['Australia', 'Selandia Baru', 'Fiji', 'Papua Nugini'],
+        correctIndex: 0,
+        explanation: 'Bendera Australia memiliki latar biru dengan Union Jack di sudut dan bintang persemakmuran serta salib selatan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah benua sekaligus negara.'
+    },
+    {
+        question: '🇳🇿 Bendera ini milik negara mana?',
+        options: ['Selandia Baru', 'Australia', 'Fiji', 'Kepulauan Cook'],
+        correctIndex: 0,
+        explanation: 'Bendera Selandia Baru memiliki latar biru dengan Union Jack dan empat bintang merah di sisi kanan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan film Lord of the Rings.'
+    },
+    {
+        question: '🇨🇦 Bendera ini adalah bendera dari negara mana?',
+        options: ['Kanada', 'Amerika Serikat', 'Inggris', 'Australia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kanada yang terkenal dengan daun maple merah di tengah dengan latar putih di antara dua garis merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar kedua di dunia.'
+    },
+    {
+        question: '🇲🇽 Bendera ini milik negara mana?',
+        options: ['Meksiko', 'Spanyol', 'Italia', 'Kolombia'],
+        correctIndex: 0,
+        explanation: 'Bendera Meksiko memiliki tiga warna vertikal: hijau, putih, dan merah dengan lambang elang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan makanan pedasnya.'
+    },
+    {
+        question: '🇧🇷 Bendera ini adalah bendera dari negara mana?',
+        options: ['Brasil', 'Portugal', 'Kolombia', 'Argentina'],
+        correctIndex: 0,
+        explanation: 'Bendera Brasil memiliki latar hijau dengan berlian kuning dan lingkaran biru berisi bintang-bintang.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Amerika Selatan.'
+    },
+    {
+        question: '🇦🇷 Bendera ini milik negara mana?',
+        options: ['Argentina', 'Uruguay', 'Chili', 'Peru'],
+        correctIndex: 0,
+        explanation: 'Bendera Argentina memiliki tiga garis horizontal: biru-putih-biru dengan matahari di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan danau dan gunung es di Patagonia.'
+    },
+    {
+        question: '🇨🇱 Bendera ini adalah bendera dari negara mana?',
+        options: ['Chili', 'Argentina', 'Peru', 'Bolivia'],
+        correctIndex: 0,
+        explanation: 'Bendera Chili memiliki dua warna: putih dan biru dengan bintang putih di sudut kiri, dan merah di bagian bawah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini berbentuk seperti cabai.'
+    },
+    {
+        question: '🇵🇪 Bendera ini milik negara mana?',
+        options: ['Peru', 'Ekuador', 'Kolombia', 'Bolivia'],
+        correctIndex: 0,
+        explanation: 'Bendera Peru memiliki tiga garis vertikal: merah-putih-merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Machu Picchu.'
+    },
+    {
+        question: '🇨🇴 Bendera ini adalah bendera dari negara mana?',
+        options: ['Kolombia', 'Ekuador', 'Venezuela', 'Panama'],
+        correctIndex: 0,
+        explanation: 'Bendera Kolombia memiliki tiga garis horizontal: kuning di atas (setengah), biru, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan kopi dan salsa.'
+    },
+    {
+        question: '🇻🇪 Bendera ini milik negara mana?',
+        options: ['Venezuela', 'Kolombia', 'Ekuador', 'Peru'],
+        correctIndex: 0,
+        explanation: 'Bendera Venezuela memiliki tiga garis horizontal: kuning, biru, dan merah dengan bintang-bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki danau terbesar di Amerika Selatan.'
+    },
+    {
+        question: '🇿🇦 Bendera ini adalah bendera dari negara mana?',
+        options: ['Afrika Selatan', 'Namibia', 'Botswana', 'Zimbabwe'],
+        correctIndex: 0,
+        explanation: 'Bendera Afrika Selatan memiliki desain Y yang unik dengan enam warna yang melambangkan persatuan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Nelson Mandela.'
+    },
+    {
+        question: '🇳🇬 Bendera ini milik negara mana?',
+        options: ['Nigeria', 'Ghana', 'Pantai Gading', 'Kamerun'],
+        correctIndex: 0,
+        explanation: 'Bendera Nigeria memiliki tiga garis vertikal: hijau-putih-hijau yang melambangkan pertanian dan perdamaian.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terpadat di Afrika.'
+    },
+    {
+        question: '🇰🇪 Bendera ini adalah bendera dari negara mana?',
+        options: ['Kenya', 'Tanzania', 'Uganda', 'Etiopia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kenya memiliki tiga warna: hitam, merah, dan hijau dengan perisai dan tombak tradisional.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan safari dan maraton.'
+    },
+    {
+        question: '🇪🇹 Bendera ini milik negara mana?',
+        options: ['Etiopia', 'Eritrea', 'Somali', 'Sudan'],
+        correctIndex: 0,
+        explanation: 'Bendera Etiopia memiliki tiga warna: hijau, kuning, dan merah dengan lambang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu yang tertua di dunia.'
+    },
+    {
+        question: '🇲🇦 Bendera ini adalah bendera dari negara mana?',
+        options: ['Maroko', 'Aljazair', 'Tunisia', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Maroko memiliki latar merah dengan bintang hijau di tengah yang disebut Bintang Sulaiman.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung barat laut Afrika.'
+    },
+    {
+        question: '🇩🇿 Bendera ini milik negara mana?',
+        options: ['Aljazair', 'Maroko', 'Tunisia', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Aljazair memiliki dua warna: hijau dan putih dengan bulan sabit dan bintang merah di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Afrika.'
+    },
+    {
+        question: '🇹🇳 Bendera ini adalah bendera dari negara mana?',
+        options: ['Tunisia', 'Aljazair', 'Maroko', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Tunisia memiliki latar merah dengan lingkaran putih dan bulan sabit serta bintang merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Puncak Es Krim Tunisia.'
+    },
+    {
+        question: '🇱🇾 Bendera ini milik negara mana?',
+        options: ['Libya', 'Mesir', 'Sudan', 'Tunisia'],
+        correctIndex: 0,
+        explanation: 'Bendera Libya memiliki tiga warna: merah, hitam, dan hijau dengan bulan sabit dan bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki cadangan minyak terbesar di Afrika.'
+    },
+    {
+        question: '🇸🇩 Bendera ini adalah bendera dari negara mana?',
+        options: ['Sudan', 'Mesir', 'Etiopia', 'Yaman'],
+        correctIndex: 0,
+        explanation: 'Bendera Sudan memiliki tiga garis horizontal: merah, putih, dan hitam dengan segitiga hijau di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Afrika.'
+    },
+    {
+        question: '🇾🇪 Bendera ini milik negara mana?',
+        options: ['Yaman', 'Oman', 'Uni Emirat Arab', 'Arab Saudi'],
+        correctIndex: 0,
+        explanation: 'Bendera Yaman memiliki tiga garis horizontal: merah, putih, dan hitam yang mewakili persatuan Arab.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung selatan Jazirah Arab.'
+    },
+    {
+        question: '🇦🇪 Bendera ini adalah bendera dari negara mana?',
+        options: ['Uni Emirat Arab', 'Arab Saudi', 'Yaman', 'Oman'],
+        correctIndex: 0,
+        explanation: 'Bendera Uni Emirat Arab memiliki tiga warna: hijau, putih, dan hitam dengan garis merah vertikal di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal dengan gedung-gedung pencakar langitnya.'
+    },
+    {
+        question: '🇴🇲 Bendera ini milik negara mana?',
+        options: ['Oman', 'Yaman', 'Uni Emirat Arab', 'Arab Saudi'],
+        correctIndex: 0,
+        explanation: 'Bendera Oman memiliki tiga warna: putih, merah, dan hijau dengan lambang negara di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung timur Jazirah Arab.'
+    }
+];
+
+// ============================================
+// KATEGORI 5: NEGARA DAN IBU KOTA (50 Soal)
+// ============================================
+const negaraIbukotaQuestions = [
+    {
+        question: 'Apa ibu kota Indonesia?',
+        options: ['Jakarta', 'Bandung', 'Surabaya', 'Medan'],
+        correctIndex: 0,
+        explanation: 'Jakarta adalah ibu kota Indonesia yang terletak di pulau Jawa dan merupakan pusat pemerintahan serta ekonomi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki julukan "Kota Metropolitan".'
+    },
+    {
+        question: 'Apa ibu kota Malaysia?',
+        options: ['Kuala Lumpur', 'Putrajaya', 'Singapura', 'Bandar Seri Begawan'],
+        correctIndex: 0,
+        explanation: 'Kuala Lumpur adalah ibu kota Malaysia yang juga merupakan kota terbesar di negara tersebut.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan Menara Kembar Petronas.'
+    },
+    {
+        question: 'Apa ibu kota Singapura?',
+        options: ['Singapura', 'Kuala Lumpur', 'Bandar Seri Begawan', 'Jakarta'],
+        correctIndex: 0,
+        explanation: 'Singapura adalah negara kota yang sekaligus menjadi ibu kotanya sendiri, dikenal sebagai pusat keuangan global.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah satu-satunya negara kota di Asia Tenggara.'
+    },
+    {
+        question: 'Apa ibu kota Filipina?',
+        options: ['Manila', 'Cebu', 'Davao', 'Quezon City'],
+        correctIndex: 0,
+        explanation: 'Manila adalah ibu kota Filipina yang terletak di pulau Luzon dan merupakan pusat pemerintahan negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini berada di pulau terbesar Filipina.'
+    },
+    {
+        question: 'Apa ibu kota Thailand?',
+        options: ['Bangkok', 'Chiang Mai', 'Phuket', 'Pattaya'],
+        correctIndex: 0,
+        explanation: 'Bangkok adalah ibu kota Thailand yang dikenal sebagai kota metropolitan dengan nama panjang "Krung Thep Maha Nakhon".',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki nama terpanjang di dunia.'
+    },
+    {
+        question: 'Apa ibu kota Vietnam?',
+        options: ['Hanoi', 'Ho Chi Minh', 'Da Nang', 'Hue'],
+        correctIndex: 0,
+        explanation: 'Hanoi adalah ibu kota Vietnam yang terletak di bagian utara negara dan merupakan pusat politik dan budaya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Sungai Merah.'
+    },
+    {
+        question: 'Apa ibu kota Kamboja?',
+        options: ['Phnom Penh', 'Siem Reap', 'Battambang', 'Sihanoukville'],
+        correctIndex: 0,
+        explanation: 'Phnom Penh adalah ibu kota Kamboja yang terletak di pertemuan sungai Mekong dan Tonle Sap.',
+        difficulty: 'sedang',
+        hint: 'Kota ini berada di tepi Sungai Mekong.'
+    },
+    {
+        question: 'Apa ibu kota Laos?',
+        options: ['Vientiane', 'Luang Prabang', 'Pakse', 'Savannakhet'],
+        correctIndex: 0,
+        explanation: 'Vientiane adalah ibu kota Laos yang terletak di tepi Sungai Mekong dan berbatasan dengan Thailand.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di sepanjang Sungai Mekong.'
+    },
+    {
+        question: 'Apa ibu kota Myanmar?',
+        options: ['Naypyidaw', 'Yangon', 'Mandalay', 'Bagan'],
+        correctIndex: 0,
+        explanation: 'Naypyidaw adalah ibu kota Myanmar yang menggantikan Yangon sebagai ibu kota pada tahun 2005.',
+        difficulty: 'sulit',
+        hint: 'Kota ini adalah ibu kota yang relatif baru.'
+    },
+    {
+        question: 'Apa ibu kota Brunei Darussalam?',
+        options: ['Bandar Seri Begawan', 'Kuala Lumpur', 'Singapura', 'Jakarta'],
+        correctIndex: 0,
+        explanation: 'Bandar Seri Begawan adalah ibu kota Brunei Darussalam yang terletak di pulau Kalimantan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pesisir utara Kalimantan.'
+    },
+    {
+        question: 'Apa ibu kota Timor Leste?',
+        options: ['Dili', 'Baucau', 'Suai', 'Maliana'],
+        correctIndex: 0,
+        explanation: 'Dili adalah ibu kota Timor Leste yang terletak di pesisir utara pulau Timor.',
+        difficulty: 'sedang',
+        hint: 'Kota ini menghadap Selat Wetar.'
+    },
+    {
+        question: 'Apa ibu kota Jepang?',
+        options: ['Tokyo', 'Kyoto', 'Osaka', 'Nagoya'],
+        correctIndex: 0,
+        explanation: 'Tokyo adalah ibu kota Jepang yang merupakan kota metropolitan terbesar di dunia dan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini sebelumnya bernama Edo.'
+    },
+    {
+        question: 'Apa ibu kota Korea Selatan?',
+        options: ['Seoul', 'Busan', 'Incheon', 'Daegu'],
+        correctIndex: 0,
+        explanation: 'Seoul adalah ibu kota Korea Selatan yang merupakan pusat pemerintahan, ekonomi, dan budaya negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di sepanjang Sungai Han.'
+    },
+    {
+        question: 'Apa ibu kota China?',
+        options: ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen'],
+        correctIndex: 0,
+        explanation: 'Beijing adalah ibu kota China yang merupakan pusat pemerintahan dan budaya selama berabad-abad.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Kota Terlarang dan Taman Surga.'
+    },
+    {
+        question: 'Apa ibu kota India?',
+        options: ['New Delhi', 'Mumbai', 'Kolkata', 'Bangalore'],
+        correctIndex: 0,
+        explanation: 'New Delhi adalah ibu kota India yang terletak di wilayah Delhi dan merupakan pusat pemerintahan negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki monumen India Gate yang terkenal.'
+    },
+    {
+        question: 'Apa ibu kota Pakistan?',
+        options: ['Islamabad', 'Karachi', 'Lahore', 'Rawalpindi'],
+        correctIndex: 0,
+        explanation: 'Islamabad adalah ibu kota Pakistan yang dibangun sebagai ibu kota baru pada tahun 1960-an.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di kaki Pegunungan Himalaya.'
+    },
+    {
+        question: 'Apa ibu kota Bangladesh?',
+        options: ['Dhaka', 'Chittagong', 'Khulna', 'Rajshahi'],
+        correctIndex: 0,
+        explanation: 'Dhaka adalah ibu kota Bangladesh yang merupakan kota terpadat di negara tersebut dan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Sungai Buriganga.'
+    },
+    {
+        question: 'Apa ibu kota Sri Lanka?',
+        options: ['Sri Jayawardenepura Kotte', 'Colombo', 'Kandy', 'Galle'],
+        correctIndex: 0,
+        explanation: 'Sri Jayawardenepura Kotte adalah ibu kota administratif Sri Lanka, sedangkan Colombo adalah ibu kota komersial.',
+        difficulty: 'sulit',
+        hint: 'Kota ini terletak di pinggiran Colombo.'
+    },
+    {
+        question: 'Apa ibu kota Nepal?',
+        options: ['Kathmandu', 'Pokhara', 'Biratnagar', 'Lalitpur'],
+        correctIndex: 0,
+        explanation: 'Kathmandu adalah ibu kota Nepal yang terletak di lembah Kathmandu dan merupakan pusat budaya dan politik.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dikelilingi oleh pegunungan Himalaya.'
+    },
+    {
+        question: 'Apa ibu kota Afghanistan?',
+        options: ['Kabul', 'Kandahar', 'Herat', 'Mazar-i-Sharif'],
+        correctIndex: 0,
+        explanation: 'Kabul adalah ibu kota Afghanistan yang terletak di bagian timur negara dan merupakan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di antara pegunungan Hindu Kush.'
+    },
+    {
+        question: 'Apa ibu kota Iran?',
+        options: ['Tehran', 'Isfahan', 'Shiraz', 'Mashhad'],
+        correctIndex: 0,
+        explanation: 'Tehran adalah ibu kota Iran yang merupakan kota terbesar di negara dan pusat politik serta ekonomi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di kaki Pegunungan Alborz.'
+    },
+    {
+        question: 'Apa ibu kota Irak?',
+        options: ['Baghdad', 'Mosul', 'Basra', 'Kirkuk'],
+        correctIndex: 0,
+        explanation: 'Baghdad adalah ibu kota Irak yang terletak di tepi Sungai Tigris dan merupakan pusat peradaban Islam.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di antara Sungai Tigris dan Efrat.'
+    },
+    {
+        question: 'Apa ibu kota Turki?',
+        options: ['Ankara', 'Istanbul', 'Izmir', 'Antalya'],
+        correctIndex: 0,
+        explanation: 'Ankara adalah ibu kota Turki yang menggantikan Istanbul sebagai ibu kota pada tahun 1923 setelah berdirinya Republik Turki.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di dataran tinggi Anatolia.'
+    },
+    {
+        question: 'Apa ibu kota Arab Saudi?',
+        options: ['Riyadh', 'Jeddah', 'Mekkah', 'Madinah'],
+        correctIndex: 0,
+        explanation: 'Riyadh adalah ibu kota Arab Saudi yang merupakan pusat pemerintahan dan keuangan negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tengah Jazirah Arab.'
+    },
+    {
+        question: 'Apa ibu kota Uni Emirat Arab?',
+        options: ['Abu Dhabi', 'Dubai', 'Sharjah', 'Ajman'],
+        correctIndex: 0,
+        explanation: 'Abu Dhabi adalah ibu kota Uni Emirat Arab yang merupakan pusat pemerintahan dan memiliki kekayaan minyak.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah salah satu emirat terkaya.'
+    },
+    {
+        question: 'Apa ibu kota Yaman?',
+        options: ['Sana\'a', 'Aden', 'Taiz', 'Hodeidah'],
+        correctIndex: 0,
+        explanation: 'Sana\'a adalah ibu kota Yaman yang terletak di pegunungan dan merupakan salah satu kota tertua di dunia.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di ketinggian 2.300 meter.'
+    },
+    {
+        question: 'Apa ibu kota Oman?',
+        options: ['Muskat', 'Salalah', 'Nizwa', 'Sohar'],
+        correctIndex: 0,
+        explanation: 'Muskat adalah ibu kota Oman yang terletak di pesisir Teluk Oman dan merupakan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Teluk Oman.'
+    },
+    {
+        question: 'Apa ibu kota Mesir?',
+        options: ['Kairo', 'Aleksandria', 'Giza', 'Luxor'],
+        correctIndex: 0,
+        explanation: 'Kairo adalah ibu kota Mesir yang terletak di tepi Sungai Nil dan merupakan kota terbesar di dunia Arab.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dikenal sebagai "Ibu Kota Dunia Arab".'
+    },
+    {
+        question: 'Apa ibu kota Maroko?',
+        options: ['Rabat', 'Casablanca', 'Marrakesh', 'Fez'],
+        correctIndex: 0,
+        explanation: 'Rabat adalah ibu kota Maroko yang terletak di pesisir Samudra Atlantik dan merupakan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Samudra Atlantik.'
+    },
+    {
+        question: 'Apa ibu kota Aljazair?',
+        options: ['Algiers', 'Oran', 'Constantine', 'Annaba'],
+        correctIndex: 0,
+        explanation: 'Algiers adalah ibu kota Aljazair yang terletak di pesisir Mediterania dan merupakan kota terbesar di negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini menghadap Laut Mediterania.'
+    },
+    {
+        question: 'Apa ibu kota Tunisia?',
+        options: ['Tunis', 'Sfax', 'Sousse', 'Kairouan'],
+        correctIndex: 0,
+        explanation: 'Tunis adalah ibu kota Tunisia yang terletak di pesisir Mediterania dan merupakan pusat politik dan ekonomi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Danau Tunis.'
+    },
+    {
+        question: 'Apa ibu kota Libya?',
+        options: ['Tripoli', 'Benghazi', 'Misrata', 'Sabha'],
+        correctIndex: 0,
+        explanation: 'Tripoli adalah ibu kota Libya yang terletak di pesisir Mediterania dan merupakan kota terbesar di negara.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pesisir Laut Mediterania.'
+    },
+    {
+        question: 'Apa ibu kota Sudan?',
+        options: ['Khartoum', 'Omdurman', 'Port Sudan', 'Kassala'],
+        correctIndex: 0,
+        explanation: 'Khartoum adalah ibu kota Sudan yang terletak di pertemuan Sungai Nil Biru dan Nil Putih.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pertemuan dua sungai Nil.'
+    },
+    {
+        question: 'Apa ibu kota Afrika Selatan?',
+        options: ['Pretoria', 'Cape Town', 'Johannesburg', 'Durban'],
+        correctIndex: 0,
+        explanation: 'Afrika Selatan memiliki tiga ibu kota: Pretoria (eksekutif), Cape Town (legislatif), dan Bloemfontein (yudikatif).',
+        difficulty: 'sulit',
+        hint: 'Negara ini memiliki tiga ibu kota.'
+    },
+    {
+        question: 'Apa ibu kota Nigeria?',
+        options: ['Abuja', 'Lagos', 'Kano', 'Ibadan'],
+        correctIndex: 0,
+        explanation: 'Abuja adalah ibu kota Nigeria yang menggantikan Lagos sebagai ibu kota pada tahun 1991.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pusat Nigeria.'
+    },
+    {
+        question: 'Apa ibu kota Kenya?',
+        options: ['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru'],
+        correctIndex: 0,
+        explanation: 'Nairobi adalah ibu kota Kenya yang terletak di dataran tinggi dan merupakan pusat keuangan di Afrika Timur.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dijuluki "Kota Hijau di Matahari".'
+    },
+    {
+        question: 'Apa ibu kota Etiopia?',
+        options: ['Addis Ababa', 'Dire Dawa', 'Mekele', 'Gondar'],
+        correctIndex: 0,
+        explanation: 'Addis Ababa adalah ibu kota Etiopia yang terletak di dataran tinggi dan merupakan ibu kota tertinggi di Afrika.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah ibu kota tertinggi di Afrika.'
+    },
+    {
+        question: 'Apa ibu kota Ghana?',
+        options: ['Accra', 'Kumasi', 'Sekondi-Takoradi', 'Tamale'],
+        correctIndex: 0,
+        explanation: 'Accra adalah ibu kota Ghana yang terletak di pesisir Teluk Guinea dan merupakan pusat pemerintahan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pesisir Atlantik.'
+    },
+    {
+        question: 'Apa ibu kota Inggris?',
+        options: ['London', 'Manchester', 'Birmingham', 'Liverpool'],
+        correctIndex: 0,
+        explanation: 'London adalah ibu kota Inggris dan Britania Raya yang merupakan pusat keuangan dan budaya global.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dilewati oleh Sungai Thames.'
+    },
+    {
+        question: 'Apa ibu kota Prancis?',
+        options: ['Paris', 'Lyon', 'Marseille', 'Toulouse'],
+        correctIndex: 0,
+        explanation: 'Paris adalah ibu kota Prancis yang dikenal sebagai "Kota Cahaya" dan merupakan pusat mode serta seni dunia.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Menara Eiffel.'
+    },
+    {
+        question: 'Apa ibu kota Jerman?',
+        options: ['Berlin', 'München', 'Hamburg', 'Frankfurt'],
+        correctIndex: 0,
+        explanation: 'Berlin adalah ibu kota Jerman yang merupakan pusat pemerintahan dan memiliki sejarah yang kaya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini pernah terbagi menjadi Berlin Timur dan Barat.'
+    },
+    {
+        question: 'Apa ibu kota Italia?',
+        options: ['Roma', 'Milano', 'Napoli', 'Turin'],
+        correctIndex: 0,
+        explanation: 'Roma adalah ibu kota Italia yang dikenal sebagai "Kota Abadi" dan merupakan pusat Kekaisaran Romawi kuno.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Colosseum yang terkenal.'
+    },
+    {
+        question: 'Apa ibu kota Spanyol?',
+        options: ['Madrid', 'Barcelona', 'Valencia', 'Seville'],
+        correctIndex: 0,
+        explanation: 'Madrid adalah ibu kota Spanyol yang terletak di pusat negara dan merupakan pusat pemerintahan serta budaya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Istana Kerajaan Madrid.'
+    },
+    {
+        question: 'Apa ibu kota Portugal?',
+        options: ['Lisbon', 'Porto', 'Braga', 'Coimbra'],
+        correctIndex: 0,
+        explanation: 'Lisbon adalah ibu kota Portugal yang terletak di pesisir Atlantik dan merupakan salah satu kota tertua di Eropa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di tepi Sungai Tagus.'
+    },
+    {
+        question: 'Apa ibu kota Belanda?',
+        options: ['Amsterdam', 'Rotterdam', 'Den Haag', 'Utrecht'],
+        correctIndex: 0,
+        explanation: 'Amsterdam adalah ibu kota Belanda yang terkenal dengan kanal-kanalnya dan merupakan pusat keuangan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki banyak kanal dan jembatan.'
+    },
+    {
+        question: 'Apa ibu kota Belgia?',
+        options: ['Brussels', 'Antwerp', 'Ghent', 'Bruges'],
+        correctIndex: 0,
+        explanation: 'Brussels adalah ibu kota Belgia dan juga merupakan pusat administrasi Uni Eropa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah ibu kota Uni Eropa.'
+    },
+    {
+        question: 'Apa ibu kota Swiss?',
+        options: ['Bern', 'Zürich', 'Geneva', 'Basel'],
+        correctIndex: 0,
+        explanation: 'Bern adalah ibu kota Swiss yang terletak di tepi Sungai Aare dan merupakan pusat pemerintahan federal.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki rumah-rumah tua dengan gaya abad pertengahan.'
+    },
+    {
+        question: 'Apa ibu kota Austria?',
+        options: ['Wina', 'Salzburg', 'Innsbruck', 'Graz'],
+        correctIndex: 0,
+        explanation: 'Wina adalah ibu kota Austria yang dikenal dengan musik klasiknya dan merupakan bekas pusat Kekaisaran Austria.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah kota musik klasik dunia.'
+    },
+    {
+        question: 'Apa ibu kota Yunani?',
+        options: ['Athena', 'Thessaloniki', 'Patras', 'Heraklion'],
+        correctIndex: 0,
+        explanation: 'Athena adalah ibu kota Yunani yang merupakan pusat peradaban kuno dan tempat lahirnya demokrasi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Parthenon di Acropolis.'
+    },
+    {
+        question: 'Apa ibu kota Rusia?',
+        options: ['Moskow', 'Saint Petersburg', 'Novosibirsk', 'Kazan'],
+        correctIndex: 0,
+        explanation: 'Moskow adalah ibu kota Rusia yang merupakan kota terbesar di Eropa dan pusat pemerintahan serta ekonomi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Kremlin dan Lapangan Merah.'
+    },
+    {
+        question: 'Apa ibu kota Amerika Serikat?',
+        options: ['Washington DC', 'New York', 'Los Angeles', 'Chicago'],
+        correctIndex: 0,
+        explanation: 'Washington DC adalah ibu kota Amerika Serikat yang merupakan pusat pemerintahan federal dan memiliki Gedung Putih.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dinamai dari presiden pertama AS.'
+    },
+    {
+        question: 'Apa ibu kota Kanada?',
+        options: ['Ottawa', 'Toronto', 'Vancouver', 'Montreal'],
+        correctIndex: 0,
+        explanation: 'Ottawa adalah ibu kota Kanada yang terletak di provinsi Ontario dan merupakan pusat pemerintahan federal.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di antara Toronto dan Montreal.'
+    }
+];
+
+
+// ============================================
+// KATEGORI 6: PROVINSI INDONESIA (50 Soal)
+// ============================================
+const const provinsiIndonesiaQuestions = [
+    // ===== SUMATRA =====
+    {
+        question: 'Apa ibu kota Provinsi Aceh?',
+        options: ['Banda Aceh', 'Medan', 'Padang', 'Pekanbaru'],
+        correctIndex: 0,
+        explanation: 'Banda Aceh adalah ibu kota Provinsi Aceh yang terletak di ujung utara Pulau Sumatra.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan masjid Baiturrahman yang megah.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sumatra Utara?',
+        options: ['Medan', 'Pematangsiantar', 'Binjai', 'Tebing Tinggi'],
+        correctIndex: 0,
+        explanation: 'Medan adalah ibu kota Provinsi Sumatra Utara yang merupakan kota terbesar ketiga di Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan soto Medan dan duriannya.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sumatra Barat?',
+        options: ['Padang', 'Bukittinggi', 'Payakumbuh', 'Solok'],
+        correctIndex: 0,
+        explanation: 'Padang adalah ibu kota Provinsi Sumatra Barat yang terkenal dengan rumah gadang dan rendangnya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pesisir barat Sumatra.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Riau?',
+        options: ['Pekanbaru', 'Dumai', 'Siak', 'Bengkalawan'],
+        correctIndex: 0,
+        explanation: 'Pekanbaru adalah ibu kota Provinsi Riau yang terletak di tepi Sungai Siak dan pusat industri minyak.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal sebagai kota minyak.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Jambi?',
+        options: ['Jambi', 'Sungai Penuh', 'Kota Bangko', 'Muara Bungo'],
+        correctIndex: 0,
+        explanation: 'Kota Jambi adalah ibu kota Provinsi Jambi yang terletak di tepi Sungai Batanghari.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dilalui oleh sungai terpanjang di Sumatra.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sumatra Selatan?',
+        options: ['Palembang', 'Lubuklinggau', 'Prabumulih', 'Baturaja'],
+        correctIndex: 0,
+        explanation: 'Palembang adalah ibu kota Provinsi Sumatra Selatan yang dikenal dengan jembatan Ampera dan pempeknya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan jembatan Ampera.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Bengkulu?',
+        options: ['Bengkulu', 'Curup', 'Bintuhan', 'Manna'],
+        correctIndex: 0,
+        explanation: 'Kota Bengkulu adalah ibu kota Provinsi Bengkulu yang terletak di pesisir barat Sumatra.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah tempat pengasingan Soekarno.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Lampung?',
+        options: ['Bandar Lampung', 'Metro', 'Kotabumi', 'Teluk Betung'],
+        correctIndex: 0,
+        explanation: 'Bandar Lampung adalah ibu kota Provinsi Lampung yang terletak di ujung selatan Pulau Sumatra.',
+        difficulty: 'sedang',
+        hint: 'Kota ini merupakan pintu gerbang ke Sumatra dari Jawa.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kepulauan Bangka Belitung?',
+        options: ['Pangkalpinang', 'Belinyu', 'Muntok', 'Tanjungpandan'],
+        correctIndex: 0,
+        explanation: 'Pangkalpinang adalah ibu kota Provinsi Kepulauan Bangka Belitung yang terkenal dengan laskar pelangi.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan film Laskar Pelangi.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kepulauan Riau?',
+        options: ['Tanjungpinang', 'Batam', 'Bintan', 'Karimun'],
+        correctIndex: 0,
+        explanation: 'Tanjungpinang adalah ibu kota Provinsi Kepulauan Riau yang terletak di Pulau Bintan.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan sejarah Kerajaan Melayu Riau.'
+    },
+
+    // ===== JAWA =====
+    {
+        question: 'Apa ibu kota Provinsi DKI Jakarta?',
+        options: ['Jakarta Pusat', 'Jakarta Selatan', 'Jakarta Timur', 'Jakarta Barat'],
+        correctIndex: 0,
+        explanation: 'Jakarta Pusat adalah pusat pemerintahan Provinsi DKI Jakarta yang juga menjadi ibu kota Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah pusat pemerintahan Indonesia.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Jawa Barat?',
+        options: ['Bandung', 'Bogor', 'Bekasi', 'Depok'],
+        correctIndex: 0,
+        explanation: 'Bandung adalah ibu kota Provinsi Jawa Barat yang dikenal sebagai "Kota Kembang" dan "Paris van Java".',
+        difficulty: 'sedang',
+        hint: 'Kota ini dijuluki "Kota Kembang".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Jawa Tengah?',
+        options: ['Semarang', 'Surakarta', 'Magelang', 'Pekalongan'],
+        correctIndex: 0,
+        explanation: 'Semarang adalah ibu kota Provinsi Jawa Tengah yang terletak di pesisir utara Jawa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan lawan sebrang dan lumpia.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi DI Yogyakarta?',
+        options: ['Yogyakarta', 'Sleman', 'Bantul', 'Kulon Progo'],
+        correctIndex: 0,
+        explanation: 'Kota Yogyakarta adalah ibu kota Provinsi DI Yogyakarta yang dikenal sebagai "Kota Pelajar" dan "Kota Budaya".',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki kerajaan yang masih berjalan.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Jawa Timur?',
+        options: ['Surabaya', 'Malang', 'Sidoarjo', 'Madiun'],
+        correctIndex: 0,
+        explanation: 'Surabaya adalah ibu kota Provinsi Jawa Timur yang merupakan kota terbesar kedua di Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal sebagai "Kota Pahlawan".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Banten?',
+        options: ['Serang', 'Tangerang', 'Cilegon', 'Pandeglang'],
+        correctIndex: 0,
+        explanation: 'Serang adalah ibu kota Provinsi Banten yang terletak di ujung barat Pulau Jawa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini berbatasan dengan Jakarta dan Lampung.'
+    },
+
+    // ===== BALI & NUSA TENGGARA =====
+    {
+        question: 'Apa ibu kota Provinsi Bali?',
+        options: ['Denpasar', 'Badung', 'Gianyar', 'Tabanan'],
+        correctIndex: 0,
+        explanation: 'Denpasar adalah ibu kota Provinsi Bali yang merupakan pusat pemerintahan dan ekonomi Pulau Dewata.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki pantai Kuta yang terkenal.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Nusa Tenggara Barat?',
+        options: ['Mataram', 'Lombok Timur', 'Sumbawa', 'Bima'],
+        correctIndex: 0,
+        explanation: 'Mataram adalah ibu kota Provinsi Nusa Tenggara Barat yang terletak di Pulau Lombok.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dekat dengan pantai Senggigi yang terkenal.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Nusa Tenggara Timur?',
+        options: ['Kupang', 'Ende', 'Maumere', 'Ruteng'],
+        correctIndex: 0,
+        explanation: 'Kupang adalah ibu kota Provinsi Nusa Tenggara Timur yang terletak di Pulau Timor.',
+        difficulty: 'sedang',
+        hint: 'Kota ini berbatasan langsung dengan Timor Leste.'
+    },
+
+    // ===== KALIMANTAN =====
+    {
+        question: 'Apa ibu kota Provinsi Kalimantan Barat?',
+        options: ['Pontianak', 'Singkawang', 'Sambas', 'Ketapang'],
+        correctIndex: 0,
+        explanation: 'Pontianak adalah ibu kota Provinsi Kalimantan Barat yang terletak tepat di garis khatulistiwa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dilalui oleh garis khatulistiwa.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kalimantan Tengah?',
+        options: ['Palangka Raya', 'Sampit', 'Pangkalan Bun', 'Kuala Kapuas'],
+        correctIndex: 0,
+        explanation: 'Palangka Raya adalah ibu kota Provinsi Kalimantan Tengah yang merupakan kota terbesar di Kalimantan Tengah.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Taman Nasional Sebangau.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kalimantan Selatan?',
+        options: ['Banjarmasin', 'Banjarbaru', 'Martapura', 'Barabai'],
+        correctIndex: 0,
+        explanation: 'Banjarmasin adalah ibu kota Provinsi Kalimantan Selatan yang terkenal dengan pasar terapungnya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dijuluki "Kota Seribu Sungai".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kalimantan Timur?',
+        options: ['Samarinda', 'Balikpapan', 'Bontang', 'Tenggarong'],
+        correctIndex: 0,
+        explanation: 'Samarinda adalah ibu kota Provinsi Kalimantan Timur yang terkenal dengan batik dan rumah adatnya.',
+        difficulty: 'sedang',
+        hint: 'Kota ini menjadi ibu kota provinsi sebelum pemindahan ke Nusantara.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Kalimantan Utara?',
+        options: ['Tanjung Selor', 'Tarakan', 'Malinau', 'Nunukan'],
+        correctIndex: 0,
+        explanation: 'Tanjung Selor adalah ibu kota Provinsi Kalimantan Utara yang merupakan provinsi termuda di Kalimantan.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini adalah hasil pemekaran dari Kalimantan Timur.'
+    },
+
+    // ===== SULAWESI =====
+    {
+        question: 'Apa ibu kota Provinsi Sulawesi Utara?',
+        options: ['Manado', 'Bitung', 'Tomohon', 'Kotamobagu'],
+        correctIndex: 0,
+        explanation: 'Manado adalah ibu kota Provinsi Sulawesi Utara yang terkenal dengan Taman Laut Bunaken.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Taman Nasional Bunaken.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sulawesi Tengah?',
+        options: ['Palu', 'Poso', 'Luwuk', 'Tolitoli'],
+        correctIndex: 0,
+        explanation: 'Palu adalah ibu kota Provinsi Sulawesi Tengah yang terletak di teluk Palu dan pernah dilanda gempa dan tsunami.',
+        difficulty: 'sedang',
+        hint: 'Kota ini memiliki Teluk Palu yang indah.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sulawesi Selatan?',
+        options: ['Makassar', 'Parepare', 'Palopo', 'Pinrang'],
+        correctIndex: 0,
+        explanation: 'Makassar adalah ibu kota Provinsi Sulawesi Selatan yang dikenal dengan benteng Fort Rotterdam dan kuliner coto.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dijuluki "Kota Daeng".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sulawesi Tenggara?',
+        options: ['Kendari', 'Baubau', 'Kolaka', 'Raha'],
+        correctIndex: 0,
+        explanation: 'Kendari adalah ibu kota Provinsi Sulawesi Tenggara yang terletak di Teluk Kendari.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan wisata bawah lautnya.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Gorontalo?',
+        options: ['Gorontalo', 'Limboto', 'Suhu', 'Kwandang'],
+        correctIndex: 0,
+        explanation: 'Kota Gorontalo adalah ibu kota Provinsi Gorontalo yang merupakan hasil pemekaran dari Sulawesi Utara.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terkenal dengan upacara adat "Molontalo".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sulawesi Barat?',
+        options: ['Mamuju', 'Majene', 'Polewali', 'Kalumpang'],
+        correctIndex: 0,
+        explanation: 'Mamuju adalah ibu kota Provinsi Sulawesi Barat yang merupakan provinsi termuda di Sulawesi.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini adalah hasil pemekaran dari Sulawesi Selatan.'
+    },
+
+    // ===== MALUKU & PAPUA =====
+    {
+        question: 'Apa ibu kota Provinsi Maluku?',
+        options: ['Ambon', 'Ternate', 'Tidore', 'Banda Neira'],
+        correctIndex: 0,
+        explanation: 'Ambon adalah ibu kota Provinsi Maluku yang terkenal sebagai "Kota Musik" dan "Kota Rempah".',
+        difficulty: 'sedang',
+        hint: 'Kota ini dijuluki "Kota Ambon Manise".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Maluku Utara?',
+        options: ['Sofifi', 'Ternate', 'Tidore', 'Halmahera'],
+        correctIndex: 0,
+        explanation: 'Sofifi adalah ibu kota Provinsi Maluku Utara yang terletak di Pulau Halmahera.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini adalah hasil pemekaran dari Maluku.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua?',
+        options: ['Jayapura', 'Merauke', 'Manokwari', 'Sorong'],
+        correctIndex: 0,
+        explanation: 'Jayapura adalah ibu kota Provinsi Papua yang terletak di ujung timur Indonesia dan berbatasan dengan PNG.',
+        difficulty: 'sedang',
+        hint: 'Kota ini berbatasan langsung dengan Papua Nugini.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua Barat?',
+        options: ['Manokwari', 'Sorong', 'Jayapura', 'Merauke'],
+        correctIndex: 0,
+        explanation: 'Manokwari adalah ibu kota Provinsi Papua Barat yang terletak di Teluk Manokwari.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah ibu kota provinsi bagian barat Papua.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua Tengah?',
+        options: ['Nabire', 'Timika', 'Jayapura', 'Merauke'],
+        correctIndex: 0,
+        explanation: 'Nabire adalah ibu kota Provinsi Papua Tengah yang merupakan hasil pemekaran Provinsi Papua.',
+        difficulty: 'sulit',
+        hint: 'Provinsi ini adalah hasil pemekaran terbaru dari Papua.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua Pegunungan?',
+        options: ['Wamena', 'Jayapura', 'Nabire', 'Timika'],
+        correctIndex: 0,
+        explanation: 'Wamena adalah ibu kota Provinsi Papua Pegunungan yang terletak di Lembah Balim.',
+        difficulty: 'sulit',
+        hint: 'Kota ini berada di dataran tinggi Papua.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua Selatan?',
+        options: ['Merauke', 'Timika', 'Jayapura', 'Nabire'],
+        correctIndex: 0,
+        explanation: 'Merauke adalah ibu kota Provinsi Papua Selatan yang merupakan hasil pemekaran Provinsi Papua.',
+        difficulty: 'sulit',
+        hint: 'Kota ini terkenal dengan "semboyan Merauke".'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Papua Barat Daya?',
+        options: ['Sorong', 'Manokwari', 'Jayapura', 'Timika'],
+        correctIndex: 0,
+        explanation: 'Sorong adalah ibu kota Provinsi Papua Barat Daya yang merupakan hasil pemekaran Provinsi Papua Barat.',
+        difficulty: 'sulit',
+        hint: 'Kota ini adalah pintu gerbang ke Raja Ampat.'
+    },
+
+    // ===== SOAL TAMBAHAN UNTUK MELENGKAPI 50 =====
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Palangkaraya?',
+        options: ['Kalimantan Tengah', 'Kalimantan Selatan', 'Kalimantan Timur', 'Kalimantan Barat'],
+        correctIndex: 0,
+        explanation: 'Palangkaraya adalah ibu kota Provinsi Kalimantan Tengah yang terletak di Pulau Kalimantan.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini memiliki Taman Nasional Sebangau.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Kendari?',
+        options: ['Sulawesi Tenggara', 'Sulawesi Selatan', 'Sulawesi Utara', 'Sulawesi Barat'],
+        correctIndex: 0,
+        explanation: 'Kendari adalah ibu kota Provinsi Sulawesi Tenggara yang terletak di Teluk Kendari.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini berada di bagian tenggara Sulawesi.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Ambon?',
+        options: ['Maluku', 'Maluku Utara', 'Sulawesi Utara', 'Papua'],
+        correctIndex: 0,
+        explanation: 'Ambon adalah ibu kota Provinsi Maluku yang terkenal sebagai "Kota Rempah".',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terdiri dari ribuan pulau di timur Indonesia.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Pontianak?',
+        options: ['Kalimantan Barat', 'Kalimantan Timur', 'Kalimantan Selatan', 'Kalimantan Tengah'],
+        correctIndex: 0,
+        explanation: 'Pontianak adalah ibu kota Provinsi Kalimantan Barat yang terletak tepat di garis khatulistiwa.',
+        difficulty: 'sedang',
+        hint: 'Kota ini dilalui garis khatulistiwa.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Pekanbaru?',
+        options: ['Riau', 'Jambi', 'Sumatra Barat', 'Sumatra Utara'],
+        correctIndex: 0,
+        explanation: 'Pekanbaru adalah ibu kota Provinsi Riau yang terletak di tepi Sungai Siak.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terkenal dengan kebudayaan Melayu.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Denpasar?',
+        options: ['Bali', 'NTB', 'NTT', 'Jawa Timur'],
+        correctIndex: 0,
+        explanation: 'Denpasar adalah ibu kota Provinsi Bali yang terletak di Pulau Dewata.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terkenal dengan keindahan pantainya.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Tanjung Pinang?',
+        options: ['Kepulauan Riau', 'Riau', 'Kepulauan Bangka Belitung', 'Sumatra Selatan'],
+        correctIndex: 0,
+        explanation: 'Tanjung Pinang adalah ibu kota Provinsi Kepulauan Riau yang terletak di Pulau Bintan.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini berbatasan langsung dengan Singapura.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Serang?',
+        options: ['Banten', 'Jawa Barat', 'Jawa Tengah', 'DKI Jakarta'],
+        correctIndex: 0,
+        explanation: 'Serang adalah ibu kota Provinsi Banten yang terletak di ujung barat Pulau Jawa.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini adalah hasil pemekaran dari Jawa Barat.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Mataram?',
+        options: ['NTB', 'Bali', 'NTT', 'Jawa Timur'],
+        correctIndex: 0,
+        explanation: 'Mataram adalah ibu kota Provinsi Nusa Tenggara Barat yang terletak di Pulau Lombok.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terkenal dengan pantai Senggigi.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Sofifi?',
+        options: ['Maluku Utara', 'Maluku', 'Sulawesi Utara', 'Papua'],
+        correctIndex: 0,
+        explanation: 'Sofifi adalah ibu kota Provinsi Maluku Utara yang terletak di Pulau Halmahera.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini adalah hasil pemekaran dari Maluku.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Sumatera Utara?',
+        options: ['Medan', 'Pematangsiantar', 'Binjai', 'Tebing Tinggi'],
+        correctIndex: 0,
+        explanation: 'Medan adalah ibu kota Provinsi Sumatera Utara yang merupakan kota terbesar di Sumatra.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terkenal dengan soto dan duriannya.'
+    },
+    {
+        question: 'Apa ibu kota Provinsi Nusa Tenggara Timur?',
+        options: ['Kupang', 'Ende', 'Maumere', 'Ruteng'],
+        correctIndex: 0,
+        explanation: 'Kupang adalah ibu kota Provinsi Nusa Tenggara Timur yang terletak di Pulau Timor.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini berbatasan dengan Timor Leste.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Palu?',
+        options: ['Sulawesi Tengah', 'Sulawesi Selatan', 'Sulawesi Utara', 'Sulawesi Barat'],
+        correctIndex: 0,
+        explanation: 'Palu adalah ibu kota Provinsi Sulawesi Tengah yang terletak di Teluk Palu.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini memiliki Danau Poso dan Lindu.'
+    },
+    {
+        question: 'Provinsi mana yang memiliki ibu kota Manokwari?',
+        options: ['Papua Barat', 'Papua', 'Maluku', 'Sulawesi Utara'],
+        correctIndex: 0,
+        explanation: 'Manokwari adalah ibu kota Provinsi Papua Barat yang terletak di Teluk Manokwari.',
+        difficulty: 'sedang',
+        hint: 'Provinsi ini terkenal dengan Taman Wisata Teluk Cendrawasih.'
+    }
+];
+
+// ============================================
+// KATEGORI 7: SEJARAH INDONESIA (50 Soal)
+// ============================================
+const sejarahIndonesiaQuestions = [
+    // ===== ERA KERAJAAN =====
+    {
+        question: 'Kerajaan Hindu tertua di Indonesia adalah?',
+        options: ['Kutai', 'Tarumanegara', 'Sriwijaya', 'Majapahit'],
+        correctIndex: 0,
+        explanation: 'Kerajaan Kutai di Kalimantan Timur adalah kerajaan Hindu tertua di Indonesia, berdiri sekitar abad ke-4 M.',
+        difficulty: 'sedang',
+        hint: 'Kerajaan ini terletak di Pulau Kalimantan.'
+    },
+    {
+        question: 'Kerajaan Buddha terbesar di Nusantara adalah?',
+        options: ['Sriwijaya', 'Kutai', 'Tarumanegara', 'Majapahit'],
+        correctIndex: 0,
+        explanation: 'Kerajaan Sriwijaya adalah kerajaan Buddha terbesar di Nusantara yang berpusat di Palembang, Sumatra Selatan.',
+        difficulty: 'sedang',
+        hint: 'Kerajaan ini menguasai jalur perdagangan Selat Malaka.'
+    },
+    {
+        question: 'Kerajaan Majapahit mencapai puncak kejayaan di bawah kepemimpinan?',
+        options: ['Hayam Wuruk', 'Gajah Mada', 'Raden Wijaya', 'Tribhuwana Tunggadewi'],
+        correctIndex: 0,
+        explanation: 'Majapahit mencapai puncak kejayaan di bawah pemerintahan Hayam Wuruk dengan patih Gajah Mada sebagai mahapatih.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah raja Majapahit yang terkenal.'
+    },
+    {
+        question: 'Sumpah Palapa diucapkan oleh?',
+        options: ['Gajah Mada', 'Hayam Wuruk', 'Raden Wijaya', 'Tribhuwana Tunggadewi'],
+        correctIndex: 0,
+        explanation: 'Gajah Mada mengucapkan Sumpah Palapa yang berisi tekad untuk menyatukan Nusantara di bawah Majapahit.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah mahapatih Majapahit yang terkenal.'
+    },
+    {
+        question: 'Kerajaan Islam pertama di Indonesia adalah?',
+        options: ['Samudera Pasai', 'Demak', 'Malaka', 'Ternate'],
+        correctIndex: 0,
+        explanation: 'Kerajaan Samudera Pasai di Aceh adalah kerajaan Islam pertama di Indonesia yang berdiri pada abad ke-13.',
+        difficulty: 'sedang',
+        hint: 'Kerajaan ini terletak di Aceh.'
+    },
+    {
+        question: 'Sunan Giri adalah salah satu anggota?',
+        options: ['Wali Songo', 'Kerajaan Demak', 'Kerajaan Mataram', 'Penyebar Islam'],
+        correctIndex: 0,
+        explanation: 'Sunan Giri adalah salah satu dari Wali Songo yang berperan penting dalam penyebaran Islam di Jawa.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah tokoh penyebar Islam di Jawa.'
+    },
+    {
+        question: 'Kerajaan Mataram Islam didirikan oleh?',
+        options: ['Sutawijaya', 'Panembahan Senopati', 'Sultan Agung', 'Amangkurat I'],
+        correctIndex: 0,
+        explanation: 'Kerajaan Mataram Islam didirikan oleh Sutawijaya yang bergelar Panembahan Senopati pada akhir abad ke-16.',
+        difficulty: 'sedang',
+        hint: 'Kerajaan ini berpusat di Jawa Tengah.'
+    },
+    {
+        question: 'Sultan Agung adalah raja dari?',
+        options: ['Mataram Islam', 'Demak', 'Cirebon', 'Banten'],
+        correctIndex: 0,
+        explanation: 'Sultan Agung adalah raja besar dari Kerajaan Mataram Islam yang memerintah pada abad ke-17.',
+        difficulty: 'sedang',
+        hint: 'Beliau terkenal dengan serangan ke Batavia.'
+    },
+    {
+        question: 'Kerajaan Ternate dan Tidore terkenal dengan?',
+        options: ['Rempah-rempah', 'Emas', 'Perak', 'Budaya'],
+        correctIndex: 0,
+        explanation: 'Kerajaan Ternate dan Tidore di Maluku terkenal sebagai penghasil rempah-rempah seperti cengkeh dan pala.',
+        difficulty: 'sedang',
+        hint: 'Keduanya terletak di Maluku.'
+    },
+
+    // ===== ERA PENJAJAHAN =====
+    {
+        question: 'Kapan bangsa Portugis pertama kali datang ke Indonesia?',
+        options: ['1511', '1521', '1498', '1500'],
+        correctIndex: 0,
+        explanation: 'Portugis datang ke Indonesia pada tahun 1511 saat Alfonso de Albuquerque menaklukkan Malaka.',
+        difficulty: 'sedang',
+        hint: 'Mereka datang untuk mencari rempah-rempah.'
+    },
+    {
+        question: 'VOC didirikan pada tahun?',
+        options: ['1602', '1596', '1600', '1619'],
+        correctIndex: 0,
+        explanation: 'VOC (Vereenigde Oost-Indische Compagnie) didirikan pada 20 Maret 1602 sebagai kongsi dagang Belanda di Asia.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah perusahaan dagang Belanda.'
+    },
+    {
+        question: 'VOC mengalami kebangkrutan pada tahun?',
+        options: ['1799', '1800', '1801', '1810'],
+        correctIndex: 0,
+        explanation: 'VOC dinyatakan bangkrut pada 31 Desember 1799 dan asetnya diambil alih oleh pemerintah Belanda.',
+        difficulty: 'sedang',
+        hint: 'Akhir abad ke-18.'
+    },
+    {
+        question: 'Perang Diponegoro berlangsung pada tahun?',
+        options: ['1825-1830', '1820-1825', '1830-1835', '1815-1820'],
+        correctIndex: 0,
+        explanation: 'Perang Diponegoro (Perang Jawa) berlangsung dari tahun 1825-1830 melawan Belanda yang dipimpin oleh Pangeran Diponegoro.',
+        difficulty: 'sedang',
+        hint: 'Perang ini terjadi di Jawa.'
+    },
+    {
+        question: 'Pangeran Diponegoro ditangkap oleh Belanda pada tahun?',
+        options: ['1830', '1825', '1835', '1840'],
+        correctIndex: 0,
+        explanation: 'Pangeran Diponegoro ditangkap oleh Belanda pada tahun 1830 dan diasingkan ke Manado kemudian Makassar.',
+        difficulty: 'sedang',
+        hint: 'Akhir dari Perang Jawa.'
+    },
+    {
+        question: 'Kapan Belanda mulai menerapkan sistem tanam paksa (Cultuurstelsel)?',
+        options: ['1830', '1800', '1850', '1840'],
+        correctIndex: 0,
+        explanation: 'Sistem tanam paksa diterapkan oleh Gubernur Jenderal Van den Bosch pada tahun 1830 untuk mengisi kas Belanda.',
+        difficulty: 'sedang',
+        hint: 'Awal abad ke-19.'
+    },
+    {
+        question: 'Sistem tanam paksa dihapuskan pada tahun?',
+        options: ['1870', '1860', '1880', '1850'],
+        correctIndex: 0,
+        explanation: 'Sistem tanam paksa dihapuskan pada tahun 1870 melalui UU Agraria dan UU Gula sebagai awal politik liberal.',
+        difficulty: 'sedang',
+        hint: 'Digantikan dengan sistem liberal.'
+    },
+    {
+        question: 'Siapa yang mendirikan Budi Utomo?',
+        options: ['Dr. Wahidin Sudirohusodo', 'Sutomo', 'Ki Hajar Dewantara', 'H.O.S. Tjokroaminoto'],
+        correctIndex: 0,
+        explanation: 'Budi Utomo didirikan oleh Dr. Wahidin Sudirohusodo pada 20 Mei 1908, yang kini diperingati sebagai Hari Kebangkitan Nasional.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah organisasi modern pertama di Indonesia.'
+    },
+    {
+        question: 'Sumpah Pemuda terjadi pada tanggal?',
+        options: ['28 Oktober 1928', '20 Mei 1908', '17 Agustus 1945', '10 November 1945'],
+        correctIndex: 0,
+        explanation: 'Sumpah Pemuda diikrarkan pada 28 Oktober 1928 sebagai tekad pemuda Indonesia untuk bersatu satu nusa, bangsa, dan bahasa.',
+        difficulty: 'sedang',
+        hint: 'Bulan Oktober 1928.'
+    },
+    {
+        question: 'Siapa tokoh yang dijuluki "Bapak Pendidikan Indonesia"?',
+        options: ['Ki Hajar Dewantara', 'Dr. Wahidin Sudirohusodo', 'Sutomo', 'H.O.S. Tjokroaminoto'],
+        correctIndex: 0,
+        explanation: 'Ki Hajar Dewantara adalah tokoh pendidikan Indonesia yang mendirikan Taman Siswa dan dijuluki Bapak Pendidikan Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Beliau memiliki semboyan "Ing Ngarso Sung Tulodo".'
+    },
+
+    // ===== ERA KEMERDEKAAN =====
+    {
+        question: 'Kapan Proklamasi Kemerdekaan Indonesia dibacakan?',
+        options: ['17 Agustus 1945', '17 Agustus 1946', '18 Agustus 1945', '16 Agustus 1945'],
+        correctIndex: 0,
+        explanation: 'Proklamasi Kemerdekaan Indonesia dibacakan oleh Ir. Soekarno pada 17 Agustus 1945 pukul 10.00 WIB di Jalan Pegangsaan Timur 56, Jakarta.',
+        difficulty: 'sedang',
+        hint: 'Tanggal ini diperingati sebagai Hari Kemerdekaan RI.'
+    },
+    {
+        question: 'Siapa yang mengetik naskah proklamasi?',
+        options: ['Sayuti Melik', 'Soekarno', 'Mohammad Hatta', 'Ahmad Soebardjo'],
+        correctIndex: 0,
+        explanation: 'Sayuti Melik adalah yang mengetik naskah proklamasi yang sudah ditulis tangan oleh Soekarno dan disetujui oleh para tokoh.',
+        difficulty: 'sulit',
+        hint: 'Beliau adalah tokoh yang bekerja di biro kawat.'
+    },
+    {
+        question: 'Apa isi dari Proklamasi Kemerdekaan Indonesia?',
+        options: [
+            'Pernyataan kemerdekaan Indonesia',
+            'Pernyataan perang melawan Belanda',
+            'Pembentukan negara Republik Indonesia',
+            'Penetapan UUD 1945'
+        ],
+        correctIndex: 0,
+        explanation: 'Proklamasi berisi pernyataan bahwa Indonesia merdeka dan hal-hal yang berkaitan dengan perpindahan kekuasaan akan dilaksanakan dengan saksama.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah pernyataan kemerdekaan.'
+    },
+    {
+        question: 'Siapa yang menjadi presiden pertama Indonesia?',
+        options: ['Ir. Soekarno', 'Dr. Mohammad Hatta', 'Letjen Soeharto', 'B.J. Habibie'],
+        correctIndex: 0,
+        explanation: 'Ir. Soekarno adalah presiden pertama Indonesia yang menjabat dari 1945-1967 bersama dengan Dr. Mohammad Hatta sebagai wakil presiden.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah proklamator kemerdekaan.'
+    },
+    {
+        question: 'Apa yang dimaksud dengan "Konferensi Meja Bundar"?',
+        options: [
+            'Perundingan Indonesia-Belanda untuk pengakuan kedaulatan',
+            'Perundingan G-30S/PKI',
+            'Konferensi Asia-Afrika',
+            'Perundingan tentang Irian Barat'
+        ],
+        correctIndex: 0,
+        explanation: 'Konferensi Meja Bundar (KMB) adalah perundingan antara Indonesia dan Belanda di Den Haag pada 1949 yang menghasilkan pengakuan kedaulatan RI.',
+        difficulty: 'sedang',
+        hint: 'Ini terjadi di Belanda tahun 1949.'
+    },
+    {
+        question: 'Kapan Belanda mengakui kedaulatan Indonesia?',
+        options: ['27 Desember 1949', '17 Agustus 1945', '1 Maret 1949', '9 Maret 1949'],
+        correctIndex: 0,
+        explanation: 'Belanda mengakui kedaulatan Indonesia pada 27 Desember 1949 melalui Konferensi Meja Bundar di Den Haag.',
+        difficulty: 'sedang',
+        hint: 'Akhir Desember 1949.'
+    },
+    {
+        question: 'Apa yang dimaksud dengan Peristiwa G-30 S/PKI?',
+        options: [
+            'Pemberontakan PKI pada 1965',
+            'Demonstrasi mahasiswa 1966',
+            'Konflik Indonesia-Malaysia',
+            'Peristiwa Malari 1974'
+        ],
+        correctIndex: 0,
+        explanation: 'G-30 S/PKI adalah peristiwa pemberontakan yang dilakukan oleh Partai Komunis Indonesia pada 30 September 1965 yang berujung pada kudeta gagal.',
+        difficulty: 'sedang',
+        hint: 'Ini terjadi pada tahun 1965.'
+    },
+    {
+        question: 'Siapa tokoh yang menjadi presiden setelah Soekarno?',
+        options: ['Soeharto', 'B.J. Habibie', 'Abdurrahman Wahid', 'Megawati Soekarnoputri'],
+        correctIndex: 0,
+        explanation: 'Soeharto menjadi presiden Indonesia setelah Soekarno mundur pada tahun 1967 dan memerintah selama 32 tahun melalui Orde Baru.',
+        difficulty: 'sedang',
+        hint: 'Beliau menjabat sebagai presiden selama 32 tahun.'
+    },
+    {
+        question: 'Kapan reformasi bergulir di Indonesia?',
+        options: ['1998', '1997', '1999', '2000'],
+        correctIndex: 0,
+        explanation: 'Reformasi bergulir pada tahun 1998 yang ditandai dengan demonstrasi mahasiswa, jatuhnya Soeharto pada 21 Mei 1998, dan dimulainya era reformasi.',
+        difficulty: 'sedang',
+        hint: 'Akhir abad ke-20, Soeharto turun.'
+    },
+
+    // ===== ERA REFORMASI =====
+    {
+        question: 'Siapa presiden Indonesia pada era reformasi setelah Soeharto?',
+        options: ['B.J. Habibie', 'Abdurrahman Wahid', 'Megawati Soekarnoputri', 'Susilo Bambang Yudhoyono'],
+        correctIndex: 0,
+        explanation: 'B.J. Habibie menjadi presiden Indonesia setelah Soeharto mundur, menjabat dari 1998-1999 sebagai presiden ketiga.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden pada masa transisi reformasi.'
+    },
+    {
+        question: 'Siapa presiden keempat Indonesia?',
+        options: ['Abdurrahman Wahid', 'B.J. Habibie', 'Megawati Soekarnoputri', 'Susilo Bambang Yudhoyono'],
+        correctIndex: 0,
+        explanation: 'Abdurrahman Wahid atau Gus Dur adalah presiden keempat Indonesia yang menjabat dari 1999-2001.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah pemimpin NU.'
+    },
+    {
+        question: 'Siapa presiden perempuan pertama Indonesia?',
+        options: ['Megawati Soekarnoputri', 'Sri Mulyani', 'Tri Rismaharini', 'Khofifah Indar Parawansa'],
+        correctIndex: 0,
+        explanation: 'Megawati Soekarnoputri adalah presiden perempuan pertama Indonesia yang menjabat dari 2001-2004.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah putri dari Soekarno.'
+    },
+    {
+        question: 'Siapa presiden Indonesia yang menjabat dua periode dari 2004-2014?',
+        options: ['Susilo Bambang Yudhoyono', 'Joko Widodo', 'Abdurrahman Wahid', 'B.J. Habibie'],
+        correctIndex: 0,
+        explanation: 'Susilo Bambang Yudhoyono (SBY) menjabat dua periode sebagai presiden ke-6 Indonesia dari 2004-2014.',
+        difficulty: 'sedang',
+        hint: 'Beliau dikenal dengan program "100 Hari Kerja".'
+    },
+    {
+        question: 'Siapa presiden Indonesia saat ini (2024)?',
+        options: ['Joko Widodo', 'Prabowo Subianto', 'Susilo Bambang Yudhoyono', 'Megawati Soekarnoputri'],
+        correctIndex: 0,
+        explanation: 'Joko Widodo (Jokowi) adalah presiden ke-7 Indonesia yang menjabat sejak 2014 hingga saat ini (2024).',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden dari Partai PDI-P.'
+    },
+    {
+        question: 'Apa nama ibu kota baru Indonesia yang sedang dibangun?',
+        options: ['Nusantara', 'Palangkaraya', 'Balikpapan', 'Samarinda'],
+        correctIndex: 0,
+        explanation: 'Nusantara adalah nama ibu kota baru Indonesia yang sedang dibangun di Kalimantan Timur untuk menggantikan Jakarta.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di Kalimantan Timur.'
+    },
+
+    // ===== PERISTIWA PENTING LAINNYA =====
+    {
+        question: 'Perang Padri berlangsung di wilayah?',
+        options: ['Sumatra Barat', 'Sumatra Utara', 'Jawa Barat', 'Sulawesi Selatan'],
+        correctIndex: 0,
+        explanation: 'Perang Padri terjadi di Sumatra Barat pada 1803-1838 antara kaum Padri dengan kaum Adat dan Belanda.',
+        difficulty: 'sedang',
+        hint: 'Perang ini terjadi di ranah Minang.'
+    },
+    {
+        question: 'Perang Aceh berlangsung selama?',
+        options: ['30 tahun', '20 tahun', '40 tahun', '25 tahun'],
+        correctIndex: 0,
+        explanation: 'Perang Aceh berlangsung dari 1873-1904 atau sekitar 30 tahun melawan Belanda yang dipimpin oleh para ulama dan tokoh Aceh.',
+        difficulty: 'sedang',
+        hint: 'Perang ini terjadi di Aceh.'
+    },
+    {
+        question: 'Siapa tokoh perempuan yang menjadi pahlawan nasional dari Aceh?',
+        options: ['Cut Nyak Dien', 'R.A. Kartini', 'Martha Christina Tiahahu', 'Nyai Ahmad Dahlan'],
+        correctIndex: 0,
+        explanation: 'Cut Nyak Dien adalah pahlawan nasional dari Aceh yang memimpin perlawanan melawan Belanda bersama suaminya.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah pejuang wanita dari Aceh.'
+    },
+    {
+        question: 'Siapa tokoh yang dijuluki "Bung Tomo"?',
+        options: ['Sutomo', 'Sukarno', 'Mohammad Hatta', 'Soedirman'],
+        correctIndex: 0,
+        explanation: 'Bung Tomo adalah tokoh pejuang Surabaya yang terkenal melalui pidatonya yang membakar semangat arek-arek Surabaya.',
+        difficulty: 'sedang',
+        hint: 'Beliau terkenal dengan pidato di Surabaya.'
+    },
+    {
+        question: 'Apa nama pertempuran yang terjadi di Surabaya pada 10 November 1945?',
+        options: ['Pertempuran 10 November', 'Pertempuran Surabaya', 'Perang Kemerdekaan', 'Peristiwa 10 November'],
+        correctIndex: 0,
+        explanation: 'Pertempuran 10 November 1945 adalah pertempuran heroik antara arek-arek Surabaya melawan sekutu dan Belanda yang diperingati sebagai Hari Pahlawan.',
+        difficulty: 'sedang',
+        hint: 'Tanggal ini diperingati sebagai Hari Pahlawan.'
+    },
+    {
+        question: 'Siapa yang dijuluki "Panglima Besar" dan "Jenderal Gerilya"?',
+        options: ['Jenderal Soedirman', 'Letjen Soeharto', 'Jenderal Nasution', 'Letjen Urip Sumohardjo'],
+        correctIndex: 0,
+        explanation: 'Jenderal Soedirman adalah Panglima Besar TNI yang dijuluki "Jenderal Gerilya" karena memimpin perang gerilya melawan Belanda.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah panglima besar TNI.'
+    },
+    {
+        question: 'Kapan Irian Barat bergabung dengan Indonesia?',
+        options: ['1963', '1962', '1961', '1964'],
+        correctIndex: 0,
+        explanation: 'Irian Barat resmi bergabung dengan Indonesia pada 1 Mei 1963 melalui Perjanjian New York yang ditandatangani tahun 1962.',
+        difficulty: 'sulit',
+        hint: 'Awal tahun 1960-an.'
+    },
+    {
+        question: 'Apa nama peristiwa penculikan 7 perwira TNI pada 1965?',
+        options: ['Peristiwa G-30 S', 'Peristiwa Malari', 'Peristiwa 15 Januari', 'Peristiwa Sumur Kuning'],
+        correctIndex: 0,
+        explanation: 'Peristiwa G-30 S/PKI adalah peristiwa penculikan 7 perwira TNI yang dilakukan oleh PKI pada 30 September 1965.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah peristiwa yang melibatkan PKI.'
+    },
+    {
+        question: 'Siapa sastrawan Indonesia yang terkenal dengan novel "Laskar Pelangi"?',
+        options: ['Andrea Hirata', 'Pramoedya Ananta Toer', 'Tere Liye', 'Dewi Lestari'],
+        correctIndex: 0,
+        explanation: 'Andrea Hirata menulis novel Laskar Pelangi (2005) yang menceritakan masa kecilnya di Belitung dan menjadi inspirasi bagi banyak orang.',
+        difficulty: 'sedang',
+        hint: 'Novel ini diangkat menjadi film tahun 2008.'
+    },
+    {
+        question: 'Apa nama bandara terbesar di Indonesia saat ini?',
+        options: ['Soekarno-Hatta', 'Ngurah Rai', 'Juanda', 'Husein Sastranegara'],
+        correctIndex: 0,
+        explanation: 'Bandara Soekarno-Hatta di Tangerang, Banten adalah bandara terbesar dan tersibuk di Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Bandara ini dinamai dari presiden pertama dan wakil presiden pertama Indonesia.'
+    },
+    {
+        question: 'Apa nama pahlawan nasional yang dikenal sebagai "Ibu Pendidikan"?',
+        options: ['R.A. Kartini', 'Cut Nyak Dien', 'Dewi Sartika', 'Martha Christina Tiahahu'],
+        correctIndex: 0,
+        explanation: 'R.A. Kartini adalah pahlawan nasional yang memperjuangkan emansipasi wanita dan pendidikan bagi perempuan Indonesia.',
+        difficulty: 'sedang',
+        hint: 'Beliau dikenal sebagai "Ibu Kartini".'
+    },
+    {
+        question: 'Apa nama kereta api pertama di Indonesia?',
+        options: ['Kereta Api Indonesia', 'Kereta Api Solo', 'Kereta Api Batavia', 'Kereta Api Semarang'],
+        correctIndex: 0,
+        explanation: 'Kereta api pertama di Indonesia dioperasikan pada tahun 1867 di Jawa Tengah oleh perusahaan swasta Belanda.',
+        difficulty: 'sulit',
+        hint: 'Dioperasikan pertama kali di Semarang.'
+    },
+    {
+        question: 'Siapa tokoh yang mendirikan Muhammadiyah?',
+        options: ['KH. Ahmad Dahlan', 'KH. Hasyim Asy\'ari', 'Dr. Wahidin Sudirohusodo', 'H.O.S. Tjokroaminoto'],
+        correctIndex: 0,
+        explanation: 'KH. Ahmad Dahlan mendirikan Muhammadiyah pada tahun 1912 sebagai organisasi Islam yang bergerak di bidang pendidikan dan sosial.',
+        difficulty: 'sedang',
+        hint: 'Organisasi ini didirikan di Yogyakarta.'
+    },
+    {
+        question: 'Siapa tokoh yang mendirikan Nahdlatul Ulama (NU)?',
+        options: ['KH. Hasyim Asy\'ari', 'KH. Ahmad Dahlan', 'KH. Bisri Syansuri', 'KH. Wahab Hasbullah'],
+        correctIndex: 0,
+        explanation: 'KH. Hasyim Asy\'ari mendirikan Nahdlatul Ulama (NU) pada tahun 1926 di Surabaya sebagai organisasi Islam tradisional.',
+        difficulty: 'sedang',
+        hint: 'Organisasi ini didirikan di Surabaya.'
+    },
+    {
+        question: 'Apa nama peristiwa yang terjadi pada 15 Januari 1974 di Jakarta?',
+        options: ['Peristiwa Malari', 'Peristiwa G-30 S', 'Peristiwa 10 November', 'Peristiwa 17 Agustus'],
+        correctIndex: 0,
+        explanation: 'Peristiwa Malari (Malapetaka 15 Januari) adalah peristiwa demonstrasi dan kerusuhan yang terjadi di Jakarta pada 15 Januari 1974.',
+        difficulty: 'sulit',
+        hint: 'Ini terjadi pada masa Orde Baru.'
+    },
+    {
+        question: 'Apa nama tarian tradisional Indonesia yang diakui UNESCO sebagai warisan budaya dunia?',
+        options: ['Tari Saman', 'Tari Kecak', 'Tari Pendet', 'Tari Jaipong'],
+        correctIndex: 0,
+        explanation: 'Tari Saman dari Aceh diakui UNESCO sebagai Warisan Budaya Takbenda Dunia pada tahun 2011.',
+        difficulty: 'sedang',
+        hint: 'Tarian ini berasal dari Aceh.'
+    }
+];
+
+// ============================================
+// KATEGORI 8: SEJARAH DUNIA (50 Soal)
+// ============================================
+const sejarahDuniaQuestions = [
+    // ===== PERADABAN KUNO =====
+    {
+        question: 'Peradaban tertua di dunia adalah?',
+        options: ['Mesopotamia', 'Mesir Kuno', 'Indus', 'Cina Kuno'],
+        correctIndex: 0,
+        explanation: 'Peradaban Mesopotamia di antara Sungai Tigris dan Efrat adalah peradaban tertua di dunia, muncul sekitar 3500 SM.',
+        difficulty: 'sedang',
+        hint: 'Peradaban ini terletak di antara dua sungai di Timur Tengah.'
+    },
+    {
+        question: 'Piramida terbesar di Mesir adalah?',
+        options: ['Piramida Giza', 'Piramida Djoser', 'Piramida Khafre', 'Piramida Menkaure'],
+        correctIndex: 0,
+        explanation: 'Piramida Giza (Piramida Agung) yang dibangun oleh Firaun Khufu adalah piramida terbesar di Mesir dengan tinggi 146 meter.',
+        difficulty: 'sedang',
+        hint: 'Piramida ini adalah salah satu dari 7 Keajaiban Dunia Kuno.'
+    },
+    {
+        question: 'Siapa firaun terkenal dari Mesir Kuno?',
+        options: ['Ramsis II', 'Tutankhamun', 'Cleopatra', 'Nebukadnezar'],
+        correctIndex: 0,
+        explanation: 'Ramsis II adalah salah satu firaun terbesar Mesir yang memerintah selama 66 tahun dan dikenal sebagai "Ramsis Agung".',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah firaun yang memerintah sangat lama.'
+    },
+    {
+        question: 'Apa nama kota kuno di Peru yang dibangun oleh suku Inca?',
+        options: ['Machu Picchu', 'Cusco', 'Lima', 'Tiahuanaco'],
+        correctIndex: 0,
+        explanation: 'Machu Picchu adalah kota kuno suku Inca yang terletak di pegunungan Andes, Peru, dan merupakan salah satu keajaiban dunia modern.',
+        difficulty: 'sedang',
+        hint: 'Kota ini terletak di pegunungan Andes, Amerika Selatan.'
+    },
+    {
+        question: 'Siapa pendiri Kekaisaran Romawi?',
+        options: ['Augustus', 'Julius Caesar', 'Nero', 'Konstantin'],
+        correctIndex: 0,
+        explanation: 'Augustus (Oktavianus) adalah pendiri Kekaisaran Romawi yang memerintah dari 27 SM hingga 14 M.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah keponakan dari Julius Caesar.'
+    },
+    {
+        question: 'Apa nama sistem tulisan kuno Mesir?',
+        options: ['Hieroglif', 'Kuneiform', 'Sanskerta', 'Aksara Cina'],
+        correctIndex: 0,
+        explanation: 'Hieroglif adalah sistem tulisan kuno Mesir yang menggunakan gambar dan simbol untuk mewakili kata dan suara.',
+        difficulty: 'sedang',
+        hint: 'Tulisan ini ditemukan di dinding-dinding piramida.'
+    },
+    {
+        question: 'Siapa raja Babilonia yang membuat Kode Hammurabi?',
+        options: ['Hammurabi', 'Nebukadnezar', 'Sargon', 'Gilgamesh'],
+        correctIndex: 0,
+        explanation: 'Raja Hammurabi dari Babilonia membuat Kode Hammurabi sekitar 1754 SM, salah satu kode hukum tertua di dunia.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah raja Babilonia kuno.'
+    },
+    {
+        question: 'Peradaban Lembah Indus berkembang di negara yang sekarang?',
+        options: ['India dan Pakistan', 'Cina', 'Mesir', 'Irak'],
+        correctIndex: 0,
+        explanation: 'Peradaban Lembah Indus berkembang di sekitar sungai Indus yang sekarang berada di wilayah India dan Pakistan.',
+        difficulty: 'sedang',
+        hint: 'Peradaban ini berada di anak benua India.'
+    },
+
+    // ===== ABAD PERTENGAHAN =====
+    {
+        question: 'Siapa yang memimpin Perang Salib Pertama?',
+        options: ['Paus Urbanus II', 'Richard I', 'Saladin', 'Godfrey dari Bouillon'],
+        correctIndex: 0,
+        explanation: 'Paus Urbanus II memimpin Perang Salib Pertama yang dimulai pada tahun 1095 untuk merebut Yerusalem dari kekuasaan Muslim.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah pemimpin Gereja Katolik.'
+    },
+    {
+        question: 'Siapa tokoh Muslim yang merebut kembali Yerusalem dari tentara Salib?',
+        options: ['Saladin', 'Suleiman I', 'Mehmed II', 'Harun al-Rashid'],
+        correctIndex: 0,
+        explanation: 'Saladin (Salahuddin Al-Ayyubi) merebut kembali Yerusalem dari tentara Salib pada tahun 1187.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah sultan dari Dinasti Ayyubiyah.'
+    },
+    {
+        question: 'Apa nama peristiwa yang menyebabkan runtuhnya Kekaisaran Romawi Barat?',
+        options: ['Invasi Barbar', 'Perang Salib', 'Reformasi', 'Renaisans'],
+        correctIndex: 0,
+        explanation: 'Invasi suku-suku Barbar seperti Visigoth, Vandal, dan Hun menyebabkan runtuhnya Kekaisaran Romawi Barat pada tahun 476 M.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah invasi dari suku-suku Eropa Utara.'
+    },
+    {
+        question: 'Siapa yang menemukan jalur laut ke India pada tahun 1498?',
+        options: ['Vasco da Gama', 'Christopher Columbus', 'Ferdinand Magellan', 'Marco Polo'],
+        correctIndex: 0,
+        explanation: 'Vasco da Gama dari Portugal menemukan jalur laut ke India pada tahun 1498 melalui Tanjung Harapan.',
+        difficulty: 'sedang',
+        hint: 'Penjelajah ini berasal dari Portugal.'
+    },
+    {
+        question: 'Apa nama perjanjian yang membagi dunia antara Spanyol dan Portugal?',
+        options: ['Perjanjian Tordesillas', 'Perjanjian Paris', 'Perjanjian Versailles', 'Perjanjian Westphalia'],
+        correctIndex: 0,
+        explanation: 'Perjanjian Tordesillas tahun 1494 membagi dunia di luar Eropa antara Spanyol dan Portugal sepanjang meridian tertentu.',
+        difficulty: 'sulit',
+        hint: 'Perjanjian ini terjadi pada abad ke-15.'
+    },
+    {
+        question: 'Siapa yang memimpin Ekspedisi Magellan?',
+        options: ['Ferdinand Magellan', 'Juan Sebastián Elcano', 'Vasco da Gama', 'Christopher Columbus'],
+        correctIndex: 0,
+        explanation: 'Ferdinand Magellan memimpin ekspedisi pertama yang mengelilingi dunia (1519-1522), meskipun ia tewas di Filipina.',
+        difficulty: 'sedang',
+        hint: 'Penjelajah ini berasal dari Portugal.'
+    },
+
+    // ===== RENAISANS & PENJELAJAHAN =====
+    {
+        question: 'Siapa yang dikenal sebagai "Bapak Renaisans"?',
+        options: ['Leonardo da Vinci', 'Michelangelo', 'Rafael', 'Donatello'],
+        correctIndex: 0,
+        explanation: 'Leonardo da Vinci dikenal sebagai "Bapak Renaisans" karena keahliannya di berbagai bidang: seni, sains, teknik, dan matematika.',
+        difficulty: 'sedang',
+        hint: 'Beliau pelukis Mona Lisa.'
+    },
+    {
+        question: 'Siapa pelukis langit-langit Kapel Sistina?',
+        options: ['Michelangelo', 'Leonardo da Vinci', 'Rafael', 'Botticelli'],
+        correctIndex: 0,
+        explanation: 'Michelangelo Buonarroti melukis langit-langit Kapel Sistina di Vatikan antara tahun 1508-1512.',
+        difficulty: 'sedang',
+        hint: 'Lukisan ini menggambarkan kisah penciptaan.'
+    },
+    {
+        question: 'Siapa pencipta patung David?',
+        options: ['Michelangelo', 'Donatello', 'Bernini', 'Rafael'],
+        correctIndex: 0,
+        explanation: 'Michelangelo menciptakan patung David antara tahun 1501-1504, yang menjadi salah satu mahakarya seni Renaisans.',
+        difficulty: 'sedang',
+        hint: 'Patung ini menggambarkan raja Israel.'
+    },
+    {
+        question: 'Siapa yang menulis "The Prince" (Sang Pangeran)?',
+        options: ['Niccolò Machiavelli', 'Thomas More', 'Erasmus', 'Francesco Petrarca'],
+        correctIndex: 0,
+        explanation: 'Niccolò Machiavelli menulis "The Prince" pada tahun 1532, sebuah buku tentang politik dan kekuasaan yang menjadi kontroversial.',
+        difficulty: 'sedang',
+        hint: 'Buku ini tentang seni memimpin.'
+    },
+    {
+        question: 'Siapa yang menemukan benua Amerika untuk Eropa?',
+        options: ['Christopher Columbus', 'Amerigo Vespucci', 'Leif Erikson', 'John Cabot'],
+        correctIndex: 0,
+        explanation: 'Christopher Columbus menemukan benua Amerika pada tahun 1492 saat mencari jalur ke Asia dan mendarat di Karibia.',
+        difficulty: 'sedang',
+        hint: 'Penjelajah ini berasal dari Italia.'
+    },
+    {
+        question: 'Siapa yang pertama kali mengelilingi dunia?',
+        options: ['Juan Sebastián Elcano', 'Ferdinand Magellan', 'Francis Drake', 'Vasco da Gama'],
+        correctIndex: 0,
+        explanation: 'Juan Sebastián Elcano adalah kapten yang berhasil mengelilingi dunia setelah Magellan tewas, menyelesaikan ekspedisi pada tahun 1522.',
+        difficulty: 'sulit',
+        hint: 'Beliau adalah kapten setelah Magellan.'
+    },
+
+    // ===== REVOLUSI & PERUBAHAN =====
+    {
+        question: 'Kapan Revolusi Prancis dimulai?',
+        options: ['1789', '1776', '1799', '1804'],
+        correctIndex: 0,
+        explanation: 'Revolusi Prancis dimulai pada 14 Juli 1789 dengan penyerbuan Bastille dan berakhir dengan jatuhnya monarki Prancis.',
+        difficulty: 'sedang',
+        hint: 'Akhir abad ke-18.'
+    },
+    {
+        question: 'Siapa yang menjadi kaisar Prancis setelah Revolusi?',
+        options: ['Napoleon Bonaparte', 'Louis XVI', 'Maximilien Robespierre', 'Charles de Gaulle'],
+        correctIndex: 0,
+        explanation: 'Napoleon Bonaparte menjadi kaisar Prancis pada tahun 1804 setelah merebut kekuasaan melalui kudeta dan memimpin ekspansi Prancis.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah jenderal yang menjadi kaisar.'
+    },
+    {
+        question: 'Apa nama pertempuran yang mengakhiri kekuasaan Napoleon?',
+        options: ['Waterloo', 'Traflagar', 'Austerlitz', 'Borodino'],
+        correctIndex: 0,
+        explanation: 'Pertempuran Waterloo pada 18 Juni 1815 adalah kekalahan terakhir Napoleon Bonaparte dan mengakhiri kekuasaannya.',
+        difficulty: 'sedang',
+        hint: 'Pertempuran ini terjadi di Belgia.'
+    },
+    {
+        question: 'Apa nama perjanjian yang mengakhiri Perang Dunia I?',
+        options: ['Perjanjian Versailles', 'Perjanjian Paris', 'Perjanjian Westphalia', 'Perjanjian Tordesillas'],
+        correctIndex: 0,
+        explanation: 'Perjanjian Versailles ditandatangani pada 28 Juni 1919, secara resmi mengakhiri Perang Dunia I dan memberlakukan sanksi berat pada Jerman.',
+        difficulty: 'sedang',
+        hint: 'Perjanjian ini ditandatangani di Prancis.'
+    },
+    {
+        question: 'Apa penyebab utama Perang Dunia I?',
+        options: [
+            'Pembunuhan Archduke Franz Ferdinand',
+            'Invasi Polandia',
+            'Serangan Pearl Harbor',
+            'Revolusi Rusia'
+        ],
+        correctIndex: 0,
+        explanation: 'Pembunuhan Archduke Franz Ferdinand dari Austria-Hongaria pada 28 Juni 1914 adalah pemicu utama Perang Dunia I.',
+        difficulty: 'sedang',
+        hint: 'Peristiwa ini terjadi di Sarajevo, Bosnia.'
+    },
+    {
+        question: 'Siapa pemimpin Jerman selama Perang Dunia I?',
+        options: ['Kaiser Wilhelm II', 'Adolf Hitler', 'Otto von Bismarck', 'Friedrich Ebert'],
+        correctIndex: 0,
+        explanation: 'Kaiser Wilhelm II adalah Kaisar Jerman selama Perang Dunia I dari 1914-1918, yang kemudian turun takhta dan melarikan diri ke Belanda.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah kaisar terakhir Jerman.'
+    },
+
+    // ===== PERANG DUNIA II =====
+    {
+        question: 'Kapan Perang Dunia II dimulai?',
+        options: ['1 September 1939', '1 September 1940', '7 Desember 1941', '3 September 1939'],
+        correctIndex: 0,
+        explanation: 'Perang Dunia II dimulai pada 1 September 1939 ketika Jerman menginvasi Polandia, diikuti oleh deklarasi perang dari Prancis dan Inggris.',
+        difficulty: 'sedang',
+        hint: 'Invasi Jerman ke Polandia.'
+    },
+    {
+        question: 'Siapa pemimpin Jerman selama Perang Dunia II?',
+        options: ['Adolf Hitler', 'Kaiser Wilhelm II', 'Hermann Göring', 'Albert Speer'],
+        correctIndex: 0,
+        explanation: 'Adolf Hitler adalah pemimpin Nazi Jerman yang memulai Perang Dunia II dan bertanggung jawab atas Holocaust.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah diktator Jerman.'
+    },
+    {
+        question: 'Apa nama operasi invasi Jerman ke Uni Soviet?',
+        options: ['Operasi Barbarossa', 'Operasi Overlord', 'Operasi Sea Lion', 'Operasi Torch'],
+        correctIndex: 0,
+        explanation: 'Operasi Barbarossa adalah invasi Jerman ke Uni Soviet pada 22 Juni 1941, yang menjadi titik balik Perang Dunia II.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah invasi terbesar dalam sejarah.'
+    },
+    {
+        question: 'Kapan serangan Pearl Harbor terjadi?',
+        options: ['7 Desember 1941', '7 Desember 1940', '7 Desember 1942', '1 Desember 1941'],
+        correctIndex: 0,
+        explanation: 'Serangan Pearl Harbor terjadi pada 7 Desember 1941 oleh Jepang terhadap pangkalan militer AS di Hawaii, menyebabkan AS masuk Perang Dunia II.',
+        difficulty: 'sedang',
+        hint: 'Serangan ini terjadi di Hawaii.'
+    },
+    {
+        question: 'Siapa presiden AS yang memimpin Perang Dunia II?',
+        options: ['Franklin D. Roosevelt', 'Harry S. Truman', 'Winston Churchill', 'Joseph Stalin'],
+        correctIndex: 0,
+        explanation: 'Franklin D. Roosevelt adalah presiden AS yang memimpin sebagian besar Perang Dunia II, kemudian digantikan oleh Harry S. Truman.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden AS yang lama menjabat.'
+    },
+    {
+        question: 'Apa nama pertempuran yang menjadi titik balik di Pasifik?',
+        options: ['Midway', 'Guadalcanal', 'Iwo Jima', 'Okinawa'],
+        correctIndex: 0,
+        explanation: 'Pertempuran Midway pada 4-7 Juni 1942 adalah titik balik di Pasifik di mana AS mengalahkan Angkatan Laut Jepang secara dramatis.',
+        difficulty: 'sulit',
+        hint: 'Pertempuran ini menggunakan pesawat terbang.'
+    },
+    {
+        question: 'Kapan Jerman menyerah dalam Perang Dunia II?',
+        options: ['8 Mei 1945', '9 Mei 1945', '6 Juni 1944', '2 September 1945'],
+        correctIndex: 0,
+        explanation: 'Jerman menyerah secara resmi pada 8 Mei 1945 (VE Day) mengakhiri perang di Eropa.',
+        difficulty: 'sedang',
+        hint: 'Tanggal ini disebut "VE Day".'
+    },
+    {
+        question: 'Kapan Jepang menyerah dalam Perang Dunia II?',
+        options: ['15 Agustus 1945', '2 September 1945', '6 Agustus 1945', '9 Agustus 1945'],
+        correctIndex: 0,
+        explanation: 'Jepang menyerah pada 15 Agustus 1945 setelah pengeboman atom di Hiroshima dan Nagasaki, dengan penandatanganan resmi pada 2 September 1945.',
+        difficulty: 'sedang',
+        hint: 'Setelah pengeboman atom.'
+    },
+
+    // ===== ERA MODERN =====
+    {
+        question: 'Apa nama perserikatan bangsa-bangsa yang didirikan setelah PDII?',
+        options: ['PBB', 'LBB', 'ASEAN', 'EU'],
+        correctIndex: 0,
+        explanation: 'Perserikatan Bangsa-Bangsa (PBB) didirikan pada 24 Oktober 1945 untuk menggantikan Liga Bangsa-Bangsa dan menjaga perdamaian dunia.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah organisasi internasional terbesar.'
+    },
+    {
+        question: 'Kapan Perang Dingin berakhir?',
+        options: ['1991', '1989', '1995', '1985'],
+        correctIndex: 0,
+        explanation: 'Perang Dingin berakhir pada tahun 1991 dengan runtuhnya Uni Soviet dan disintegrasi Blok Timur.',
+        difficulty: 'sedang',
+        hint: 'Akhir abad ke-20, Uni Soviet runtuh.'
+    },
+    {
+        question: 'Siapa pemimpin Uni Soviet yang memulai perestroika dan glasnost?',
+        options: ['Mikhail Gorbachev', 'Leonid Brezhnev', 'Nikita Khrushchev', 'Joseph Stalin'],
+        correctIndex: 0,
+        explanation: 'Mikhail Gorbachev memulai perestroika (restrukturisasi) dan glasnost (keterbukaan) untuk mereformasi Uni Soviet pada tahun 1985-1991.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden terakhir Uni Soviet.'
+    },
+    {
+        question: 'Kapan Tembok Berlin runtuh?',
+        options: ['9 November 1989', '9 November 1990', '9 November 1988', '3 Oktober 1990'],
+        correctIndex: 0,
+        explanation: 'Tembok Berlin runtuh pada 9 November 1989, menjadi simbol berakhirnya Perang Dingin dan penyatuan Jerman pada 1990.',
+        difficulty: 'sedang',
+        hint: 'Kejadian ini pada akhir tahun 1980-an.'
+    },
+    {
+        question: 'Apa nama pendaratan pertama manusia di bulan?',
+        options: ['Apollo 11', 'Apollo 13', 'Apollo 8', 'Apollo 17'],
+        correctIndex: 0,
+        explanation: 'Apollo 11 adalah misi yang berhasil mendaratkan manusia pertama di bulan pada 20 Juli 1969 dengan Neil Armstrong dan Buzz Aldrin.',
+        difficulty: 'sedang',
+        hint: 'Misi ini pada tahun 1969.'
+    },
+    {
+        question: 'Siapa orang pertama yang berjalan di bulan?',
+        options: ['Neil Armstrong', 'Buzz Aldrin', 'Yuri Gagarin', 'John Glenn'],
+        correctIndex: 0,
+        explanation: 'Neil Armstrong adalah manusia pertama yang berjalan di bulan pada 20 Juli 1969 dengan kata-kata terkenal: "That\'s one small step for man..."',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah komandan Apollo 11.'
+    },
+    {
+        question: 'Apa nama pesawat ulang-alik yang meledak pada tahun 1986?',
+        options: ['Challenger', 'Columbia', 'Discovery', 'Endeavour'],
+        correctIndex: 0,
+        explanation: 'Pesawat ulang-alik Challenger meledak 73 detik setelah lepas landas pada 28 Januari 1986, menewaskan 7 astronot.',
+        difficulty: 'sulit',
+        hint: 'Ini adalah bencana luar angkasa terkenal.'
+    },
+    {
+        question: 'Kapan serangan 9/11 terjadi di Amerika Serikat?',
+        options: ['11 September 2001', '11 September 2000', '11 September 2002', '11 November 2001'],
+        correctIndex: 0,
+        explanation: 'Serangan teroris 9/11 terjadi pada 11 September 2001 ketika empat pesawat dibajak dan menabrak WTC serta Pentagon.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah serangan teroris terbesar di AS.'
+    },
+    {
+        question: 'Siapa pemimpin Al-Qaeda pada serangan 9/11?',
+        options: ['Osama bin Laden', 'Abu Bakr al-Baghdadi', 'Ayman al-Zawahiri', 'Khalid Sheikh Mohammed'],
+        correctIndex: 0,
+        explanation: 'Osama bin Laden adalah pemimpin Al-Qaeda yang merencanakan serangan 9/11 dan diburu oleh AS hingga tertembak pada 2011.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah pendiri Al-Qaeda.'
+    },
+    {
+        question: 'Siapa presiden AS pertama yang berkunjung ke Indonesia?',
+        options: ['Barack Obama', 'George H.W. Bush', 'Bill Clinton', 'Richard Nixon'],
+        correctIndex: 0,
+        explanation: 'Barack Obama adalah presiden AS pertama yang berkunjung ke Indonesia pada 2010, di mana ia menghabiskan masa kecilnya di Jakarta.',
+        difficulty: 'sulit',
+        hint: 'Beliau adalah presiden AS ke-44.'
+    },
+    {
+        question: 'Apa nama pandemi yang melanda dunia pada 2020?',
+        options: ['COVID-19', 'SARS', 'H1N1', 'Ebola'],
+        correctIndex: 0,
+        explanation: 'Pandemi COVID-19 yang disebabkan oleh virus SARS-CoV-2 melanda dunia pada 2020 dengan dampak global yang sangat besar.',
+        difficulty: 'sedang',
+        hint: 'Pandemi ini disebabkan oleh virus corona.'
+    },
+    {
+        question: 'Siapa yang menulis "The Communist Manifesto" bersama Engels?',
+        options: ['Karl Marx', 'Lenin', 'Stalin', 'Trotsky'],
+        correctIndex: 0,
+        explanation: 'Karl Marx dan Friedrich Engels menulis "The Communist Manifesto" pada tahun 1848 yang menjadi dasar ideologi komunis.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah karya tentang komunisme.'
+    },
+    {
+        question: 'Apa nama revolusi industri yang dimulai di Inggris pada abad ke-18?',
+        options: ['Revolusi Industri', 'Revolusi Prancis', 'Revolusi Amerika', 'Revolusi Rusia'],
+        correctIndex: 0,
+        explanation: 'Revolusi Industri dimulai di Inggris pada abad ke-18 dengan penemuan mesin uap dan perubahan drastis dalam produksi barang.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah perubahan dari produksi tangan ke mesin.'
+    },
+    {
+        question: 'Siapa penemu mesin uap?',
+        options: ['James Watt', 'Thomas Newcomen', 'George Stephenson', 'Richard Arkwright'],
+        correctIndex: 0,
+        explanation: 'James Watt mengembangkan mesin uap yang efisien pada tahun 1769, yang menjadi motor revolusi industri.',
+        difficulty: 'sedang',
+        hint: 'Penemu ini dari Skotlandia.'
+    },
+    {
+        question: 'Apa nama sungai yang menjadi pusat peradaban Mesir Kuno?',
+        options: ['Sungai Nil', 'Sungai Tigris', 'Sungai Efrat', 'Sungai Indus'],
+        correctIndex: 0,
+        explanation: 'Sungai Nil adalah pusat peradaban Mesir Kuno yang menyediakan air dan tanah subur untuk pertanian dan kehidupan masyarakat.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah sungai terpanjang di Afrika.'
+    },
+    {
+        question: 'Apa nama peradaban yang membangun Chichen Itza?',
+        options: ['Suku Maya', 'Suku Aztek', 'Suku Inca', 'Suku Olmek'],
+        correctIndex: 0,
+        explanation: 'Suku Maya membangun Chichen Itza di Semenanjung Yucatan, Meksiko, sebagai pusat peradaban dan astronomi Maya.',
+        difficulty: 'sedang',
+        hint: 'Peradaban ini di Amerika Tengah.'
+    },
+    {
+        question: 'Siapa yang menulis "The Wealth of Nations"?',
+        options: ['Adam Smith', 'Karl Marx', 'John Maynard Keynes', 'David Ricardo'],
+        correctIndex: 0,
+        explanation: 'Adam Smith menulis "The Wealth of Nations" pada tahun 1776 yang menjadi dasar pemikiran ekonomi kapitalis modern.',
+        difficulty: 'sedang',
+        hint: 'Buku ini tentang ekonomi.'
+    },
+    {
+        question: 'Apa nama perjanjian yang membentuk Uni Eropa?',
+        options: ['Perjanjian Maastricht', 'Perjanjian Lisbon', 'Perjanjian Roma', 'Perjanjian Amsterdam'],
+        correctIndex: 0,
+        explanation: 'Perjanjian Maastricht ditandatangani pada tahun 1992 yang membentuk Uni Eropa dan memperkenalkan euro sebagai mata uang tunggal.',
+        difficulty: 'sulit',
+        hint: 'Perjanjian ini di Belanda.'
+    }
+];
+
+
 // ============================================
 // EXPOSE KE GLOBAL
 // ============================================
 
-/**
- * Menggabungkan semua kategori ke dalam satu objek global
- * Setiap kategori memiliki 50 soal
- */
 window.questionsByCategory = {
     'pengetahuan-umum': createCategoryQuestions(pengetahuanUmumQuestions, 'Pengetahuan Umum'),
     'matematika': createCategoryQuestions(matematikaQuestions, 'Matematika'),
-    'agama-islam': createCategoryQuestions(agamaIslamQuestions, 'Agama Islam')
-    // Kategori lain akan ditambahkan di tahap berikutnya
+    'agama-islam': createCategoryQuestions(agamaIslamQuestions, 'Agama Islam'),
+    'nama-bendera': createCategoryQuestions(namaBenderaQuestions, 'Nama Bendera Dunia'),
+    'negara-ibukota': createCategoryQuestions(negaraIbukotaQuestions, 'Negara dan Ibu Kota'),
+    'provinsi-indonesia': createCategoryQuestions(provinsiIndonesiaQuestions, 'Provinsi dan Ibu Kota Indonesia'),
+    'sejarah-indonesia': createCategoryQuestions(sejarahIndonesiaQuestions, 'Sejarah Indonesia'),
+    'sejarah-dunia': createCategoryQuestions(sejarahDuniaQuestions, 'Sejarah Dunia')
 };
 
-/**
- * Total soal yang tersedia
- */
-window.totalQuestions = 
-    window.questionsByCategory['pengetahuan-umum'].length +
-    window.questionsByCategory['matematika'].length +
-    window.questionsByCategory['agama-islam'].length;
+// Hitung total soal
+window.totalQuestions = 0;
+for (const category in window.questionsByCategory) {
+    window.totalQuestions += window.questionsByCategory[category].length;
+}
 
-console.log(`📚 Database soal dimuat: ${window.totalQuestions} soal`);
-console.log(`📂 ${Object.keys(window.questionsByCategory).length} kategori tersedia`);
+console.log('✅ ZaxQuiz Loaded!');
+console.log(`📚 ${Object.keys(window.questionsByCategory).length} kategori`);
+console.log(`📝 ${window.totalQuestions} total soal`);
 
 // ============================================
 // INFORMASI UNTUK PENGEMBANG
