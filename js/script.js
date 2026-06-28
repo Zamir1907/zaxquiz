@@ -980,5 +980,3 @@ window.ZaxQuiz = {
     formatTime,
     getScoreEmoji
 };
-
-console.log('🚀 ZaxQuiz v1.0.0 loaded successfully!');
