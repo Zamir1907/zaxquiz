@@ -9,7 +9,10 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Font Google (opsional, tapi bagus untuk tampilan) -->
+    <!-- Font Awesome Icons (Open Source) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Font Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,27 +23,27 @@
     <!-- ============================================ -->
     <div id="app" class="app-container">
         
-<!-- ========================================== -->
-<!-- HEADER / NAVBAR                          -->
-<!-- ========================================== -->
-<header class="app-header">
-    <div class="header-left">
-        <div class="logo">
-            <img src="assets/icons/bubble-letter-z-pink.svg" alt="ZaxQuiz Logo" class="logo-img">
-            <span class="logo-text">ZaxQuiz</span>
-        </div>
-    </div>
-    <div class="header-right">
-        <!-- Toggle Sound -->
-        <button id="soundToggle" class="header-btn" aria-label="Toggle suara" title="Suara">
-            <span class="icon">🔊</span>
-        </button>
-        <!-- Toggle Theme -->
-        <button id="themeToggle" class="header-btn" aria-label="Toggle tema" title="Ganti tema">
-            <span class="icon">🌙</span>
-        </button>
-    </div>
-</header>
+        <!-- ========================================== -->
+        <!-- HEADER / NAVBAR                          -->
+        <!-- ========================================== -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="assets/icons/bubble-letter-z-pink.svg" alt="ZaxQuiz Logo" class="logo-img">
+                    <span class="logo-text">ZaxQuiz</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- Toggle Sound -->
+                <button id="soundToggle" class="header-btn" aria-label="Toggle suara" title="Suara">
+                    <i class="fas fa-volume-up" aria-hidden="true"></i>
+                </button>
+                <!-- Toggle Theme -->
+                <button id="themeToggle" class="header-btn" aria-label="Toggle tema" title="Ganti tema">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
 
         <!-- ========================================== -->
         <!-- MAIN CONTENT AREA                        -->
@@ -54,7 +57,7 @@
                 <div class="home-container">
                     <!-- Hero Section -->
                     <div class="hero">
-                        <div class="hero-emoji">🎯</div>
+                        <div class="hero-emoji"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
                         <h1 class="hero-title">Selamat Datang di ZaxQuiz!</h1>
                         <p class="hero-subtitle">Uji pengetahuanmu dengan kuis interaktif yang seru dan menantang</p>
                     </div>
@@ -62,11 +65,11 @@
                     <!-- Quiz Settings -->
                     <div class="quiz-settings">
                         <div class="settings-card">
-                            <h2 class="settings-title">⚙️ Pengaturan Quiz</h2>
+                            <h2 class="settings-title"><i class="fas fa-cog" aria-hidden="true"></i> Pengaturan Quiz</h2>
                             
                             <!-- Pilih Kategori -->
                             <div class="form-group">
-                                <label for="categorySelect" class="form-label">📚 Pilih Kategori</label>
+                                <label for="categorySelect" class="form-label"><i class="fas fa-book" aria-hidden="true"></i> Pilih Kategori</label>
                                 <select id="categorySelect" class="form-select">
                                     <option value="pengetahuan-umum">Pengetahuan Umum</option>
                                     <option value="matematika">Matematika</option>
@@ -81,7 +84,7 @@
 
                             <!-- Pilih Tingkat Kesulitan -->
                             <div class="form-group">
-                                <label for="difficultySelect" class="form-label">📊 Tingkat Kesulitan</label>
+                                <label for="difficultySelect" class="form-label"><i class="fas fa-chart-bar" aria-hidden="true"></i> Tingkat Kesulitan</label>
                                 <select id="difficultySelect" class="form-select">
                                     <option value="all">Semua</option>
                                     <option value="sedang">Sedang</option>
@@ -94,19 +97,19 @@
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="timerToggle" checked>
                                     <span class="checkbox-custom"></span>
-                                    ⏱️ Aktifkan Timer (15 detik per soal)
+                                    <i class="fas fa-clock" aria-hidden="true"></i> Aktifkan Timer (15 detik per soal)
                                 </label>
                             </div>
 
                             <!-- Tombol Mulai -->
                             <button id="startQuizBtn" class="btn btn-primary btn-large btn-squishy">
-                                🚀 Mulai Quiz!
+                                <i class="fas fa-rocket" aria-hidden="true"></i> Mulai Quiz!
                             </button>
                         </div>
 
                         <!-- Statistik Singkat -->
                         <div class="stats-card">
-                            <h3 class="stats-title">📊 Statistik Anda</h3>
+                            <h3 class="stats-title"><i class="fas fa-chart-pie" aria-hidden="true"></i> Statistik Anda</h3>
                             <div class="stats-grid">
                                 <div class="stat-item">
                                     <span class="stat-number" id="totalQuizzes">0</span>
@@ -125,7 +128,7 @@
 
                         <!-- Tombol Riwayat -->
                         <button id="historyBtn" class="btn btn-secondary btn-squishy">
-                            📜 Lihat Riwayat Skor
+                            <i class="fas fa-history" aria-hidden="true"></i> Lihat Riwayat Skor
                         </button>
                     </div>
                 </div>
@@ -143,7 +146,7 @@
                             <span class="quiz-difficulty" id="quizDifficulty">Sedang</span>
                         </div>
                         <div class="quiz-score">
-                            <span class="score-label">⭐ Skor:</span>
+                            <span class="score-label"><i class="fas fa-star" aria-hidden="true"></i> Skor:</span>
                             <span class="score-value" id="currentScore">0</span>
                         </div>
                     </div>
@@ -162,41 +165,42 @@
                     <!-- Timer -->
                     <div class="timer-container" id="timerContainer">
                         <div class="timer-bar" id="timerBar" style="width: 100%"></div>
-                        <span class="timer-text" id="timerText">⏱️ 15s</span>
+                        <span class="timer-text" id="timerText"><i class="fas fa-hourglass-half" aria-hidden="true"></i> 15s</span>
                     </div>
 
-      <!-- Question Area -->
-<div class="question-area">
-    <div class="question-number" id="questionNumber">Pertanyaan #1</div>
-    <h2 class="question-text" id="questionText">
-        Pertanyaan akan muncul di sini...
-    </h2>
-    
-    <!-- Pilihan Jawaban -->
-    <div class="options-grid" id="optionsContainer">
-        <!-- Options akan di-generate oleh JavaScript -->
-    </div>
+                    <!-- Question Area -->
+                    <div class="question-area">
+                        <div class="question-number" id="questionNumber">Pertanyaan #1</div>
+                        <h2 class="question-text" id="questionText">
+                            Pertanyaan akan muncul di sini...
+                        </h2>
+                        
+                        <!-- Pilihan Jawaban -->
+                        <div class="options-grid" id="optionsContainer">
+                            <!-- Options akan di-generate oleh JavaScript -->
+                        </div>
 
-    <!-- Hint Button & Container -->
-    <div class="hint-section">
-        <button id="hintBtn" class="btn btn-hint btn-squishy">
-            💡 Hint
-        </button>
-        <div class="hint-container" id="hintContainer" style="display: none;">
-            <div class="hint-content">
-                <span class="hint-icon">💡</span>
-                <span class="hint-text" id="hintText">Hint akan muncul di sini...</span>
-            </div>
-        </div>
-    </div>
+                        <!-- Hint Button & Container -->
+                        <div class="hint-section">
+                            <button id="hintBtn" class="btn btn-hint btn-squishy">
+                                <i class="fas fa-lightbulb" aria-hidden="true"></i> Hint
+                            </button>
+                            <div class="hint-container" id="hintContainer" style="display: none;">
+                                <div class="hint-content">
+                                    <span class="hint-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></span>
+                                    <span class="hint-text" id="hintText">Hint akan muncul di sini...</span>
+                                </div>
+                            </div>
+                        </div>
 
-    <!-- Action Buttons - Sekarang di bawah hint -->
-    <div class="quiz-actions">
-        <button id="exitQuizBtn" class="btn btn-danger btn-squishy">
-            🚪 Keluar Quiz
-        </button>
-    </div>
-</div>
+                        <!-- Action Buttons -->
+                        <div class="quiz-actions">
+                            <button id="exitQuizBtn" class="btn btn-danger btn-squishy">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Keluar Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- ========================================== -->
@@ -205,22 +209,22 @@
             <section id="explanationScreen" class="screen" role="main" aria-label="Penjelasan jawaban">
                 <div class="explanation-container">
                     <div class="explanation-card">
-                        <div class="explanation-icon" id="explanationIcon">❌</div>
+                        <div class="explanation-icon" id="explanationIcon"><i class="fas fa-times-circle" aria-hidden="true"></i></div>
                         <h2 class="explanation-title" id="explanationTitle">Jawaban Salah!</h2>
                         
                         <div class="explanation-content">
                             <div class="explanation-answer">
-                                <span class="label">✅ Jawaban Benar:</span>
+                                <span class="label"><i class="fas fa-check-circle" aria-hidden="true"></i> Jawaban Benar:</span>
                                 <span class="value" id="correctAnswer">Jawaban benar</span>
                             </div>
                             <div class="explanation-detail">
-                                <span class="label">📖 Penjelasan:</span>
+                                <span class="label"><i class="fas fa-info-circle" aria-hidden="true"></i> Penjelasan:</span>
                                 <p class="value" id="explanationText">Penjelasan singkat tentang jawaban...</p>
                             </div>
                         </div>
 
                         <button id="continueBtn" class="btn btn-primary btn-squishy">
-                            ➡️ Lanjutkan
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i> Lanjutkan
                         </button>
                     </div>
                 </div>
@@ -232,7 +236,7 @@
             <section id="resultScreen" class="screen" role="main" aria-label="Halaman hasil">
                 <div class="result-container">
                     <div class="result-card">
-                        <div class="result-emoji" id="resultEmoji">🏆</div>
+                        <div class="result-emoji" id="resultEmoji"><i class="fas fa-trophy" aria-hidden="true"></i></div>
                         <h2 class="result-title" id="resultTitle">Quiz Selesai!</h2>
                         
                         <div class="result-score">
@@ -242,19 +246,19 @@
 
                         <div class="result-details">
                             <div class="result-detail-item">
-                                <span class="result-detail-label">✅ Benar</span>
+                                <span class="result-detail-label"><i class="fas fa-check" aria-hidden="true"></i> Benar</span>
                                 <span class="result-detail-value correct" id="resultCorrect">0</span>
                             </div>
                             <div class="result-detail-item">
-                                <span class="result-detail-label">❌ Salah</span>
+                                <span class="result-detail-label"><i class="fas fa-times" aria-hidden="true"></i> Salah</span>
                                 <span class="result-detail-value wrong" id="resultWrong">0</span>
                             </div>
                             <div class="result-detail-item">
-                                <span class="result-detail-label">📊 Persentase</span>
+                                <span class="result-detail-label"><i class="fas fa-percentage" aria-hidden="true"></i> Persentase</span>
                                 <span class="result-detail-value" id="resultPercentage">0%</span>
                             </div>
                             <div class="result-detail-item">
-                                <span class="result-detail-label">⏱️ Waktu</span>
+                                <span class="result-detail-label"><i class="fas fa-clock" aria-hidden="true"></i> Waktu</span>
                                 <span class="result-detail-value" id="resultTime">0s</span>
                             </div>
                         </div>
@@ -266,10 +270,10 @@
 
                         <div class="result-actions">
                             <button id="retryBtn" class="btn btn-primary btn-squishy">
-                                🔄 Ulangi Quiz
+                                <i class="fas fa-sync-alt" aria-hidden="true"></i> Ulangi Quiz
                             </button>
                             <button id="homeBtn" class="btn btn-secondary btn-squishy">
-                                🏠 Kembali ke Home
+                                <i class="fas fa-home" aria-hidden="true"></i> Kembali ke Home
                             </button>
                         </div>
                     </div>
@@ -282,22 +286,22 @@
             <section id="historyScreen" class="screen" role="main" aria-label="Riwayat skor">
                 <div class="history-container">
                     <div class="history-header">
-                        <h2 class="history-title">📜 Riwayat Skor</h2>
+                        <h2 class="history-title"><i class="fas fa-history" aria-hidden="true"></i> Riwayat Skor</h2>
                         <button id="clearHistoryBtn" class="btn btn-danger btn-small btn-squishy">
-                            🗑️ Hapus Semua
+                            <i class="fas fa-trash-alt" aria-hidden="true"></i> Hapus Semua
                         </button>
                     </div>
 
                     <div class="history-list" id="historyList">
                         <!-- Akan diisi JavaScript -->
                         <div class="history-empty">
-                            <span class="empty-icon">📭</span>
+                            <span class="empty-icon"><i class="fas fa-inbox" aria-hidden="true"></i></span>
                             <p>Belum ada riwayat quiz. Yuk, mulai quiz sekarang!</p>
                         </div>
                     </div>
 
                     <button id="backFromHistoryBtn" class="btn btn-secondary btn-squishy">
-                        ↩️ Kembali
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i> Kembali
                     </button>
                 </div>
             </section>
@@ -308,7 +312,7 @@
         <!-- FOOTER                                    -->
         <!-- ========================================== -->
         <footer class="app-footer">
-            <p class="footer-text">Made with ❤️ • ZaxQuiz v1.0</p>
+            <p class="footer-text">Made with <i class="fas fa-heart" aria-hidden="true" style="color: #FF6B9D;"></i> • ZaxQuiz v1.0</p>
         </footer>
 
     </div>
