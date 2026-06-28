@@ -276,54 +276,89 @@ class QuizEngine {
         this.theme = theme;
     }
 
-    initQuiz(category, difficulty, timerEnabled) {
-        console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
+initQuiz(category, difficulty, timerEnabled) {
+    console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
+    
+    // ✅ TAMBAH: Validasi kategori PERTAMA
+    if (!category) {
+        console.error('❌ ERROR: Kategori tidak dipilih!');
+        alert('⚠️ Maaf, Anda belum memilih kategori. Silakan pilih kategori terlebih dahulu.');
+        return;
+    }
+
+    this.state.currentCategory = category;
+    this.state.currentDifficulty = difficulty;
+    this.state.timerEnabled = timerEnabled;
+    this.state.currentIndex = 0;
+    this.state.score = 0;
+    this.state.correctAnswers = 0;
+    this.state.wrongAnswers = 0;
+    this.state.answered = false;
+    this.state.hintUsed = false;
+    this.state.startTime = Date.now();
+    this.state.endTime = null;
+    this.state.isQuizActive = true;
+
+    // ✅ TAMBAH: Ambil soal dengan error handling
+    let questions = this.getQuestionsForCategory(category);
+    
+    // ✅ TAMBAH: Validasi soal ditemukan
+    if (!questions || questions.length === 0) {
+        console.error(`❌ ERROR: Tidak ada soal untuk kategori '${category}'`);
+        alert(`⚠️ Maaf, kategori "${category}" tidak tersedia atau tidak memiliki soal.\n\nSilakan pilih kategori lain.`);
+        this.isQuizActive = false;
+        return;
+    }
+
+    console.log(`📚 Found ${questions.length} questions for category`);
+
+    if (difficulty !== 'all') {
+        questions = questions.filter(q => q.difficulty === difficulty);
+        console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
         
-        this.state.currentCategory = category;
-        this.state.currentDifficulty = difficulty;
-        this.state.timerEnabled = timerEnabled;
-        this.state.currentIndex = 0;
-        this.state.score = 0;
-        this.state.correctAnswers = 0;
-        this.state.wrongAnswers = 0;
-        this.state.answered = false;
-        this.state.hintUsed = false;
-        this.state.startTime = Date.now();
-        this.state.endTime = null;
-        this.state.isQuizActive = true;
-
-        let questions = this.getQuestionsForCategory(category);
-        console.log(`📚 Found ${questions.length} questions for category`);
-
-        if (difficulty !== 'all') {
-            questions = questions.filter(q => q.difficulty === difficulty);
-            console.log(`📊 Filtered to ${questions.length} ${difficulty} questions`);
-            if (questions.length < 50) {
-                const allQuestions = this.getAllQuestions();
-                const filtered = allQuestions.filter(q => q.difficulty === difficulty);
+        // ✅ FIX: Jika filter hasilnya kurang soal
+        if (questions.length < 50) {
+            const allQuestions = this.getAllQuestions();
+            const filtered = allQuestions.filter(q => q.difficulty === difficulty);
+            
+            // ✅ TAMBAH: Validasi ada soal dari kategori lain
+            if (filtered.length === 0) {
+                console.warn(`⚠️ WARNING: Tidak ada soal dengan level '${difficulty}' di database manapun`);
+                // Fallback: gunakan soal dengan filter ditiadakan
+                questions = this.getQuestionsForCategory(category);
+            } else {
                 const shuffled = shuffleArray(filtered);
-                const need = 50 - questions.length;
+                const need = Math.min(50 - questions.length, shuffled.length);
                 const additional = shuffled.slice(0, need);
                 questions = [...questions, ...additional];
             }
         }
-
-        questions = shuffleArray(questions);
-        this.state.questions = questions.slice(0, 50);
-        this.state.totalQuestions = this.state.questions.length;
-        
-        console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
-
-        this.showQuestion();
-        this.updateUI();
-        this.showScreen('quizScreen');
-
-        if (this.state.timerEnabled) {
-            this.startTimer();
-        }
-
-        this.sound.playClick();
     }
+
+    questions = shuffleArray(questions);
+    this.state.questions = questions.slice(0, 50);
+    this.state.totalQuestions = this.state.questions.length;
+    
+    // ✅ TAMBAH: Validasi akhir sebelum mulai
+    if (this.state.totalQuestions === 0) {
+        console.error('❌ ERROR: Tidak ada soal yang tersedia!');
+        alert('⚠️ Maaf, sistem tidak menemukan soal yang sesuai. Silakan coba lagi.');
+        this.isQuizActive = false;
+        return;
+    }
+    
+    console.log(`✅ Quiz ready with ${this.state.totalQuestions} questions`);
+
+    this.showQuestion();
+    this.updateUI();
+    this.showScreen('quizScreen');
+
+    if (this.state.timerEnabled) {
+        this.startTimer();
+    }
+
+    this.sound.playClick();
+}
 
     getAllQuestions() {
         const all = [];
@@ -334,65 +369,115 @@ class QuizEngine {
     }
 
     getQuestionsForCategory(category) {
-        if (window.questionsByCategory && window.questionsByCategory[category]) {
-            return window.questionsByCategory[category];
-        }
-        return this.getAllQuestions();
+    // ✅ Cek window.questionsByCategory ada
+    if (!window.questionsByCategory) {
+        console.error('❌ ERROR: window.questionsByCategory tidak ditemukan!');
+        console.error('   Pastikan questions.js sudah di-load sebelum script.js');
+        return [];
     }
+
+    // ✅ Cek kategori ada di object
+    if (!window.questionsByCategory[category]) {
+        console.error(`❌ ERROR: Kategori '${category}' tidak ada dalam database`);
+        console.log('   Kategori yang tersedia:', Object.keys(window.questionsByCategory));
+        return [];
+    }
+
+    // ✅ Cek category adalah array dan punya data
+    const questions = window.questionsByCategory[category];
+    if (!Array.isArray(questions)) {
+        console.error(`❌ ERROR: Data kategori '${category}' bukan array!`);
+        return [];
+    }
+
+    if (questions.length === 0) {
+        console.error(`❌ ERROR: Kategori '${category}' kosong (tidak ada soal)`);
+        return [];
+    }
+
+    console.log(`✅ Kategori '${category}': ${questions.length} soal ditemukan`);
+    return questions;
+}
 
     showQuestion() {
-        const questions = this.state.questions;
-        const index = this.state.currentIndex;
+    const questions = this.state.questions;
+    const index = this.state.currentIndex;
 
-        if (index >= questions.length) {
-            this.finishQuiz();
-            return;
-        }
-
-        const question = questions[index];
-        this.state.answered = false;
-        this.state.hintUsed = false;
-
-        DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-        DOM.questionText.textContent = question.question;
-
-        const shuffledOptions = shuffleArray(
-            question.options.map((text, i) => ({
-                text,
-                index: i,
-                isCorrect: i === question.correctIndex
-            }))
-        );
-
-        DOM.optionsContainer.innerHTML = '';
-        const letters = ['A', 'B', 'C', 'D'];
-        shuffledOptions.forEach((option, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.dataset.index = option.index;
-            btn.dataset.correct = option.isCorrect;
-            btn.innerHTML = `
-                <span class="option-letter">${letters[i]}</span>
-                <span>${option.text}</span>
-            `;
-            btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-            DOM.optionsContainer.appendChild(btn);
-        });
-
-        DOM.hintContainer.style.display = 'none';
-        DOM.hintText.textContent = '';
-
-        this.updateProgress();
-        this.updateScore();
-
-        DOM.timerBar.classList.remove('warning', 'danger');
-
-        if (this.state.timerEnabled) {
-            this.state.timeLeft = this.state.maxTime;
-            this.updateTimerUI();
-            this.startTimer();
-        }
+    // ✅ TAMBAH: Validasi array ada dan punya isi
+    if (!questions || !Array.isArray(questions) || questions.length === 0) {
+        console.error('❌ ERROR: Array soal kosong atau invalid!');
+        console.error('   State questions:', this.state.questions);
+        alert('⚠️ Error: Tidak ada soal untuk ditampilkan!');
+        this.resetQuiz();
+        return;
     }
+
+    // ✅ TAMBAH: Check index valid
+    if (index < 0) {
+        console.error('❌ ERROR: Index soal negatif:', index);
+        this.state.currentIndex = 0;
+        return this.showQuestion();
+    }
+
+    if (index >= questions.length) {
+        console.log(`✅ Semua soal selesai (${index} >= ${questions.length})`);
+        this.finishQuiz();
+        return;
+    }
+
+    const question = questions[index];
+    
+    // ✅ TAMBAH: Validasi soal object valid
+    if (!question || !question.question || !question.options) {
+        console.error('❌ ERROR: Soal format invalid!', question);
+        alert('⚠️ Error: Format soal tidak sesuai!');
+        this.nextQuestion();
+        return;
+    }
+
+    this.state.answered = false;
+    this.state.hintUsed = false;
+
+    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
+    DOM.questionText.textContent = question.question;
+
+    const shuffledOptions = shuffleArray(
+        question.options.map((text, i) => ({
+            text,
+            index: i,
+            isCorrect: i === question.correctIndex
+        }))
+    );
+
+    DOM.optionsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    shuffledOptions.forEach((option, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.dataset.index = option.index;
+        btn.dataset.correct = option.isCorrect;
+        btn.innerHTML = `
+            <span class="option-letter">${letters[i]}</span>
+            <span>${option.text}</span>
+        `;
+        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
+        DOM.optionsContainer.appendChild(btn);
+    });
+
+    DOM.hintContainer.style.display = 'none';
+    DOM.hintText.textContent = '';
+
+    this.updateProgress();
+    this.updateScore();
+
+    DOM.timerBar.classList.remove('warning', 'danger');
+
+    if (this.state.timerEnabled) {
+        this.state.timeLeft = this.state.maxTime;
+        this.updateTimerUI();
+        this.startTimer();
+    }
+                      }
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
