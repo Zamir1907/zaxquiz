@@ -457,6 +457,7 @@ class QuizEngine {
         
         // Sembunyikan hint saat ganti soal
         DOM.hintContainer.style.display = 'none';
+        DOM.hintContainer.classList.remove('active');
 
         DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
         DOM.questionText.textContent = question.question;
@@ -689,15 +690,17 @@ class QuizEngine {
         if (this.state.answered) return;
         
         // Toggle hint: jika sudah tampil, sembunyikan
-        if (DOM.hintContainer.style.display === 'block') {
+        if (DOM.hintContainer.classList.contains('active')) {
+            DOM.hintContainer.classList.remove('active');
             DOM.hintContainer.style.display = 'none';
-            this.state.hintUsed = false; // Reset agar bisa dipakai lagi
+            this.state.hintUsed = false;
             return;
         }
 
         const question = this.state.questions[this.state.currentIndex];
         DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
         DOM.hintContainer.style.display = 'block';
+        DOM.hintContainer.classList.add('active');
         this.state.hintUsed = true;
         this.sound.playClick();
 
@@ -719,6 +722,7 @@ class QuizEngine {
         DOM.timerContainer.classList.remove('active');
         DOM.timerContainer.style.display = 'none';
         DOM.hintContainer.style.display = 'none';
+        DOM.hintContainer.classList.remove('active');
         
         this.showScreen('homeScreen');
         this.sound.playClick();
