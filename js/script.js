@@ -123,7 +123,7 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// SOUND SYSTEM - Dengan Web Audio API Fallback
+// SOUND SYSTEM - PRIORITASKAN FILE MP3
 // ============================================
 class SoundManager {
     constructor() {
@@ -186,26 +186,27 @@ class SoundManager {
     }
 
     play(soundName) {
-    if (!this.enabled) return;
-    
-    try {
-        const sound = this.sounds[soundName];
-        if (sound) {
-            sound.currentTime = 0;
-            const playPromise = sound.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-
-                    this.playFallback(soundName);
-                });
+        if (!this.enabled) return;
+        
+        // PRIORITASKAN FILE MP3
+        try {
+            const sound = this.sounds[soundName];
+            if (sound) {
+                sound.currentTime = 0;
+                const playPromise = sound.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // FALLBACK KE WEB AUDIO JIKA MP3 GAGAL
+                        this.playFallback(soundName);
+                    });
+                }
+                return; // ← PASTIKAN RETURN AGAR TIDAK LANJUT KE FALLBACK
             }
-            return;  
+        } catch (e) {
+            // JIKA ERROR, PAKAI FALLBACK
+            this.playFallback(soundName);
         }
-    } catch (e) {
-
-        this.playFallback(soundName);
     }
-}
 
     playFallback(soundName) {
         const sounds = {
@@ -377,8 +378,8 @@ class QuizEngine {
         }
 
         questions = shuffleArray(questions);
-this.state.questions = questions;  
-this.state.totalQuestions = this.state.questions.length;
+        this.state.questions = questions; // ← SEMUA SOAL, TANPA SLICE
+        this.state.totalQuestions = this.state.questions.length;
         
         this.updateTimerVisibility();
         this.showQuestion();
@@ -418,79 +419,76 @@ this.state.totalQuestions = this.state.questions.length;
     }
 
     showQuestion() {
-    const questions = this.state.questions;
-    const index = this.state.currentIndex;
+        const questions = this.state.questions;
+        const index = this.state.currentIndex;
 
-    if (index >= questions.length) {
-        this.finishQuiz();
-        return;
+        if (index >= questions.length) {
+            this.finishQuiz();
+            return;
+        }
+
+        const question = questions[index];
+        this.state.answered = false;
+        this.state.hintUsed = false;
+        
+        DOM.hintContainer.style.display = 'none';
+        DOM.hintContainer.classList.remove('active');
+
+        DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
+        
+        if (question.category === 'Nama Bendera Dunia' && question.flagCode) {
+            DOM.questionText.innerHTML = `
+                <div class="flag-container">
+                    <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
+                         alt="Bendera" 
+                         class="flag-image"
+                         loading="lazy"
+                         onerror="this.style.display='none'">
+                </div>
+                <div class="question-text-only">${question.question}</div>
+            `;
+        } else {
+            DOM.questionText.innerHTML = question.question;
+        }
+
+        const shuffledOptions = shuffleArray(
+            question.options.map((text, i) => ({
+                text,
+                index: i,
+                isCorrect: i === question.correctIndex
+            }))
+        );
+
+        DOM.optionsContainer.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+        shuffledOptions.forEach((option, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.dataset.index = option.index;
+            btn.dataset.correct = option.isCorrect;
+            btn.innerHTML = `
+                <span class="option-letter">${letters[i]}</span>
+                <span>${option.text}</span>
+            `;
+            btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
+            DOM.optionsContainer.appendChild(btn);
+        });
+
+        DOM.hintText.textContent = '';
+
+        this.updateProgress();
+        this.updateScore();
+
+        DOM.timerBar.classList.remove('warning', 'danger');
+
+        this.updateTimerVisibility();
+
+        if (this.state.timerEnabled) {
+            this.state.timeLeft = this.state.maxTime;
+            this.updateTimerUI();
+            this.startTimer();
+        }
     }
-
-    const question = questions[index];
-    this.state.answered = false;
-    this.state.hintUsed = false;
-    
-    // Sembunyikan hint saat ganti soal
-    DOM.hintContainer.style.display = 'none';
-    DOM.hintContainer.classList.remove('active');
-
-    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-    
-    // CEK: Jika kategori adalah "Nama Bendera Dunia" dan ada flagCode
-    if (question.category === 'Nama Bendera Dunia' && question.flagCode) {
-        // Tampilkan gambar bendera di atas pertanyaan
-        DOM.questionText.innerHTML = `
-            <div class="flag-container">
-                <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
-                     alt="Bendera" 
-                     class="flag-image"
-                     loading="lazy"
-                     onerror="this.style.display='none'">
-            </div>
-            <div class="question-text-only">${question.question}</div>
-        `;
-    } else {
-        DOM.questionText.innerHTML = question.question;
-    }
-
-    const shuffledOptions = shuffleArray(
-        question.options.map((text, i) => ({
-            text,
-            index: i,
-            isCorrect: i === question.correctIndex
-        }))
-    );
-
-    DOM.optionsContainer.innerHTML = '';
-    const letters = ['A', 'B', 'C', 'D'];
-    shuffledOptions.forEach((option, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.dataset.index = option.index;
-        btn.dataset.correct = option.isCorrect;
-        btn.innerHTML = `
-            <span class="option-letter">${letters[i]}</span>
-            <span>${option.text}</span>
-        `;
-        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-        DOM.optionsContainer.appendChild(btn);
-    });
-
-    DOM.hintText.textContent = '';
-
-    this.updateProgress();
-    this.updateScore();
-
-    DOM.timerBar.classList.remove('warning', 'danger');
-
-    this.updateTimerVisibility();
-
-    if (this.state.timerEnabled) {
-        this.state.timeLeft = this.state.maxTime;
-        this.updateTimerUI();
-        this.startTimer();
-    }
-}
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
@@ -530,6 +528,7 @@ this.state.totalQuestions = this.state.questions.length;
         DOM.correctAnswer.textContent = question.options[question.correctIndex];
         DOM.explanationText.textContent = question.explanation;
         this.showScreen('explanationScreen');
+        this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MASUK EXPLANATION
     }
 
     nextQuestion() {
@@ -577,6 +576,7 @@ this.state.totalQuestions = this.state.questions.length;
 
         this.sound.playComplete();
         this.showScreen('resultScreen');
+        this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MASUK RESULT
 
         StorageManager.saveHistory({
             category: this.state.currentCategory,
@@ -677,15 +677,15 @@ this.state.totalQuestions = this.state.questions.length;
     }
 
     showHint() {
-    if (this.state.answered) return;
-    
-    if (DOM.hintContainer.classList.contains('active')) {
-        DOM.hintContainer.classList.remove('active');
-        DOM.hintContainer.style.display = 'none';
-        this.state.hintUsed = false;
-        this.sound.playClick(); 
-        return;
-    }
+        if (this.state.answered) return;
+        
+        if (DOM.hintContainer.classList.contains('active')) {
+            DOM.hintContainer.classList.remove('active');
+            DOM.hintContainer.style.display = 'none';
+            this.state.hintUsed = false;
+            this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MENUTUP HINT
+            return;
+        }
 
         const question = this.state.questions[this.state.currentIndex];
         DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
@@ -780,11 +780,12 @@ function setupEventListeners() {
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
         sound.initAudioContext();
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT TOGGLE
     });
 
     DOM.startQuizBtn.addEventListener('click', function(e) {
         console.log('🎯 Start Quiz clicked!');
-        e.preventDefault();
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK START
         
         const category = DOM.categorySelect.value;
         const difficulty = DOM.difficultySelect.value;
@@ -812,13 +813,17 @@ function setupEventListeners() {
     });
 
     DOM.exitQuizBtn.addEventListener('click', () => {
-    sound.playClick();  
-    if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
-        quizEngine.resetQuiz();
-    }
-});
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK KELUAR
+        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
+            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK DI CONFIRM
+            quizEngine.resetQuiz();
+        } else {
+            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL DI CONFIRM
+        }
+    });
 
     DOM.continueBtn.addEventListener('click', () => {
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK CONTINUE
         quizEngine.nextQuestion();
     });
 
@@ -827,6 +832,7 @@ function setupEventListeners() {
     });
 
     DOM.retryBtn.addEventListener('click', () => {
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK RETRY
         const category = DOM.categorySelect.value;
         const difficulty = DOM.difficultySelect.value;
         const timerEnabled = DOM.timerToggle.checked;
@@ -834,35 +840,43 @@ function setupEventListeners() {
     });
 
     DOM.homeBtn.addEventListener('click', () => {
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK HOME
         quizEngine.resetQuiz();
     });
 
     DOM.historyBtn.addEventListener('click', () => {
+        sound.playClick(); // ← SUDAH ADA, TETAP
         renderHistory();
         quizEngine.showScreen('historyScreen');
-        sound.playClick();
     });
 
     DOM.backFromHistoryBtn.addEventListener('click', () => {
+        sound.playClick(); // ← SUDAH ADA, TETAP
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
-        sound.playClick();
     });
 
     DOM.clearHistoryBtn.addEventListener('click', () => {
+        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK HAPUS
         if (confirm('Yakin ingin menghapus semua riwayat?')) {
+            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK DI CONFIRM
             StorageManager.clearHistory();
             renderHistory();
             quizEngine.updateHomeStats();
-            sound.playClick();
+        } else {
+            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL DI CONFIRM
         }
     });
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
+            sound.playClick(); // ← TAMBAHKAN SOUND SAAT ESC
             if (confirm('Yakin ingin keluar dari quiz?')) {
+                sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK
                 quizEngine.resetQuiz();
+            } else {
+                sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL
             }
         }
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
