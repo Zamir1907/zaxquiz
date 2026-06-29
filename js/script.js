@@ -30,60 +30,6 @@ const AppState = {
 };
 
 // ============================================
-// STATE PERSISTENCE - UNTUK REFRESH
-// ============================================
-function saveQuizState() {
-    try {
-        const state = {
-            currentCategory: AppState.currentCategory,
-            currentDifficulty: AppState.currentDifficulty,
-            timerEnabled: AppState.timerEnabled,
-            questions: AppState.questions,
-            currentIndex: AppState.currentIndex,
-            score: AppState.score,
-            totalQuestions: AppState.totalQuestions,
-            correctAnswers: AppState.correctAnswers,
-            wrongAnswers: AppState.wrongAnswers,
-            answered: AppState.answered,
-            startTime: AppState.startTime,
-            hintUsed: AppState.hintUsed,
-            isQuizActive: AppState.isQuizActive,
-            timeLeft: AppState.timeLeft,
-            timerEnabled: AppState.timerEnabled,
-            // Simpan juga timestamp untuk validasi
-            timestamp: Date.now()
-        };
-        sessionStorage.setItem('zaxquiz_state', JSON.stringify(state));
-    } catch (e) {
-        console.warn('Gagal menyimpan state:', e);
-    }
-}
-
-function loadQuizState() {
-    try {
-        const data = sessionStorage.getItem('zaxquiz_state');
-        if (!data) return null;
-        
-        const state = JSON.parse(data);
-        
-        // Validasi: jika state lebih dari 1 jam, anggap expired
-        if (Date.now() - state.timestamp > 3600000) {
-            sessionStorage.removeItem('zaxquiz_state');
-            return null;
-        }
-        
-        return state;
-    } catch (e) {
-        console.warn('Gagal memuat state:', e);
-        return null;
-    }
-}
-
-function clearQuizState() {
-    sessionStorage.removeItem('zaxquiz_state');
-}
-
-// ============================================
 // DOM REFERENCES
 // ============================================
 const DOM = {};
@@ -177,6 +123,58 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
+// STATE PERSISTENCE - UNTUK REFRESH
+// ============================================
+function saveQuizState() {
+    try {
+        const state = {
+            currentCategory: AppState.currentCategory,
+            currentDifficulty: AppState.currentDifficulty,
+            timerEnabled: AppState.timerEnabled,
+            questions: AppState.questions,
+            currentIndex: AppState.currentIndex,
+            score: AppState.score,
+            totalQuestions: AppState.totalQuestions,
+            correctAnswers: AppState.correctAnswers,
+            wrongAnswers: AppState.wrongAnswers,
+            answered: AppState.answered,
+            startTime: AppState.startTime,
+            hintUsed: AppState.hintUsed,
+            isQuizActive: AppState.isQuizActive,
+            timeLeft: AppState.timeLeft,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem('zaxquiz_state', JSON.stringify(state));
+    } catch (e) {
+        console.warn('Gagal menyimpan state:', e);
+    }
+}
+
+function loadQuizState() {
+    try {
+        const data = sessionStorage.getItem('zaxquiz_state');
+        if (!data) return null;
+        
+        const state = JSON.parse(data);
+        
+        // Validasi: jika state lebih dari 1 jam, anggap expired
+        if (Date.now() - state.timestamp > 3600000) {
+            sessionStorage.removeItem('zaxquiz_state');
+            return null;
+        }
+        
+        return state;
+    } catch (e) {
+        console.warn('Gagal memuat state:', e);
+        return null;
+    }
+}
+
+function clearQuizState() {
+    sessionStorage.removeItem('zaxquiz_state');
+}
+
+// ============================================
 // SOUND SYSTEM - PRIORITASKAN FILE MP3
 // ============================================
 class SoundManager {
@@ -222,10 +220,10 @@ class SoundManager {
 
     loadSounds() {
         const soundFiles = {
-            click: 'assets/sounds/click.mp3',
-            correct: 'assets/sounds/correct.mp3',
-            wrong: 'assets/sounds/wrong.mp3',
-            complete: 'assets/sounds/complete.mp3'
+            click: 'sounds/click.mp3',
+            correct: 'sounds/correct.mp3',
+            wrong: 'sounds/wrong.mp3',
+            complete: 'sounds/complete.mp3'
         };
 
         for (const [key, path] of Object.entries(soundFiles)) {
@@ -250,14 +248,12 @@ class SoundManager {
                 const playPromise = sound.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        // FALLBACK KE WEB AUDIO JIKA MP3 GAGAL
                         this.playFallback(soundName);
                     });
                 }
-                return; // ← PASTIKAN RETURN AGAR TIDAK LANJUT KE FALLBACK
+                return;
             }
         } catch (e) {
-            // JIKA ERROR, PAKAI FALLBACK
             this.playFallback(soundName);
         }
     }
@@ -400,11 +396,10 @@ class QuizEngine {
             console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
             alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
             return;
-            
-    clearQuizState();
         }
         
-        saveQuizState();
+        // Hapus state lama sebelum mulai quiz baru
+        clearQuizState();
         
         this.state.currentCategory = category;
         this.state.currentDifficulty = difficulty;
@@ -436,7 +431,7 @@ class QuizEngine {
         }
 
         questions = shuffleArray(questions);
-        this.state.questions = questions; // ← SEMUA SOAL, TANPA SLICE
+        this.state.questions = questions;
         this.state.totalQuestions = this.state.questions.length;
         
         this.updateTimerVisibility();
@@ -448,6 +443,8 @@ class QuizEngine {
             this.startTimer();
         }
 
+        // Simpan state setelah quiz dimulai
+        saveQuizState();
         this.sound.playClick();
     }
 
@@ -479,8 +476,6 @@ class QuizEngine {
     showQuestion() {
         const questions = this.state.questions;
         const index = this.state.currentIndex;
-        saveQuizState();
-
 
         if (index >= questions.length) {
             this.finishQuiz();
@@ -497,22 +492,22 @@ class QuizEngine {
         DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
         
         if (question.category === 'Nama Bendera Dunia' && question.flagCode) {
-    DOM.questionText.innerHTML = `
-        <div class="flag-container">
-            <div class="flag-skeleton" id="flagSkeleton">
-                <div class="flag-spinner"></div>
-                <span class="flag-skeleton-text">Memuat bendera...</span>
-            </div>
-            <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
-                 alt="Bendera" 
-                 class="flag-image"
-                 loading="lazy"
-                 onerror="this.style.display='none'"
-                 onload="this.classList.add('loaded'); document.getElementById('flagSkeleton').classList.add('hidden')">
-        </div>
-        <div class="question-text-only">${question.question}</div>
-    `;
-} else {
+            DOM.questionText.innerHTML = `
+                <div class="flag-container">
+                    <div class="flag-skeleton" id="flagSkeleton">
+                        <div class="flag-spinner"></div>
+                        <span class="flag-skeleton-text">Memuat bendera...</span>
+                    </div>
+                    <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
+                         alt="Bendera" 
+                         class="flag-image"
+                         loading="lazy"
+                         onerror="this.style.display='none'"
+                         onload="this.classList.add('loaded'); const skeleton = document.getElementById('flagSkeleton'); if(skeleton) skeleton.classList.add('hidden')">
+                </div>
+                <div class="question-text-only">${question.question}</div>
+            `;
+        } else {
             DOM.questionText.innerHTML = question.question;
         }
 
@@ -553,12 +548,14 @@ class QuizEngine {
             this.updateTimerUI();
             this.startTimer();
         }
+
+        // Simpan state setiap kali ganti soal
+        saveQuizState();
     }
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
         this.state.answered = true;
-        saveQuizState();
 
         this.stopTimer();
 
@@ -586,6 +583,7 @@ class QuizEngine {
 
         this.updateScore();
         this.updateProgress();
+        saveQuizState();
     }
 
     showExplanation(question) {
@@ -594,7 +592,7 @@ class QuizEngine {
         DOM.correctAnswer.textContent = question.options[question.correctIndex];
         DOM.explanationText.textContent = question.explanation;
         this.showScreen('explanationScreen');
-        this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MASUK EXPLANATION
+        this.sound.playClick();
     }
 
     nextQuestion() {
@@ -612,6 +610,8 @@ class QuizEngine {
         this.state.isQuizActive = false;
         this.state.endTime = Date.now();
         this.stopTimer();
+
+        // Hapus state saat quiz selesai
         clearQuizState();
 
         const total = this.state.totalQuestions;
@@ -643,7 +643,7 @@ class QuizEngine {
 
         this.sound.playComplete();
         this.showScreen('resultScreen');
-        this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MASUK RESULT
+        this.sound.playClick();
 
         StorageManager.saveHistory({
             category: this.state.currentCategory,
@@ -750,7 +750,7 @@ class QuizEngine {
             DOM.hintContainer.classList.remove('active');
             DOM.hintContainer.style.display = 'none';
             this.state.hintUsed = false;
-            this.sound.playClick(); // ← TAMBAHKAN SOUND SAAT MENUTUP HINT
+            this.sound.playClick();
             return;
         }
 
@@ -770,12 +770,13 @@ class QuizEngine {
     resetQuiz() {
         this.stopTimer();
         this.state.isQuizActive = false;
-        clearQuizState();
         this.state.currentIndex = 0;
         this.state.score = 0;
         this.state.correctAnswers = 0;
         this.state.wrongAnswers = 0;
         this.state.questions = [];
+        
+        clearQuizState();
         
         DOM.timerContainer.classList.remove('active');
         DOM.timerContainer.style.display = 'none';
@@ -848,12 +849,12 @@ function setupEventListeners() {
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
         sound.initAudioContext();
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT TOGGLE
+        sound.playClick();
     });
 
     DOM.startQuizBtn.addEventListener('click', function(e) {
         console.log('🎯 Start Quiz clicked!');
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK START
+        sound.playClick();
         
         const category = DOM.categorySelect.value;
         const difficulty = DOM.difficultySelect.value;
@@ -881,17 +882,17 @@ function setupEventListeners() {
     });
 
     DOM.exitQuizBtn.addEventListener('click', () => {
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK KELUAR
+        sound.playClick();
         if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
-            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK DI CONFIRM
+            sound.playClick();
             quizEngine.resetQuiz();
         } else {
-            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL DI CONFIRM
+            sound.playClick();
         }
     });
 
     DOM.continueBtn.addEventListener('click', () => {
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK CONTINUE
+        sound.playClick();
         quizEngine.nextQuestion();
     });
 
@@ -900,7 +901,7 @@ function setupEventListeners() {
     });
 
     DOM.retryBtn.addEventListener('click', () => {
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK RETRY
+        sound.playClick();
         const category = DOM.categorySelect.value;
         const difficulty = DOM.difficultySelect.value;
         const timerEnabled = DOM.timerToggle.checked;
@@ -908,43 +909,43 @@ function setupEventListeners() {
     });
 
     DOM.homeBtn.addEventListener('click', () => {
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK HOME
+        sound.playClick();
         quizEngine.resetQuiz();
     });
 
     DOM.historyBtn.addEventListener('click', () => {
-        sound.playClick(); // ← SUDAH ADA, TETAP
+        sound.playClick();
         renderHistory();
         quizEngine.showScreen('historyScreen');
     });
 
     DOM.backFromHistoryBtn.addEventListener('click', () => {
-        sound.playClick(); // ← SUDAH ADA, TETAP
+        sound.playClick();
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
     });
 
     DOM.clearHistoryBtn.addEventListener('click', () => {
-        sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK HAPUS
+        sound.playClick();
         if (confirm('Yakin ingin menghapus semua riwayat?')) {
-            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK DI CONFIRM
+            sound.playClick();
             StorageManager.clearHistory();
             renderHistory();
             quizEngine.updateHomeStats();
         } else {
-            sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL DI CONFIRM
+            sound.playClick();
         }
     });
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
-            sound.playClick(); // ← TAMBAHKAN SOUND SAAT ESC
+            sound.playClick();
             if (confirm('Yakin ingin keluar dari quiz?')) {
-                sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK OK
+                sound.playClick();
                 quizEngine.resetQuiz();
             } else {
-                sound.playClick(); // ← TAMBAHKAN SOUND SAAT KLIK BATAL
+                sound.playClick();
             }
         }
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
@@ -961,30 +962,23 @@ function setupEventListeners() {
             if (btns[idx]) btns[idx].click();
         }
     });
-    
-// ============================================
-// BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
-// ============================================
-window.addEventListener('popstate', function(e) {
-    if (quizEngine.state.isQuizActive) {
-        sound.playClick();
-        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
-            sound.playClick();
-            quizEngine.resetQuiz();
-            // Hapus state agar tidak kembali ke halaman sebelumnya
-            history.pushState(null, '', window.location.href);
-        } else {
-            sound.playClick();
-            // Tambahkan state baru agar tombol back tidak langsung keluar
-            history.pushState(null, '', window.location.href);
-        }
-    }
-});
 
-// Tambahkan state awal saat halaman dimuat
-window.addEventListener('load', function() {
-    history.pushState(null, '', window.location.href);
-});
+    // ============================================
+    // BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
+    // ============================================
+    window.addEventListener('popstate', function(e) {
+        if (quizEngine.state.isQuizActive) {
+            sound.playClick();
+            if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
+                sound.playClick();
+                quizEngine.resetQuiz();
+                history.pushState(null, '', window.location.href);
+            } else {
+                sound.playClick();
+                history.pushState(null, '', window.location.href);
+            }
+        }
+    });
 
     // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
@@ -1139,8 +1133,39 @@ document.addEventListener('DOMContentLoaded', function() {
     initDOM();
     setupEventListeners();
     quizEngine.updateHomeStats();
-    
-        // CEK APAKAH ADA STATE YANG DISIMPAN
+
+    // Load categories ke select
+    if (window.questionsByCategory) {
+        const select = DOM.categorySelect;
+        select.innerHTML = '';
+
+        const categoryNames = {
+            'pengetahuan-umum': 'Pengetahuan Umum',
+            'matematika': 'Matematika',
+            'agama-islam': 'Agama Islam',
+            'nama-bendera': 'Nama Bendera Dunia',
+            'negara-ibukota': 'Negara dan Ibu Kota',
+            'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
+            'sejarah-indonesia': 'Sejarah Indonesia',
+            'sejarah-dunia': 'Sejarah Dunia'
+        };
+
+        for (const key in window.questionsByCategory) {
+            if (window.questionsByCategory[key] && window.questionsByCategory[key].length > 0) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = categoryNames[key] || key;
+                select.appendChild(option);
+            }
+        }
+    }
+
+    // Tambahkan state awal untuk back navigation
+    window.addEventListener('load', function() {
+        history.pushState(null, '', window.location.href);
+    });
+
+    // CEK APAKAH ADA STATE YANG DISIMPAN (refresh)
     const savedState = loadQuizState();
     if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
         // Restore state ke AppState
@@ -1178,32 +1203,6 @@ document.addEventListener('DOMContentLoaded', function() {
         quizEngine.showQuestion();
         
         console.log('✅ State restored from refresh!');
-    }
-
-    // Load categories ke select
-    if (window.questionsByCategory) {
-        const select = DOM.categorySelect;
-        select.innerHTML = '';
-
-        const categoryNames = {
-            'pengetahuan-umum': 'Pengetahuan Umum',
-            'matematika': 'Matematika',
-            'agama-islam': 'Agama Islam',
-            'nama-bendera': 'Nama Bendera Dunia',
-            'negara-ibukota': 'Negara dan Ibu Kota',
-            'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
-            'sejarah-indonesia': 'Sejarah Indonesia',
-            'sejarah-dunia': 'Sejarah Dunia'
-        };
-
-        for (const key in window.questionsByCategory) {
-            if (window.questionsByCategory[key] && window.questionsByCategory[key].length > 0) {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = categoryNames[key] || key;
-                select.appendChild(option);
-            }
-        }
     }
 
     theme.applyTheme();
