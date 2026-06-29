@@ -123,16 +123,55 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// SOUND SYSTEM - Dengan Fallback Silent
+// SOUND SYSTEM - Dengan Web Audio API Fallback
 // ============================================
 class SoundManager {
     constructor() {
         this.sounds = {};
         this.enabled = true;
+        this.audioContext = null;
         this.loadSounds();
     }
 
+    // Inisialisasi Audio Context (harus dipanggil setelah user interaction)
+    initAudioContext() {
+        if (!this.audioContext) {
+            try {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                console.warn('Web Audio API tidak didukung');
+            }
+        }
+        return this.audioContext;
+    }
+
+    // Generate suara menggunakan Web Audio API (tanpa file MP3)
+    generateBeep(frequency, duration, type = 'sine') {
+        try {
+            const ctx = this.initAudioContext();
+            if (!ctx) return;
+            
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = type;
+            
+            gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+            
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + duration);
+        } catch (e) {
+            // Silent fallback
+        }
+    }
+
     loadSounds() {
+        // Coba load file MP3 (opsional)
         const soundFiles = {
             click: 'sounds/click.mp3',
             correct: 'sounds/correct.mp3',
@@ -146,31 +185,79 @@ class SoundManager {
                 audio.preload = 'auto';
                 this.sounds[key] = audio;
             } catch (e) {
-                // Silent fallback - tidak ada error
+                // Jika file tidak ada, gunakan Web Audio API fallback
+                this.sounds[key] = null;
             }
         }
     }
 
     play(soundName) {
         if (!this.enabled) return;
+        
+        // Coba mainkan file MP3 dulu
         try {
             const sound = this.sounds[soundName];
             if (sound) {
                 sound.currentTime = 0;
                 const playPromise = sound.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(() => {});
+                    playPromise.catch(() => {
+                        // Jika gagal, gunakan fallback Web Audio
+                        this.playFallback(soundName);
+                    });
                 }
+                return;
             }
         } catch (e) {
-            // Silent fallback
+            // Jika error, gunakan fallback
+        }
+        
+        // Fallback: Web Audio API
+        this.playFallback(soundName);
+    }
+
+    playFallback(soundName) {
+        // Pilih frekuensi berdasarkan jenis suara
+        const sounds = {
+            click: { freq: 800, duration: 0.08, type: 'sine' },
+            correct: { freq: 523, duration: 0.15, type: 'sine' },
+            wrong: { freq: 300, duration: 0.3, type: 'sawtooth' },
+            complete: { freq: 660, duration: 0.2, type: 'sine' }
+        };
+
+        const config = sounds[soundName];
+        if (!config) return;
+
+        // Untuk suara correct dan complete, buat nada naik (happy)
+        if (soundName === 'correct') {
+            this.generateBeep(523, 0.12);
+            setTimeout(() => this.generateBeep(659, 0.12), 120);
+            setTimeout(() => this.generateBeep(784, 0.15), 240);
+        } else if (soundName === 'complete') {
+            this.generateBeep(523, 0.1);
+            setTimeout(() => this.generateBeep(659, 0.1), 100);
+            setTimeout(() => this.generateBeep(784, 0.1), 200);
+            setTimeout(() => this.generateBeep(1047, 0.2), 300);
+        } else {
+            this.generateBeep(config.freq, config.duration, config.type);
         }
     }
 
-    playCorrect() { this.play('correct'); }
-    playWrong() { this.play('wrong'); }
-    playClick() { this.play('click'); }
-    playComplete() { this.play('complete'); }
+    playCorrect() { 
+        this.play('correct'); 
+    }
+
+    playWrong() { 
+        this.play('wrong'); 
+    }
+
+    playClick() { 
+        this.play('click'); 
+    }
+
+    playComplete() { 
+        this.play('complete'); 
+    }
 
     toggle() {
         this.enabled = !this.enabled;
@@ -296,6 +383,9 @@ class QuizEngine {
         this.state.startTime = Date.now();
         this.state.endTime = null;
         this.state.isQuizActive = true;
+
+        // Inisialisasi Audio Context untuk suara (harus dipanggil setelah user interaction)
+        sound.initAudioContext();
 
         let questions = this.getQuestionsForCategory(category);
 
@@ -695,6 +785,9 @@ function setupEventListeners() {
         }
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
+        
+        // Inisialisasi Audio Context saat pertama kali user klik sound
+        sound.initAudioContext();
     });
 
     DOM.startQuizBtn.addEventListener('click', function(e) {
