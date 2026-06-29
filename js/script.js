@@ -157,7 +157,6 @@ function loadQuizState() {
         
         const state = JSON.parse(data);
         
-        // Validasi: jika state lebih dari 1 jam, anggap expired
         if (Date.now() - state.timestamp > 3600000) {
             sessionStorage.removeItem('zaxquiz_state');
             return null;
@@ -240,7 +239,6 @@ class SoundManager {
     play(soundName) {
         if (!this.enabled) return;
         
-        // PRIORITASKAN FILE MP3
         try {
             const sound = this.sounds[soundName];
             if (sound) {
@@ -398,7 +396,6 @@ class QuizEngine {
             return;
         }
         
-        // Hapus state lama sebelum mulai quiz baru
         clearQuizState();
         
         this.state.currentCategory = category;
@@ -443,9 +440,10 @@ class QuizEngine {
             this.startTimer();
         }
 
-        // Simpan state setelah quiz dimulai
         saveQuizState();
         this.sound.playClick();
+        
+        history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
     }
 
     getAllQuestions() {
@@ -549,7 +547,6 @@ class QuizEngine {
             this.startTimer();
         }
 
-        // Simpan state setiap kali ganti soal
         saveQuizState();
     }
 
@@ -611,7 +608,6 @@ class QuizEngine {
         this.state.endTime = Date.now();
         this.stopTimer();
 
-        // Hapus state saat quiz selesai
         clearQuizState();
 
         const total = this.state.totalQuestions;
@@ -655,6 +651,7 @@ class QuizEngine {
         });
 
         this.updateHomeStats();
+        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
     }
 
     updateProgress() {
@@ -784,9 +781,9 @@ class QuizEngine {
         DOM.hintContainer.classList.remove('active');
         
         this.showScreen('homeScreen');
-            // Reset state back navigation
-    history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
         this.sound.playClick();
+        
+        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
     }
 
     showScreen(screenId) {
@@ -805,9 +802,12 @@ class QuizEngine {
 
         const header = document.querySelector('.app-header');
         if (header) header.style.display = 'flex';
-    if (screenId === 'homeScreen' || screenId === 'quizScreen') {
-        history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
-         }
+        
+        if (screenId === 'homeScreen') {
+            history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+        } else if (screenId === 'quizScreen') {
+            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
+        }
     }
 
     updateHomeStats() {
@@ -968,50 +968,40 @@ function setupEventListeners() {
         }
     });
 
-// ============================================
-// BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
-// ============================================
-window.addEventListener('popstate', function(e) {
-    // Cek apakah state yang dilalui adalah state buatan kita
-    const state = e.state;
-    
-    // Jika tidak ada state atau state bukan dari aplikasi, abaikan
-    if (!state || state.source !== 'zaxquiz') {
-        // Jika masih di quiz, tetap tampilkan dialog
+    // ============================================
+    // BACK NAVIGATION - FIX TOTAL
+    // ============================================
+    window.addEventListener('popstate', function(e) {
+        // SELALU tampilkan dialog jika quiz aktif, apapun statenya
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
             if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
                 sound.playClick();
-                // Hapus state sebelum reset
                 clearQuizState();
                 quizEngine.resetQuiz();
-                // Redirect ke home tanpa history
-                window.location.hash = '#home';
+                history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
             } else {
                 sound.playClick();
-                // Kembalikan state agar tidak keluar
-                history.pushState({ source: 'zaxquiz' }, '', window.location.href);
+                history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
+                if (quizEngine.state.questions.length > 0) {
+                    quizEngine.showQuestion();
+                }
             }
+            // Prevent default back navigation
+            e.preventDefault();
+            return false;
         }
-        return;
-    }
-
-    // Jika user menekan back saat quiz aktif
-    if (quizEngine.state.isQuizActive) {
-        sound.playClick();
-        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
-            sound.playClick();
-            clearQuizState();
-            quizEngine.resetQuiz();
-            // Reset state agar tidak kembali ke halaman sebelumnya
-            history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
-        } else {
-            sound.playClick();
-            // Push state baru agar back tidak langsung keluar
-            history.pushState({ source: 'zaxquiz' }, '', window.location.href);
+        
+        // Jika tidak ada quiz aktif, biarkan back navigation normal
+        // Tapi tetap jaga state
+        const state = e.state;
+        if (!state || state.source !== 'zaxquiz') {
+            if (!state) {
+                history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+            }
+            return;
         }
-    }
-});
+    });
 
     // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
@@ -1193,21 +1183,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-// Tambahkan state awal untuk back navigation
-window.addEventListener('load', function() {
-    // Hanya jika tidak ada hash
-    if (!window.location.hash) {
-        history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
-    }
-});
+    // ============================================
+    // STATE AWAL UNTUK BACK NAVIGATION
+    // ============================================
+    window.addEventListener('load', function() {
+        const savedState = loadQuizState();
+        if (savedState && savedState.isQuizActive) {
+            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
+        } else {
+            history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+        }
+    });
 
     theme.applyTheme();
     initProtection();
 
-    // CEK APAKAH ADA STATE YANG DISIMPAN (refresh)
+    // ============================================
+    // RESTORE STATE SETELAH REFRESH
+    // ============================================
     const savedState = loadQuizState();
     if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
-        // Restore state ke AppState
         AppState.currentCategory = savedState.currentCategory;
         AppState.currentDifficulty = savedState.currentDifficulty;
         AppState.timerEnabled = savedState.timerEnabled;
@@ -1223,28 +1218,26 @@ window.addEventListener('load', function() {
         AppState.isQuizActive = savedState.isQuizActive;
         AppState.timeLeft = savedState.timeLeft;
         
-        // Restore UI
         quizEngine.updateUI();
         quizEngine.updateProgress();
         quizEngine.updateScore();
         quizEngine.updateTimerVisibility();
         
-        // Tampilkan quiz screen
         quizEngine.showScreen('quizScreen');
         
-        // Restore timer jika aktif
         if (AppState.timerEnabled && AppState.isQuizActive) {
             quizEngine.updateTimerUI();
             quizEngine.startTimer();
         }
         
-        // Render ulang pertanyaan
         quizEngine.showQuestion();
+        
+        history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
         
         console.log('✅ State restored from refresh!');
     } else {
-        // Jika tidak ada state, tampilkan home
         quizEngine.showScreen('homeScreen');
+        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
     }
 
     console.log('✅ ZaxQuiz ready!');
