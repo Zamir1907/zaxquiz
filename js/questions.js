@@ -6,7 +6,8 @@ function createQuestion(data) {
         explanation: data.explanation,
         difficulty: data.difficulty || 'sedang',
         hint: data.hint || 'Pikirkan dengan cermat!',
-        category: data.category || 'Umum'
+        category: data.category || 'Umum',
+        flagCode: data.flagCode || null  
     };
 }
 
