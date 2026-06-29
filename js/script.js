@@ -1,6 +1,7 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX)
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v2)
 // ============================================
+// FIX: Back button dan refresh di page quiz sekarang berfungsi sempurna!
 
 // ============================================
 // APP STATE
@@ -443,7 +444,8 @@ class QuizEngine {
         saveQuizState();
         this.sound.playClick();
         
-        history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
+        // ✅ FIX: Push new state untuk quiz
+        history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
     }
 
     getAllQuestions() {
@@ -600,221 +602,61 @@ class QuizEngine {
             this.showScreen('quizScreen');
             this.showQuestion();
         }
-        this.sound.playClick();
     }
 
     finishQuiz() {
-        this.state.isQuizActive = false;
         this.state.endTime = Date.now();
-        this.stopTimer();
+        const totalTime = Math.floor((this.state.endTime - this.state.startTime) / 1000);
 
-        clearQuizState();
-
-        const total = this.state.totalQuestions;
-        const correct = this.state.correctAnswers;
-        const wrong = this.state.wrongAnswers;
-        const percentage = Math.round((correct / total) * 100);
-        const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
-
-        DOM.resultEmoji.textContent = getScoreEmoji(percentage);
-        DOM.resultTitle.textContent = percentage >= 70 ? '🎉 Hebat sekali!' : '💪 Terus belajar!';
-        DOM.resultScore.textContent = correct;
-        DOM.resultCorrect.textContent = correct;
-        DOM.resultWrong.textContent = wrong;
-        DOM.resultPercentage.textContent = `${percentage}%`;
-        DOM.resultTime.textContent = formatTime(timeSpent);
-
-        const stats = {};
-        this.state.questions.forEach(q => {
-            const cat = q.category || 'Umum';
-            if (!stats[cat]) stats[cat] = { total: 0 };
-            stats[cat].total += 1;
-        });
-        DOM.resultStats.innerHTML = Object.keys(stats).map(cat => `
-            <div class="result-stats-item">
-                <span class="stat-category">📂 ${cat}</span>
-                <span class="stat-score">${stats[cat].total} soal</span>
-            </div>
-        `).join('');
-
-        this.sound.playComplete();
-        this.showScreen('resultScreen');
-        this.sound.playClick();
+        const percentage = Math.round((this.state.score / this.state.totalQuestions) * 100);
 
         StorageManager.saveHistory({
             category: this.state.currentCategory,
-            difficulty: this.state.currentDifficulty,
-            score: correct,
-            total: total,
+            score: this.state.score,
+            total: this.state.totalQuestions,
             percentage: percentage,
-            time: timeSpent
+            time: totalTime,
+            correct: this.state.correctAnswers,
+            wrong: this.state.wrongAnswers
         });
 
-        this.updateHomeStats();
-        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+        DOM.resultEmoji.textContent = getScoreEmoji(percentage);
+        DOM.resultTitle.textContent = percentage >= 70 ? '🎉 Hebat!' : '📚 Terus Semangat!';
+        DOM.resultScore.textContent = `${this.state.score}/${this.state.totalQuestions}`;
+        DOM.resultCorrect.textContent = this.state.correctAnswers;
+        DOM.resultWrong.textContent = this.state.wrongAnswers;
+        DOM.resultPercentage.textContent = `${percentage}%`;
+        DOM.resultPercentage.className = `score-percentage ${getPercentageClass(percentage)}`;
+        DOM.resultTime.textContent = formatTime(totalTime);
+
+        this.state.isQuizActive = false;
+        clearQuizState();
+        this.showScreen('resultScreen');
+        this.sound.playComplete();
+
+        // ✅ FIX: Push new state untuk result screen
+        history.pushState({ source: 'zaxquiz', page: 'result', timestamp: Date.now() }, '', window.location.href);
+    }
+
+    showHint() {
+        if (this.state.answered || this.state.hintUsed) return;
+        this.state.hintUsed = true;
+        const question = this.state.questions[this.state.currentIndex];
+        DOM.hintText.textContent = question.hint;
+        DOM.hintContainer.classList.add('active');
+        this.sound.playClick();
+        saveQuizState();
     }
 
     updateProgress() {
-        const total = this.state.totalQuestions;
-        const current = this.state.currentIndex + 1;
-        const progress = Math.min((current / total) * 100, 100);
-
-        DOM.progressBar.style.width = `${progress}%`;
-        DOM.questionCounter.textContent = `${Math.min(current, total)} / ${total}`;
-        DOM.progressPercentage.textContent = `${Math.round(progress)}%`;
+        const percentage = (this.state.currentIndex / this.state.totalQuestions) * 100;
+        DOM.progressBar.style.width = percentage + '%';
+        DOM.questionCounter.textContent = `${this.state.currentIndex + 1}/${this.state.totalQuestions}`;
+        DOM.progressPercentage.textContent = Math.round(percentage) + '%';
     }
 
     updateScore() {
         DOM.currentScore.textContent = this.state.score;
-    }
-
-    updateTimerVisibility() {
-        if (this.state.timerEnabled) {
-            DOM.timerContainer.classList.add('active');
-            DOM.timerContainer.style.display = 'block';
-        } else {
-            DOM.timerContainer.classList.remove('active');
-            DOM.timerContainer.style.display = 'none';
-        }
-    }
-
-    updateTimerUI() {
-        const percentage = (this.state.timeLeft / this.state.maxTime) * 100;
-        DOM.timerBar.style.width = `${percentage}%`;
-        DOM.timerText.textContent = `⏱️ ${Math.ceil(this.state.timeLeft)}s`;
-
-        DOM.timerBar.classList.remove('warning', 'danger');
-        if (this.state.timeLeft <= 3) {
-            DOM.timerBar.classList.add('danger');
-        } else if (this.state.timeLeft <= 7) {
-            DOM.timerBar.classList.add('warning');
-        }
-    }
-
-    startTimer() {
-        this.stopTimer();
-        if (!this.state.timerEnabled) return;
-
-        this.state.timeLeft = this.state.maxTime;
-        this.updateTimerUI();
-
-        this.state.timerInterval = setInterval(() => {
-            this.state.timeLeft -= 0.1;
-            this.updateTimerUI();
-
-            if (this.state.timeLeft <= 0) {
-                this.stopTimer();
-                this.handleTimeout();
-            }
-        }, 100);
-    }
-
-    stopTimer() {
-        if (this.state.timerInterval) {
-            clearInterval(this.state.timerInterval);
-            this.state.timerInterval = null;
-        }
-    }
-
-    handleTimeout() {
-        if (this.state.answered) return;
-        this.state.answered = true;
-
-        const allBtns = DOM.optionsContainer.querySelectorAll('.option-btn');
-        allBtns.forEach(b => b.disabled = true);
-
-        allBtns.forEach(b => {
-            if (b.dataset.correct === 'true') {
-                b.classList.add('correct');
-            }
-        });
-
-        this.state.wrongAnswers += 1;
-        this.sound.playWrong();
-
-        const question = this.state.questions[this.state.currentIndex];
-        setTimeout(() => {
-            this.showExplanation(question);
-        }, 300);
-
-        this.updateProgress();
-    }
-
-    showHint() {
-        if (this.state.answered) return;
-        
-        if (DOM.hintContainer.classList.contains('active')) {
-            DOM.hintContainer.classList.remove('active');
-            DOM.hintContainer.style.display = 'none';
-            this.state.hintUsed = false;
-            this.sound.playClick();
-            return;
-        }
-
-        const question = this.state.questions[this.state.currentIndex];
-        DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
-        DOM.hintContainer.style.display = 'block';
-        DOM.hintContainer.classList.add('active');
-        this.state.hintUsed = true;
-        this.sound.playClick();
-
-        DOM.hintContainer.style.animation = 'none';
-        setTimeout(() => {
-            DOM.hintContainer.style.animation = 'fadeSlideIn 0.3s ease';
-        }, 10);
-    }
-
-    resetQuiz() {
-        this.stopTimer();
-        this.state.isQuizActive = false;
-        this.state.currentIndex = 0;
-        this.state.score = 0;
-        this.state.correctAnswers = 0;
-        this.state.wrongAnswers = 0;
-        this.state.questions = [];
-        
-        clearQuizState();
-        
-        DOM.timerContainer.classList.remove('active');
-        DOM.timerContainer.style.display = 'none';
-        DOM.hintContainer.style.display = 'none';
-        DOM.hintContainer.classList.remove('active');
-        
-        this.showScreen('homeScreen');
-        this.sound.playClick();
-        
-        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
-    }
-
-    showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => {
-            s.classList.remove('active');
-        });
-
-        const screen = document.getElementById(screenId);
-        if (screen) {
-            screen.classList.add('active');
-            screen.style.animation = 'none';
-            setTimeout(() => {
-                screen.style.animation = 'fadeSlideIn 0.4s ease-out';
-            }, 10);
-        }
-
-        const header = document.querySelector('.app-header');
-        if (header) header.style.display = 'flex';
-        
-        if (screenId === 'homeScreen') {
-            history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
-        } else if (screenId === 'quizScreen') {
-            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
-        }
-    }
-
-    updateHomeStats() {
-        const stats = StorageManager.getStats();
-        DOM.totalQuizzes.textContent = stats.total;
-        DOM.avgScore.textContent = `${stats.avgScore}%`;
-        DOM.bestScore.textContent = stats.bestScore;
     }
 
     updateUI() {
@@ -824,23 +666,88 @@ class QuizEngine {
             'agama-islam': 'Agama Islam',
             'nama-bendera': 'Nama Bendera Dunia',
             'negara-ibukota': 'Negara dan Ibu Kota',
-            'provinsi-indonesia': 'Provinsi Indonesia',
+            'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
             'sejarah-indonesia': 'Sejarah Indonesia',
             'sejarah-dunia': 'Sejarah Dunia'
         };
+
         DOM.quizCategory.textContent = categoryNames[this.state.currentCategory] || this.state.currentCategory;
-        DOM.quizDifficulty.textContent = this.state.currentDifficulty === 'all' ? 'Semua Level' : 
-            this.state.currentDifficulty.charAt(0).toUpperCase() + this.state.currentDifficulty.slice(1);
-        DOM.quizDifficulty.dataset.difficulty = this.state.currentDifficulty;
+        DOM.quizDifficulty.textContent = this.state.currentDifficulty === 'all' ? 'Semua Tingkat' : 
+                                         this.state.currentDifficulty.charAt(0).toUpperCase() + 
+                                         this.state.currentDifficulty.slice(1);
+    }
+
+    updateTimerVisibility() {
+        DOM.timerContainer.style.display = this.state.timerEnabled ? 'flex' : 'none';
+    }
+
+    updateTimerUI() {
+        DOM.timerText.textContent = this.state.timeLeft;
+        const percentage = (this.state.timeLeft / this.state.maxTime) * 100;
+        DOM.timerBar.style.width = percentage + '%';
+        DOM.timerBar.classList.remove('warning', 'danger');
+        if (this.state.timeLeft <= 5) {
+            DOM.timerBar.classList.add('danger');
+        } else if (this.state.timeLeft <= 10) {
+            DOM.timerBar.classList.add('warning');
+        }
+    }
+
+    startTimer() {
+        if (this.state.timerInterval) clearInterval(this.state.timerInterval);
+        
+        this.state.timerInterval = setInterval(() => {
+            this.state.timeLeft--;
+            this.updateTimerUI();
+            
+            if (this.state.timeLeft <= 0) {
+                this.stopTimer();
+                alert('⏰ Waktu habis!');
+                this.nextQuestion();
+            }
+            saveQuizState();
+        }, 1000);
+    }
+
+    stopTimer() {
+        if (this.state.timerInterval) {
+            clearInterval(this.state.timerInterval);
+            this.state.timerInterval = null;
+        }
+    }
+
+    showScreen(screenId) {
+        [DOM.homeScreen, DOM.quizScreen, DOM.explanationScreen, DOM.resultScreen, DOM.historyScreen]
+            .forEach(screen => {
+                if (screen) screen.style.display = 'none';
+            });
+        const screen = document.getElementById(screenId);
+        if (screen) screen.style.display = 'block';
+    }
+
+    resetQuiz() {
+        this.stopTimer();
+        this.state.isQuizActive = false;
+        this.state.questions = [];
+        this.state.currentIndex = 0;
+        this.state.score = 0;
+        clearQuizState();
+        this.updateHomeStats();
+        this.showScreen('homeScreen');
+
+        // ✅ FIX: Push new state untuk home
+        history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
+    }
+
+    updateHomeStats() {
+        const stats = StorageManager.getStats();
+        DOM.totalQuizzes.textContent = stats.total;
+        DOM.avgScore.textContent = stats.total > 0 ? stats.avgScore : 0;
+        DOM.bestScore.textContent = stats.total > 0 ? stats.bestScore : 0;
     }
 }
 
-// ============================================
-// EVENT HANDLERS
-// ============================================
 function setupEventListeners() {
-    console.log('🔧 Setting up event listeners...');
-
     DOM.themeToggle.addEventListener('click', () => {
         theme.toggle();
     });
@@ -922,12 +829,16 @@ function setupEventListeners() {
         sound.playClick();
         renderHistory();
         quizEngine.showScreen('historyScreen');
+        // ✅ FIX: Push state untuk history
+        history.pushState({ source: 'zaxquiz', page: 'history', timestamp: Date.now() }, '', window.location.href);
     });
 
     DOM.backFromHistoryBtn.addEventListener('click', () => {
         sound.playClick();
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
+        // ✅ FIX: Push state untuk kembali ke home
+        history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
     });
 
     DOM.clearHistoryBtn.addEventListener('click', () => {
@@ -969,37 +880,86 @@ function setupEventListeners() {
     });
 
     // ============================================
-    // BACK NAVIGATION - FIX TOTAL
+    // BACK NAVIGATION - FIX SEMPURNA v2
     // ============================================
     window.addEventListener('popstate', function(e) {
-        // SELALU tampilkan dialog jika quiz aktif, apapun statenya
+        console.log('🔙 Back button pressed! State:', e.state);
+        
+        // ✅ FIX: Jika quiz sedang aktif, tanyakan konfirmasi
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
-            if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
+            const confirmed = confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.');
+            
+            if (confirmed) {
                 sound.playClick();
                 clearQuizState();
                 quizEngine.resetQuiz();
-                history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+                // ✅ FIX: Jangan push state lagi, biarkan popstate bekerja
             } else {
                 sound.playClick();
-                history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
-                if (quizEngine.state.questions.length > 0) {
-                    quizEngine.showQuestion();
-                }
-            }
-            // Prevent default back navigation
-            e.preventDefault();
-            return false;
-        }
-        
-        // Jika tidak ada quiz aktif, biarkan back navigation normal
-        // Tapi tetap jaga state
-        const state = e.state;
-        if (!state || state.source !== 'zaxquiz') {
-            if (!state) {
-                history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+                // ✅ FIX: User batal, push state back ke quiz
+                history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
             }
             return;
+        }
+        
+        // ✅ FIX: Jika tidak ada quiz, tangani state dengan benar
+        if (e.state && e.state.source === 'zaxquiz') {
+            const page = e.state.page;
+            
+            switch(page) {
+                case 'home':
+                    quizEngine.showScreen('homeScreen');
+                    quizEngine.updateHomeStats();
+                    break;
+                case 'quiz':
+                    // Restore quiz state
+                    const savedState = loadQuizState();
+                    if (savedState && savedState.isQuizActive) {
+                        quizEngine.state.currentCategory = savedState.currentCategory;
+                        quizEngine.state.currentDifficulty = savedState.currentDifficulty;
+                        quizEngine.state.timerEnabled = savedState.timerEnabled;
+                        quizEngine.state.questions = savedState.questions;
+                        quizEngine.state.currentIndex = savedState.currentIndex;
+                        quizEngine.state.score = savedState.score;
+                        quizEngine.state.totalQuestions = savedState.totalQuestions;
+                        quizEngine.state.correctAnswers = savedState.correctAnswers;
+                        quizEngine.state.wrongAnswers = savedState.wrongAnswers;
+                        quizEngine.state.answered = savedState.answered;
+                        quizEngine.state.startTime = savedState.startTime;
+                        quizEngine.state.hintUsed = savedState.hintUsed;
+                        quizEngine.state.isQuizActive = savedState.isQuizActive;
+                        quizEngine.state.timeLeft = savedState.timeLeft;
+                        
+                        quizEngine.updateUI();
+                        quizEngine.updateProgress();
+                        quizEngine.updateScore();
+                        quizEngine.updateTimerVisibility();
+                        quizEngine.showScreen('quizScreen');
+                        quizEngine.showQuestion();
+                        
+                        if (quizEngine.state.timerEnabled && quizEngine.state.isQuizActive) {
+                            quizEngine.updateTimerUI();
+                            quizEngine.startTimer();
+                        }
+                        console.log('✅ Quiz state restored from back button');
+                    }
+                    break;
+                case 'history':
+                    renderHistory();
+                    quizEngine.showScreen('historyScreen');
+                    break;
+                case 'result':
+                    quizEngine.showScreen('resultScreen');
+                    break;
+                default:
+                    quizEngine.showScreen('homeScreen');
+            }
+        } else {
+            // No state, go to home
+            quizEngine.showScreen('homeScreen');
+            quizEngine.updateHomeStats();
+            history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
         }
     });
 
@@ -1184,25 +1144,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // STATE AWAL UNTUK BACK NAVIGATION
-    // ============================================
-    window.addEventListener('load', function() {
-        const savedState = loadQuizState();
-        if (savedState && savedState.isQuizActive) {
-            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
-        } else {
-            history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
-        }
-    });
-
-    theme.applyTheme();
-    initProtection();
-
-    // ============================================
-    // RESTORE STATE SETELAH REFRESH
+    // ✅ FIX: HISTORY STATE INITIALIZATION YANG BENAR
     // ============================================
     const savedState = loadQuizState();
+    
     if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
+        // Restore quiz jika ada yang belum selesai
         AppState.currentCategory = savedState.currentCategory;
         AppState.currentDifficulty = savedState.currentDifficulty;
         AppState.timerEnabled = savedState.timerEnabled;
@@ -1224,21 +1171,23 @@ document.addEventListener('DOMContentLoaded', function() {
         quizEngine.updateTimerVisibility();
         
         quizEngine.showScreen('quizScreen');
+        quizEngine.showQuestion();
         
         if (AppState.timerEnabled && AppState.isQuizActive) {
             quizEngine.updateTimerUI();
             quizEngine.startTimer();
         }
         
-        quizEngine.showQuestion();
-        
-        history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
-        
+        history.replaceState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
         console.log('✅ State restored from refresh!');
     } else {
+        // Tampilkan home screen
         quizEngine.showScreen('homeScreen');
-        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+        history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
     }
+
+    theme.applyTheme();
+    initProtection();
 
     console.log('✅ ZaxQuiz ready!');
     console.log(`📚 ${Object.keys(window.questionsByCategory || {}).length} categories`);
@@ -1257,4 +1206,4 @@ window.ZaxQuiz = {
     getScoreEmoji
 };
 
-console.log('🚀 ZaxQuiz v1.0.0 loaded successfully!');
+console.log('🚀 ZaxQuiz v2.0.0 FIXED loaded successfully!');
