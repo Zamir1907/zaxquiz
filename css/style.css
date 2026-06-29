@@ -1012,6 +1012,7 @@ button:focus {
 
 .question-text {
     font-size: 1.3rem;
+    text-align: center;
     font-weight: 600;
     margin-bottom: 24px;
     line-height: 1.5;
@@ -1019,10 +1020,11 @@ button:focus {
 }
 
 /* ============================================ */
-/* LOADING SKELETON UNTUK BENDERA             */
+/* BOX UNTUK BENDERA */
 /* ============================================ */
 
 .flag-container {
+    margin: 0 auto 20px auto;
     position: relative;
     min-height: 120px;
     display: flex;
