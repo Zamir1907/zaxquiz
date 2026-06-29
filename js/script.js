@@ -190,11 +190,23 @@ const sound = new SoundManager();
 class ThemeManager {
     constructor() {
         this.isDark = localStorage.getItem('zaxquiz-theme') === 'dark';
-        this.applyTheme();
+        // Tunggu DOM siap sebelum apply theme pertama
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.applyTheme());
+        } else {
+            this.applyTheme();
+        }
     }
 
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
+        
+        // Update meta theme-color untuk mobile
+        const themeColor = document.getElementById('themeColor');
+        if (themeColor) {
+            themeColor.content = this.isDark ? '#1A1A2E' : '#6C63FF';
+        }
+        
         if (DOM.themeToggle) {
             const icon = DOM.themeToggle.querySelector('i');
             if (icon) {
@@ -352,6 +364,9 @@ class QuizEngine {
         const question = questions[index];
         this.state.answered = false;
         this.state.hintUsed = false;
+        
+        // Sembunyikan hint saat ganti soal
+        DOM.hintContainer.style.display = 'none';
 
         DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
         DOM.questionText.textContent = question.question;
@@ -379,7 +394,6 @@ class QuizEngine {
             DOM.optionsContainer.appendChild(btn);
         });
 
-        DOM.hintContainer.style.display = 'none';
         DOM.hintText.textContent = '';
 
         this.updateProgress();
@@ -581,7 +595,15 @@ class QuizEngine {
     }
 
     showHint() {
-        if (this.state.answered || this.state.hintUsed) return;
+        // Jika sudah menjawab, tidak bisa pakai hint
+        if (this.state.answered) return;
+        
+        // Toggle hint: jika sudah tampil, sembunyikan
+        if (DOM.hintContainer.style.display === 'block') {
+            DOM.hintContainer.style.display = 'none';
+            this.state.hintUsed = false; // Reset agar bisa dipakai lagi
+            return;
+        }
 
         const question = this.state.questions[this.state.currentIndex];
         DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
@@ -606,6 +628,7 @@ class QuizEngine {
         
         DOM.timerContainer.classList.remove('active');
         DOM.timerContainer.style.display = 'none';
+        DOM.hintContainer.style.display = 'none';
         
         this.showScreen('homeScreen');
         this.sound.playClick();
@@ -758,6 +781,7 @@ function setupEventListeners() {
         }
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
             quizEngine.showHint();
+            e.preventDefault();
         }
         if (e.key === 't' || e.key === 'T') {
             theme.toggle();
@@ -949,6 +973,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Pastikan theme diterapkan setelah DOM siap
+    theme.applyTheme();
 
     initProtection();
     quizEngine.showScreen('homeScreen');
