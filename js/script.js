@@ -30,6 +30,60 @@ const AppState = {
 };
 
 // ============================================
+// STATE PERSISTENCE - UNTUK REFRESH
+// ============================================
+function saveQuizState() {
+    try {
+        const state = {
+            currentCategory: AppState.currentCategory,
+            currentDifficulty: AppState.currentDifficulty,
+            timerEnabled: AppState.timerEnabled,
+            questions: AppState.questions,
+            currentIndex: AppState.currentIndex,
+            score: AppState.score,
+            totalQuestions: AppState.totalQuestions,
+            correctAnswers: AppState.correctAnswers,
+            wrongAnswers: AppState.wrongAnswers,
+            answered: AppState.answered,
+            startTime: AppState.startTime,
+            hintUsed: AppState.hintUsed,
+            isQuizActive: AppState.isQuizActive,
+            timeLeft: AppState.timeLeft,
+            timerEnabled: AppState.timerEnabled,
+            // Simpan juga timestamp untuk validasi
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem('zaxquiz_state', JSON.stringify(state));
+    } catch (e) {
+        console.warn('Gagal menyimpan state:', e);
+    }
+}
+
+function loadQuizState() {
+    try {
+        const data = sessionStorage.getItem('zaxquiz_state');
+        if (!data) return null;
+        
+        const state = JSON.parse(data);
+        
+        // Validasi: jika state lebih dari 1 jam, anggap expired
+        if (Date.now() - state.timestamp > 3600000) {
+            sessionStorage.removeItem('zaxquiz_state');
+            return null;
+        }
+        
+        return state;
+    } catch (e) {
+        console.warn('Gagal memuat state:', e);
+        return null;
+    }
+}
+
+function clearQuizState() {
+    sessionStorage.removeItem('zaxquiz_state');
+}
+
+// ============================================
 // DOM REFERENCES
 // ============================================
 const DOM = {};
@@ -346,7 +400,11 @@ class QuizEngine {
             console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
             alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
             return;
+            
+    clearQuizState();
         }
+        
+        saveQuizState();
         
         this.state.currentCategory = category;
         this.state.currentDifficulty = difficulty;
@@ -421,6 +479,8 @@ class QuizEngine {
     showQuestion() {
         const questions = this.state.questions;
         const index = this.state.currentIndex;
+        saveQuizState();
+
 
         if (index >= questions.length) {
             this.finishQuiz();
@@ -437,17 +497,22 @@ class QuizEngine {
         DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
         
         if (question.category === 'Nama Bendera Dunia' && question.flagCode) {
-            DOM.questionText.innerHTML = `
-                <div class="flag-container">
-                    <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
-                         alt="Bendera" 
-                         class="flag-image"
-                         loading="lazy"
-                         onerror="this.style.display='none'">
-                </div>
-                <div class="question-text-only">${question.question}</div>
-            `;
-        } else {
+    DOM.questionText.innerHTML = `
+        <div class="flag-container">
+            <div class="flag-skeleton" id="flagSkeleton">
+                <div class="flag-spinner"></div>
+                <span class="flag-skeleton-text">Memuat bendera...</span>
+            </div>
+            <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
+                 alt="Bendera" 
+                 class="flag-image"
+                 loading="lazy"
+                 onerror="this.style.display='none'"
+                 onload="this.classList.add('loaded'); document.getElementById('flagSkeleton').classList.add('hidden')">
+        </div>
+        <div class="question-text-only">${question.question}</div>
+    `;
+} else {
             DOM.questionText.innerHTML = question.question;
         }
 
@@ -493,6 +558,7 @@ class QuizEngine {
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
         this.state.answered = true;
+        saveQuizState();
 
         this.stopTimer();
 
@@ -546,6 +612,7 @@ class QuizEngine {
         this.state.isQuizActive = false;
         this.state.endTime = Date.now();
         this.stopTimer();
+        clearQuizState();
 
         const total = this.state.totalQuestions;
         const correct = this.state.correctAnswers;
@@ -703,6 +770,7 @@ class QuizEngine {
     resetQuiz() {
         this.stopTimer();
         this.state.isQuizActive = false;
+        clearQuizState();
         this.state.currentIndex = 0;
         this.state.score = 0;
         this.state.correctAnswers = 0;
@@ -1071,6 +1139,46 @@ document.addEventListener('DOMContentLoaded', function() {
     initDOM();
     setupEventListeners();
     quizEngine.updateHomeStats();
+    
+        // CEK APAKAH ADA STATE YANG DISIMPAN
+    const savedState = loadQuizState();
+    if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
+        // Restore state ke AppState
+        AppState.currentCategory = savedState.currentCategory;
+        AppState.currentDifficulty = savedState.currentDifficulty;
+        AppState.timerEnabled = savedState.timerEnabled;
+        AppState.questions = savedState.questions;
+        AppState.currentIndex = savedState.currentIndex;
+        AppState.score = savedState.score;
+        AppState.totalQuestions = savedState.totalQuestions;
+        AppState.correctAnswers = savedState.correctAnswers;
+        AppState.wrongAnswers = savedState.wrongAnswers;
+        AppState.answered = savedState.answered;
+        AppState.startTime = savedState.startTime;
+        AppState.hintUsed = savedState.hintUsed;
+        AppState.isQuizActive = savedState.isQuizActive;
+        AppState.timeLeft = savedState.timeLeft;
+        
+        // Restore UI
+        quizEngine.updateUI();
+        quizEngine.updateProgress();
+        quizEngine.updateScore();
+        quizEngine.updateTimerVisibility();
+        
+        // Tampilkan quiz screen
+        quizEngine.showScreen('quizScreen');
+        
+        // Restore timer jika aktif
+        if (AppState.timerEnabled && AppState.isQuizActive) {
+            quizEngine.updateTimerUI();
+            quizEngine.startTimer();
+        }
+        
+        // Render ulang pertanyaan
+        quizEngine.showQuestion();
+        
+        console.log('✅ State restored from refresh!');
+    }
 
     // Load categories ke select
     if (window.questionsByCategory) {
