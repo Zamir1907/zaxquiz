@@ -133,7 +133,6 @@ class SoundManager {
         this.loadSounds();
     }
 
-    // Inisialisasi Audio Context (harus dipanggil setelah user interaction)
     initAudioContext() {
         if (!this.audioContext) {
             try {
@@ -145,7 +144,6 @@ class SoundManager {
         return this.audioContext;
     }
 
-    // Generate suara menggunakan Web Audio API (tanpa file MP3)
     generateBeep(frequency, duration, type = 'sine') {
         try {
             const ctx = this.initAudioContext();
@@ -165,13 +163,10 @@ class SoundManager {
             
             oscillator.start(ctx.currentTime);
             oscillator.stop(ctx.currentTime + duration);
-        } catch (e) {
-            // Silent fallback
-        }
+        } catch (e) {}
     }
 
     loadSounds() {
-        // Coba load file MP3 (opsional)
         const soundFiles = {
             click: 'sounds/click.mp3',
             correct: 'sounds/correct.mp3',
@@ -185,7 +180,6 @@ class SoundManager {
                 audio.preload = 'auto';
                 this.sounds[key] = audio;
             } catch (e) {
-                // Jika file tidak ada, gunakan Web Audio API fallback
                 this.sounds[key] = null;
             }
         }
@@ -194,7 +188,6 @@ class SoundManager {
     play(soundName) {
         if (!this.enabled) return;
         
-        // Coba mainkan file MP3 dulu
         try {
             const sound = this.sounds[soundName];
             if (sound) {
@@ -202,22 +195,17 @@ class SoundManager {
                 const playPromise = sound.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        // Jika gagal, gunakan fallback Web Audio
                         this.playFallback(soundName);
                     });
                 }
                 return;
             }
-        } catch (e) {
-            // Jika error, gunakan fallback
-        }
-        
-        // Fallback: Web Audio API
+        } catch (e) {}
+
         this.playFallback(soundName);
     }
 
     playFallback(soundName) {
-        // Pilih frekuensi berdasarkan jenis suara
         const sounds = {
             click: { freq: 800, duration: 0.08, type: 'sine' },
             correct: { freq: 523, duration: 0.15, type: 'sine' },
@@ -228,7 +216,6 @@ class SoundManager {
         const config = sounds[soundName];
         if (!config) return;
 
-        // Untuk suara correct dan complete, buat nada naik (happy)
         if (soundName === 'correct') {
             this.generateBeep(523, 0.12);
             setTimeout(() => this.generateBeep(659, 0.12), 120);
@@ -243,21 +230,10 @@ class SoundManager {
         }
     }
 
-    playCorrect() { 
-        this.play('correct'); 
-    }
-
-    playWrong() { 
-        this.play('wrong'); 
-    }
-
-    playClick() { 
-        this.play('click'); 
-    }
-
-    playComplete() { 
-        this.play('complete'); 
-    }
+    playCorrect() { this.play('correct'); }
+    playWrong() { this.play('wrong'); }
+    playClick() { this.play('click'); }
+    playComplete() { this.play('complete'); }
 
     toggle() {
         this.enabled = !this.enabled;
@@ -272,12 +248,11 @@ class SoundManager {
 const sound = new SoundManager();
 
 // ============================================
-// THEME SYSTEM - Menggunakan Icon Library (FIX)
+// THEME SYSTEM
 // ============================================
 class ThemeManager {
     constructor() {
         this.isDark = localStorage.getItem('zaxquiz-theme') === 'dark';
-        // Tunggu DOM siap sebelum apply theme pertama
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.applyTheme());
         } else {
@@ -288,7 +263,6 @@ class ThemeManager {
     applyTheme() {
         document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light');
         
-        // Update meta theme-color untuk mobile
         const themeColor = document.getElementById('themeColor');
         if (themeColor) {
             themeColor.content = this.isDark ? '#1A1A2E' : '#6C63FF';
@@ -384,7 +358,6 @@ class QuizEngine {
         this.state.endTime = null;
         this.state.isQuizActive = true;
 
-        // Inisialisasi Audio Context untuk suara (harus dipanggil setelah user interaction)
         sound.initAudioContext();
 
         let questions = this.getQuestionsForCategory(category);
@@ -789,8 +762,6 @@ function setupEventListeners() {
         }
         DOM.soundToggle.title = enabled ? 'Suara Aktif' : 'Suara Nonaktif';
         localStorage.setItem('zaxquiz-sound', enabled ? 'on' : 'off');
-        
-        // Inisialisasi Audio Context saat pertama kali user klik sound
         sound.initAudioContext();
     });
 
@@ -891,7 +862,7 @@ function setupEventListeners() {
         }
     });
 
-    // FIX: Hilangkan efek focus/outline setelah klik
+    // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
         const target = e.target.closest('button, .btn, .option-btn, .header-btn');
         if (target) {
@@ -1071,9 +1042,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Pastikan theme diterapkan setelah DOM siap
     theme.applyTheme();
-
     initProtection();
     quizEngine.showScreen('homeScreen');
 
