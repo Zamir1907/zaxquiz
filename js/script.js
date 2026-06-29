@@ -186,24 +186,26 @@ class SoundManager {
     }
 
     play(soundName) {
-        if (!this.enabled) return;
-        
-        try {
-            const sound = this.sounds[soundName];
-            if (sound) {
-                sound.currentTime = 0;
-                const playPromise = sound.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        this.playFallback(soundName);
-                    });
-                }
-                return;
+    if (!this.enabled) return;
+    
+    try {
+        const sound = this.sounds[soundName];
+        if (sound) {
+            sound.currentTime = 0;
+            const playPromise = sound.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+
+                    this.playFallback(soundName);
+                });
             }
-        } catch (e) {}
+            return;  
+        }
+    } catch (e) {
 
         this.playFallback(soundName);
     }
+}
 
     playFallback(soundName) {
         const sounds = {
@@ -375,8 +377,8 @@ class QuizEngine {
         }
 
         questions = shuffleArray(questions);
-        this.state.questions = questions.slice(0, 50);
-        this.state.totalQuestions = this.state.questions.length;
+this.state.questions = questions;  
+this.state.totalQuestions = this.state.questions.length;
         
         this.updateTimerVisibility();
         this.showQuestion();
@@ -675,16 +677,15 @@ class QuizEngine {
     }
 
     showHint() {
-        // Jika sudah menjawab, tidak bisa pakai hint
-        if (this.state.answered) return;
-        
-        // Toggle hint: jika sudah tampil, sembunyikan
-        if (DOM.hintContainer.classList.contains('active')) {
-            DOM.hintContainer.classList.remove('active');
-            DOM.hintContainer.style.display = 'none';
-            this.state.hintUsed = false;
-            return;
-        }
+    if (this.state.answered) return;
+    
+    if (DOM.hintContainer.classList.contains('active')) {
+        DOM.hintContainer.classList.remove('active');
+        DOM.hintContainer.style.display = 'none';
+        this.state.hintUsed = false;
+        this.sound.playClick(); 
+        return;
+    }
 
         const question = this.state.questions[this.state.currentIndex];
         DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
@@ -811,10 +812,11 @@ function setupEventListeners() {
     });
 
     DOM.exitQuizBtn.addEventListener('click', () => {
-        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
-            quizEngine.resetQuiz();
-        }
-    });
+    sound.playClick();  
+    if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
+        quizEngine.resetQuiz();
+    }
+});
 
     DOM.continueBtn.addEventListener('click', () => {
         quizEngine.nextQuestion();
