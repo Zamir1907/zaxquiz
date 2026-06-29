@@ -1024,7 +1024,7 @@ button:focus {
 /* ============================================ */
 
 .flag-container {
-    margin: 0 auto 20px auto;
+    margin: 0 auto 15px auto;
     position: relative;
     min-height: 120px;
     display: flex;
