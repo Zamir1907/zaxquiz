@@ -122,7 +122,7 @@ body {
 }
 
 /* ============================================ */
-/* HINT SECTION & QUIZ ACTIONS                */
+/* HINT SECTION & QUIZ ACTIONS - FIX LAYOUT   */
 /* ============================================ */
 .hint-section {
     margin-top: 16px;
@@ -130,19 +130,23 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
 }
 
 .quiz-actions {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
     justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
-/* Timer Container - Hidden by default */
+/* ============================================ */
+/* TIMER CONTAINER                            */
+/* ============================================ */
 #timerContainer {
     display: none;
     margin-bottom: 16px;
@@ -277,7 +281,7 @@ button:focus {
     margin-bottom: 24px;
     transition: background var(--transition), box-shadow var(--transition);
     position: sticky;
-    top: 20px;
+    top: 16px;
     z-index: 100;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -901,6 +905,7 @@ button:focus {
     transition: background var(--transition), box-shadow var(--transition);
     position: relative;
     animation: fadeSlideIn 0.3s ease;
+    overflow: visible;
 }
 
 .question-number {
@@ -1013,20 +1018,24 @@ button:focus {
     opacity: 0.5;
 }
 
-/* Hint */
+/* ============================================ */
+/* HINT CONTAINER - FIX LAYOUT & TOGGLE       */
+/* ============================================ */
 .hint-container {
-    position: absolute;
-    top: calc(100% + 12px);
-    left: 0;
-    right: 0;
-    z-index: 10;
-    margin-top: 0;
+    position: relative;
+    margin-top: 8px;
     padding: 16px 20px;
     background: var(--bg-card);
     border-radius: var(--radius-sm);
     border-left: 4px solid var(--accent);
     animation: fadeSlideIn 0.3s ease;
     box-shadow: 0 4px 20px var(--shadow-color);
+    width: 100%;
+    display: none;
+}
+
+.hint-container.active {
+    display: block;
 }
 
 .hint-content {
@@ -1374,7 +1383,7 @@ button:focus {
 
     .app-header {
         padding: 10px 16px;
-        top: 16px;
+        top: 12px;
         border-radius: var(--radius-sm);
     }
 
