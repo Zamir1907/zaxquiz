@@ -146,6 +146,41 @@ body {
     z-index: 1;
 }
 
+@media (max-width: 768px) {
+    .hint-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .hint-container {
+        min-width: 100%;
+        flex: none;
+    }
+    
+    .hint-container.active {
+        flex: none;
+        min-width: 100%;
+    }
+    
+    .hint-container:not(.active) {
+        flex: 0 0 auto;
+        min-width: 0;
+        width: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+        box-shadow: none;
+        overflow: hidden;
+        display: none;
+    }
+    
+    .quiz-actions {
+        min-width: 100%;
+        flex: none;
+        justify-content: center;
+    }
+}
+
 /* ============================================ */
 /* TIMER CONTAINER                            */
 /* ============================================ */
@@ -1037,8 +1072,24 @@ button:focus {
     display: none;
 }
 
+/* Saat hint aktif */
 .hint-container.active {
     display: block;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Saat hint tidak aktif, jangan makan space */
+.hint-container:not(.active) {
+    flex: 0 0 auto;
+    min-width: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+    display: none;
 }
 
 .hint-content {
