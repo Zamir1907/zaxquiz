@@ -220,10 +220,10 @@ class SoundManager {
 
     loadSounds() {
         const soundFiles = {
-            click: 'sounds/click.mp3',
-            correct: 'sounds/correct.mp3',
-            wrong: 'sounds/wrong.mp3',
-            complete: 'sounds/complete.mp3'
+            click: 'assets/sounds/click.mp3',
+            correct: 'assets/sounds/correct.mp3',
+            wrong: 'assets/sounds/wrong.mp3',
+            complete: 'assets/sounds/complete.mp3'
         };
 
         for (const [key, path] of Object.entries(soundFiles)) {
@@ -1165,6 +1165,9 @@ document.addEventListener('DOMContentLoaded', function() {
         history.pushState(null, '', window.location.href);
     });
 
+    theme.applyTheme();
+    initProtection();
+
     // CEK APAKAH ADA STATE YANG DISIMPAN (refresh)
     const savedState = loadQuizState();
     if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
@@ -1203,11 +1206,10 @@ document.addEventListener('DOMContentLoaded', function() {
         quizEngine.showQuestion();
         
         console.log('✅ State restored from refresh!');
+    } else {
+        // Jika tidak ada state, tampilkan home
+        quizEngine.showScreen('homeScreen');
     }
-
-    theme.applyTheme();
-    initProtection();
-    quizEngine.showScreen('homeScreen');
 
     console.log('✅ ZaxQuiz ready!');
     console.log(`📚 ${Object.keys(window.questionsByCategory || {}).length} categories`);
