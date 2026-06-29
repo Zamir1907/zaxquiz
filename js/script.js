@@ -1,7 +1,8 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v2)
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v3)
 // ============================================
-// FIX: Back button dan refresh di page quiz sekarang berfungsi sempurna!
+// FIX: Hint sekarang berfungsi dengan toggle (buka/tutup)
+// FIX: Back button dan refresh di page quiz berfungsi sempurna!
 
 // ============================================
 // APP STATE
@@ -486,6 +487,7 @@ class QuizEngine {
         this.state.answered = false;
         this.state.hintUsed = false;
         
+        // Sembunyikan hint saat ganti soal
         DOM.hintContainer.style.display = 'none';
         DOM.hintContainer.classList.remove('active');
 
@@ -602,111 +604,113 @@ class QuizEngine {
             this.showScreen('quizScreen');
             this.showQuestion();
         }
+        this.sound.playClick();
     }
 
     finishQuiz() {
+        this.state.isQuizActive = false;
         this.state.endTime = Date.now();
-        const totalTime = Math.floor((this.state.endTime - this.state.startTime) / 1000);
+        this.stopTimer();
 
-        const percentage = Math.round((this.state.score / this.state.totalQuestions) * 100);
+        clearQuizState();
+
+        const total = this.state.totalQuestions;
+        const correct = this.state.correctAnswers;
+        const wrong = this.state.wrongAnswers;
+        const percentage = Math.round((correct / total) * 100);
+        const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
+
+        DOM.resultEmoji.textContent = getScoreEmoji(percentage);
+        DOM.resultTitle.textContent = percentage >= 70 ? '🎉 Hebat sekali!' : '💪 Terus belajar!';
+        DOM.resultScore.textContent = `${correct}/${total}`;
+        DOM.resultCorrect.textContent = correct;
+        DOM.resultWrong.textContent = wrong;
+        DOM.resultPercentage.textContent = `${percentage}%`;
+        DOM.resultTime.textContent = formatTime(timeSpent);
+
+        const stats = {};
+        this.state.questions.forEach(q => {
+            const cat = q.category || 'Umum';
+            if (!stats[cat]) stats[cat] = { total: 0 };
+            stats[cat].total += 1;
+        });
+        DOM.resultStats.innerHTML = Object.keys(stats).map(cat => `
+            <div class="result-stats-item">
+                <span class="stat-category">📂 ${cat}</span>
+                <span class="stat-score">${stats[cat].total} soal</span>
+            </div>
+        `).join('');
+
+        this.sound.playComplete();
+        this.showScreen('resultScreen');
+        this.sound.playClick();
 
         StorageManager.saveHistory({
             category: this.state.currentCategory,
-            score: this.state.score,
-            total: this.state.totalQuestions,
+            difficulty: this.state.currentDifficulty,
+            score: correct,
+            total: total,
             percentage: percentage,
-            time: totalTime,
-            correct: this.state.correctAnswers,
-            wrong: this.state.wrongAnswers
+            time: timeSpent
         });
 
-        DOM.resultEmoji.textContent = getScoreEmoji(percentage);
-        DOM.resultTitle.textContent = percentage >= 70 ? '🎉 Hebat!' : '📚 Terus Semangat!';
-        DOM.resultScore.textContent = `${this.state.score}/${this.state.totalQuestions}`;
-        DOM.resultCorrect.textContent = this.state.correctAnswers;
-        DOM.resultWrong.textContent = this.state.wrongAnswers;
-        DOM.resultPercentage.textContent = `${percentage}%`;
-        DOM.resultPercentage.className = `score-percentage ${getPercentageClass(percentage)}`;
-        DOM.resultTime.textContent = formatTime(totalTime);
-
-        this.state.isQuizActive = false;
-        clearQuizState();
-        this.showScreen('resultScreen');
-        this.sound.playComplete();
-
-        // ✅ FIX: Push new state untuk result screen
+        this.updateHomeStats();
         history.pushState({ source: 'zaxquiz', page: 'result', timestamp: Date.now() }, '', window.location.href);
     }
 
-    showHint() {
-        if (this.state.answered || this.state.hintUsed) return;
-        this.state.hintUsed = true;
-        const question = this.state.questions[this.state.currentIndex];
-        DOM.hintText.textContent = question.hint;
-        DOM.hintContainer.classList.add('active');
-        this.sound.playClick();
-        saveQuizState();
-    }
-
     updateProgress() {
-        const percentage = (this.state.currentIndex / this.state.totalQuestions) * 100;
-        DOM.progressBar.style.width = percentage + '%';
-        DOM.questionCounter.textContent = `${this.state.currentIndex + 1}/${this.state.totalQuestions}`;
-        DOM.progressPercentage.textContent = Math.round(percentage) + '%';
+        const total = this.state.totalQuestions;
+        const current = this.state.currentIndex + 1;
+        const progress = Math.min((current / total) * 100, 100);
+
+        DOM.progressBar.style.width = `${progress}%`;
+        DOM.questionCounter.textContent = `${Math.min(current, total)} / ${total}`;
+        DOM.progressPercentage.textContent = `${Math.round(progress)}%`;
     }
 
     updateScore() {
         DOM.currentScore.textContent = this.state.score;
     }
 
-    updateUI() {
-        const categoryNames = {
-            'pengetahuan-umum': 'Pengetahuan Umum',
-            'matematika': 'Matematika',
-            'agama-islam': 'Agama Islam',
-            'nama-bendera': 'Nama Bendera Dunia',
-            'negara-ibukota': 'Negara dan Ibu Kota',
-            'provinsi-indonesia': 'Provinsi dan Ibu Kota Indonesia',
-            'sejarah-indonesia': 'Sejarah Indonesia',
-            'sejarah-dunia': 'Sejarah Dunia'
-        };
-
-        DOM.quizCategory.textContent = categoryNames[this.state.currentCategory] || this.state.currentCategory;
-        DOM.quizDifficulty.textContent = this.state.currentDifficulty === 'all' ? 'Semua Tingkat' : 
-                                         this.state.currentDifficulty.charAt(0).toUpperCase() + 
-                                         this.state.currentDifficulty.slice(1);
-    }
-
     updateTimerVisibility() {
-        DOM.timerContainer.style.display = this.state.timerEnabled ? 'flex' : 'none';
+        if (this.state.timerEnabled) {
+            DOM.timerContainer.classList.add('active');
+            DOM.timerContainer.style.display = 'block';
+        } else {
+            DOM.timerContainer.classList.remove('active');
+            DOM.timerContainer.style.display = 'none';
+        }
     }
 
     updateTimerUI() {
-        DOM.timerText.textContent = this.state.timeLeft;
         const percentage = (this.state.timeLeft / this.state.maxTime) * 100;
-        DOM.timerBar.style.width = percentage + '%';
+        DOM.timerBar.style.width = `${percentage}%`;
+        DOM.timerText.textContent = `⏱️ ${Math.ceil(this.state.timeLeft)}s`;
+
         DOM.timerBar.classList.remove('warning', 'danger');
-        if (this.state.timeLeft <= 5) {
+        if (this.state.timeLeft <= 3) {
             DOM.timerBar.classList.add('danger');
-        } else if (this.state.timeLeft <= 10) {
+        } else if (this.state.timeLeft <= 7) {
             DOM.timerBar.classList.add('warning');
         }
     }
 
     startTimer() {
-        if (this.state.timerInterval) clearInterval(this.state.timerInterval);
-        
+        this.stopTimer();
+        if (!this.state.timerEnabled) return;
+
+        this.state.timeLeft = this.state.maxTime;
+        this.updateTimerUI();
+
         this.state.timerInterval = setInterval(() => {
-            this.state.timeLeft--;
+            this.state.timeLeft -= 0.1;
             this.updateTimerUI();
-            
+
             if (this.state.timeLeft <= 0) {
                 this.stopTimer();
-                alert('⏰ Waktu habis!');
-                this.nextQuestion();
+                this.handleTimeout();
             }
-            saveQuizState();
-        }, 1000);
+        }, 100);
     }
 
     stopTimer() {
@@ -716,38 +720,130 @@ class QuizEngine {
         }
     }
 
-    showScreen(screenId) {
-        [DOM.homeScreen, DOM.quizScreen, DOM.explanationScreen, DOM.resultScreen, DOM.historyScreen]
-            .forEach(screen => {
-                if (screen) screen.style.display = 'none';
-            });
-        const screen = document.getElementById(screenId);
-        if (screen) screen.style.display = 'block';
+    handleTimeout() {
+        if (this.state.answered) return;
+        this.state.answered = true;
+
+        const allBtns = DOM.optionsContainer.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        allBtns.forEach(b => {
+            if (b.dataset.correct === 'true') {
+                b.classList.add('correct');
+            }
+        });
+
+        this.state.wrongAnswers += 1;
+        this.sound.playWrong();
+
+        const question = this.state.questions[this.state.currentIndex];
+        setTimeout(() => {
+            this.showExplanation(question);
+        }, 300);
+
+        this.updateProgress();
+    }
+
+    // ============================================
+    // SHOW HINT - FIX TOGGLE BUKA/TUTUP
+    // ============================================
+    showHint() {
+        // Jika sudah menjawab, tidak bisa pakai hint
+        if (this.state.answered) return;
+        
+        // Toggle hint: jika sudah tampil, sembunyikan
+        if (DOM.hintContainer.style.display === 'block') {
+            DOM.hintContainer.style.display = 'none';
+            DOM.hintContainer.classList.remove('active');
+            this.state.hintUsed = false;
+            this.sound.playClick();
+            return;
+        }
+
+        const question = this.state.questions[this.state.currentIndex];
+        DOM.hintText.textContent = question.hint || 'Petunjuk: Pikirkan dengan cermat!';
+        DOM.hintContainer.style.display = 'block';
+        DOM.hintContainer.classList.add('active');
+        this.state.hintUsed = true;
+        this.sound.playClick();
+
+        DOM.hintContainer.style.animation = 'none';
+        setTimeout(() => {
+            DOM.hintContainer.style.animation = 'fadeSlideIn 0.3s ease';
+        }, 10);
     }
 
     resetQuiz() {
         this.stopTimer();
         this.state.isQuizActive = false;
-        this.state.questions = [];
         this.state.currentIndex = 0;
         this.state.score = 0;
+        this.state.correctAnswers = 0;
+        this.state.wrongAnswers = 0;
+        this.state.questions = [];
+        
         clearQuizState();
-        this.updateHomeStats();
+        
+        DOM.timerContainer.classList.remove('active');
+        DOM.timerContainer.style.display = 'none';
+        DOM.hintContainer.style.display = 'none';
+        DOM.hintContainer.classList.remove('active');
+        
         this.showScreen('homeScreen');
-
-        // ✅ FIX: Push new state untuk home
+        this.sound.playClick();
+        
         history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
+    }
+
+    showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => {
+            s.classList.remove('active');
+        });
+
+        const screen = document.getElementById(screenId);
+        if (screen) {
+            screen.classList.add('active');
+            screen.style.animation = 'none';
+            setTimeout(() => {
+                screen.style.animation = 'fadeSlideIn 0.4s ease-out';
+            }, 10);
+        }
+
+        const header = document.querySelector('.app-header');
+        if (header) header.style.display = 'flex';
     }
 
     updateHomeStats() {
         const stats = StorageManager.getStats();
         DOM.totalQuizzes.textContent = stats.total;
-        DOM.avgScore.textContent = stats.total > 0 ? stats.avgScore : 0;
-        DOM.bestScore.textContent = stats.total > 0 ? stats.bestScore : 0;
+        DOM.avgScore.textContent = stats.total > 0 ? `${stats.avgScore}%` : '0%';
+        DOM.bestScore.textContent = stats.total > 0 ? stats.bestScore : '0';
+    }
+
+    updateUI() {
+        const categoryNames = {
+            'pengetahuan-umum': 'Pengetahuan Umum',
+            'matematika': 'Matematika',
+            'agama-islam': 'Agama Islam',
+            'nama-bendera': 'Nama Bendera Dunia',
+            'negara-ibukota': 'Negara dan Ibu Kota',
+            'provinsi-indonesia': 'Provinsi Indonesia',
+            'sejarah-indonesia': 'Sejarah Indonesia',
+            'sejarah-dunia': 'Sejarah Dunia'
+        };
+        DOM.quizCategory.textContent = categoryNames[this.state.currentCategory] || this.state.currentCategory;
+        DOM.quizDifficulty.textContent = this.state.currentDifficulty === 'all' ? 'Semua Level' : 
+            this.state.currentDifficulty.charAt(0).toUpperCase() + this.state.currentDifficulty.slice(1);
+        DOM.quizDifficulty.dataset.difficulty = this.state.currentDifficulty;
     }
 }
 
+// ============================================
+// EVENT HANDLERS
+// ============================================
 function setupEventListeners() {
+    console.log('🔧 Setting up event listeners...');
+
     DOM.themeToggle.addEventListener('click', () => {
         theme.toggle();
     });
@@ -829,7 +925,6 @@ function setupEventListeners() {
         sound.playClick();
         renderHistory();
         quizEngine.showScreen('historyScreen');
-        // ✅ FIX: Push state untuk history
         history.pushState({ source: 'zaxquiz', page: 'history', timestamp: Date.now() }, '', window.location.href);
     });
 
@@ -837,7 +932,6 @@ function setupEventListeners() {
         sound.playClick();
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
-        // ✅ FIX: Push state untuk kembali ke home
         history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
     });
 
@@ -880,12 +974,12 @@ function setupEventListeners() {
     });
 
     // ============================================
-    // BACK NAVIGATION - FIX SEMPURNA v2
+    // BACK NAVIGATION - FIX SEMPURNA
     // ============================================
     window.addEventListener('popstate', function(e) {
         console.log('🔙 Back button pressed! State:', e.state);
         
-        // ✅ FIX: Jika quiz sedang aktif, tanyakan konfirmasi
+        // Jika quiz sedang aktif, tanyakan konfirmasi
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
             const confirmed = confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.');
@@ -894,16 +988,16 @@ function setupEventListeners() {
                 sound.playClick();
                 clearQuizState();
                 quizEngine.resetQuiz();
-                // ✅ FIX: Jangan push state lagi, biarkan popstate bekerja
+                // Jangan push state lagi, biarkan popstate bekerja
             } else {
                 sound.playClick();
-                // ✅ FIX: User batal, push state back ke quiz
+                // User batal, push state back ke quiz
                 history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
             }
             return;
         }
         
-        // ✅ FIX: Jika tidak ada quiz, tangani state dengan benar
+        // Jika tidak ada quiz, tangani state dengan benar
         if (e.state && e.state.source === 'zaxquiz') {
             const page = e.state.page;
             
@@ -916,20 +1010,20 @@ function setupEventListeners() {
                     // Restore quiz state
                     const savedState = loadQuizState();
                     if (savedState && savedState.isQuizActive) {
-                        quizEngine.state.currentCategory = savedState.currentCategory;
-                        quizEngine.state.currentDifficulty = savedState.currentDifficulty;
-                        quizEngine.state.timerEnabled = savedState.timerEnabled;
-                        quizEngine.state.questions = savedState.questions;
-                        quizEngine.state.currentIndex = savedState.currentIndex;
-                        quizEngine.state.score = savedState.score;
-                        quizEngine.state.totalQuestions = savedState.totalQuestions;
-                        quizEngine.state.correctAnswers = savedState.correctAnswers;
-                        quizEngine.state.wrongAnswers = savedState.wrongAnswers;
-                        quizEngine.state.answered = savedState.answered;
-                        quizEngine.state.startTime = savedState.startTime;
-                        quizEngine.state.hintUsed = savedState.hintUsed;
-                        quizEngine.state.isQuizActive = savedState.isQuizActive;
-                        quizEngine.state.timeLeft = savedState.timeLeft;
+                        AppState.currentCategory = savedState.currentCategory;
+                        AppState.currentDifficulty = savedState.currentDifficulty;
+                        AppState.timerEnabled = savedState.timerEnabled;
+                        AppState.questions = savedState.questions;
+                        AppState.currentIndex = savedState.currentIndex;
+                        AppState.score = savedState.score;
+                        AppState.totalQuestions = savedState.totalQuestions;
+                        AppState.correctAnswers = savedState.correctAnswers;
+                        AppState.wrongAnswers = savedState.wrongAnswers;
+                        AppState.answered = savedState.answered;
+                        AppState.startTime = savedState.startTime;
+                        AppState.hintUsed = savedState.hintUsed;
+                        AppState.isQuizActive = savedState.isQuizActive;
+                        AppState.timeLeft = savedState.timeLeft;
                         
                         quizEngine.updateUI();
                         quizEngine.updateProgress();
@@ -938,7 +1032,7 @@ function setupEventListeners() {
                         quizEngine.showScreen('quizScreen');
                         quizEngine.showQuestion();
                         
-                        if (quizEngine.state.timerEnabled && quizEngine.state.isQuizActive) {
+                        if (AppState.timerEnabled && AppState.isQuizActive) {
                             quizEngine.updateTimerUI();
                             quizEngine.startTimer();
                         }
@@ -1144,7 +1238,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // ✅ FIX: HISTORY STATE INITIALIZATION YANG BENAR
+    // HISTORY STATE INITIALIZATION
     // ============================================
     const savedState = loadQuizState();
     
@@ -1206,4 +1300,4 @@ window.ZaxQuiz = {
     getScoreEmoji
 };
 
-console.log('🚀 ZaxQuiz v2.0.0 FIXED loaded successfully!');
+console.log('🚀 ZaxQuiz v3.0.0 FULL FIX loaded successfully!');
