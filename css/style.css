@@ -126,22 +126,24 @@ body {
 /* ============================================ */
 .hint-section {
     margin-top: 16px;
-    position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
+    align-items: flex-start;
     width: 100%;
 }
 
 .quiz-actions {
-    margin-top: 16px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
     flex-wrap: wrap;
+    flex: 1;
+    min-width: 180px;
+    margin-top: 0;
     position: relative;
     z-index: 1;
-    width: 100%;
 }
 
 /* ============================================ */
@@ -547,6 +549,7 @@ button:focus {
 .btn-hint {
     background: var(--accent);
     color: var(--text-primary);
+    min-width: 100px;
 }
 
 .btn-hint:hover {
@@ -1019,18 +1022,18 @@ button:focus {
 }
 
 /* ============================================ */
-/* HINT CONTAINER - FIX LAYOUT & TOGGLE       */
+/* HINT CONTAINER - FIX LAYOUT SIDE BY SIDE   */
 /* ============================================ */
 .hint-container {
-    position: relative;
-    margin-top: 8px;
+    flex: 1;
+    min-width: 200px;
+    margin-top: 0;
     padding: 16px 20px;
     background: var(--bg-card);
     border-radius: var(--radius-sm);
     border-left: 4px solid var(--accent);
     animation: fadeSlideIn 0.3s ease;
     box-shadow: 0 4px 20px var(--shadow-color);
-    width: 100%;
     display: none;
 }
 
@@ -1472,6 +1475,23 @@ button:focus {
     .history-item-right {
         width: 100%;
         justify-content: space-between;
+    }
+
+    /* Fix hint section di mobile */
+    .hint-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .hint-container {
+        min-width: 100%;
+        flex: none;
+    }
+    
+    .quiz-actions {
+        min-width: 100%;
+        flex: none;
+        justify-content: center;
     }
 }
 
