@@ -784,6 +784,8 @@ class QuizEngine {
         DOM.hintContainer.classList.remove('active');
         
         this.showScreen('homeScreen');
+            // Reset state back navigation
+    history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
         this.sound.playClick();
     }
 
@@ -803,6 +805,9 @@ class QuizEngine {
 
         const header = document.querySelector('.app-header');
         if (header) header.style.display = 'flex';
+    if (screenId === 'homeScreen' || screenId === 'quizScreen') {
+        history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
+         }
     }
 
     updateHomeStats() {
@@ -963,22 +968,50 @@ function setupEventListeners() {
         }
     });
 
-    // ============================================
-    // BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
-    // ============================================
-    window.addEventListener('popstate', function(e) {
+// ============================================
+// BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
+// ============================================
+window.addEventListener('popstate', function(e) {
+    // Cek apakah state yang dilalui adalah state buatan kita
+    const state = e.state;
+    
+    // Jika tidak ada state atau state bukan dari aplikasi, abaikan
+    if (!state || state.source !== 'zaxquiz') {
+        // Jika masih di quiz, tetap tampilkan dialog
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
             if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
                 sound.playClick();
+                // Hapus state sebelum reset
+                clearQuizState();
                 quizEngine.resetQuiz();
-                history.pushState(null, '', window.location.href);
+                // Redirect ke home tanpa history
+                window.location.hash = '#home';
             } else {
                 sound.playClick();
-                history.pushState(null, '', window.location.href);
+                // Kembalikan state agar tidak keluar
+                history.pushState({ source: 'zaxquiz' }, '', window.location.href);
             }
         }
-    });
+        return;
+    }
+
+    // Jika user menekan back saat quiz aktif
+    if (quizEngine.state.isQuizActive) {
+        sound.playClick();
+        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
+            sound.playClick();
+            clearQuizState();
+            quizEngine.resetQuiz();
+            // Reset state agar tidak kembali ke halaman sebelumnya
+            history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
+        } else {
+            sound.playClick();
+            // Push state baru agar back tidak langsung keluar
+            history.pushState({ source: 'zaxquiz' }, '', window.location.href);
+        }
+    }
+});
 
     // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
@@ -1160,10 +1193,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Tambahkan state awal untuk back navigation
-    window.addEventListener('load', function() {
-        history.pushState(null, '', window.location.href);
-    });
+// Tambahkan state awal untuk back navigation
+window.addEventListener('load', function() {
+    // Hanya jika tidak ada hash
+    if (!window.location.hash) {
+        history.replaceState({ source: 'zaxquiz' }, '', window.location.href);
+    }
+});
 
     theme.applyTheme();
     initProtection();
