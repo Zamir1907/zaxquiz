@@ -1264,417 +1264,1167 @@ const agamaIslamQuestions = [
     }
 ];
 
-        // ============================================
-// KATEGORI 4: NAMA BENDERA DUNIA (50 Soal)
+// ============================================
+// KATEGORI 4: NAMA BENDERA DUNIA (195 Soal)
 // ============================================
 const namaBenderaQuestions = [
+    // ===== ASIA (48 Negara) =====
+    // INDONESIA
     {
-        question: '🇮🇩 Bendera ini milik negara mana?',
+        question: 'Bendera ini milik negara mana?',
         options: ['Indonesia', 'Malaysia', 'Singapura', 'Filipina'],
         correctIndex: 0,
-        explanation: 'Bendera Indonesia terdiri dari dua warna: merah di atas dan putih di bawah, yang dikenal sebagai Sang Saka Merah Putih.',
+        explanation: 'Bendera Indonesia disebut Sang Saka Merah Putih, terdiri dari dua warna merah di atas dan putih di bawah.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara kepulauan terbesar di dunia.'
+        hint: 'Negara kepulauan terbesar di dunia.',
+        flagCode: 'id'
     },
+    // MALAYSIA
     {
-        question: '🇺🇸 Bendera ini adalah bendera dari negara mana?',
-        options: ['Amerika Serikat', 'Inggris', 'Kanada', 'Australia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Malaysia', 'Indonesia', 'Filipina', 'Thailand'],
         correctIndex: 0,
-        explanation: 'Bendera Amerika Serikat memiliki 13 garis merah-putih dan 50 bintang putih di bidang biru, melambangkan 50 negara bagian.',
+        explanation: 'Bendera Malaysia disebut Jalur Gemilang, memiliki 14 garis merah-putih dan bulan sabit dengan bintang.',
         difficulty: 'sedang',
-        hint: 'Negara ini dikenal sebagai "Negeri Paman Sam".'
+        hint: 'Negara ini terbagi menjadi dua bagian: Semenanjung dan Kalimantan.',
+        flagCode: 'my'
     },
+    // SINGAPURA
     {
-        question: '🇯🇵 Bendera ini milik negara mana?',
-        options: ['Jepang', 'Korea Selatan', 'China', 'Taiwan'],
-        correctIndex: 0,
-        explanation: 'Bendera Jepang, yang disebut Hinomaru, memiliki lingkaran merah di tengah yang melambangkan matahari terbit.',
-        difficulty: 'sedang',
-        hint: 'Negara ini dikenal sebagai "Negeri Matahari Terbit".'
-    },
-    {
-        question: '🇨🇳 Bendera ini adalah bendera dari negara mana?',
-        options: ['China', 'Vietnam', 'Korea Utara', 'Taiwan'],
-        correctIndex: 0,
-        explanation: 'Bendera China memiliki latar merah dengan lima bintang kuning di sudut kiri atas, melambangkan persatuan di bawah kepemimpinan komunis.',
-        difficulty: 'sedang',
-        hint: 'Negara ini memiliki populasi terbesar di dunia.'
-    },
-    {
-        question: '🇬🇧 Bendera ini milik negara mana?',
-        options: ['Inggris', 'Amerika Serikat', 'Australia', 'Selandia Baru'],
-        correctIndex: 0,
-        explanation: 'Bendera Inggris, yang disebut Union Jack, menggabungkan salib dari tiga santo pelindung: St. George, St. Andrew, dan St. Patrick.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah bagian dari Britania Raya.'
-    },
-    {
-        question: '🇫🇷 Bendera ini adalah bendera dari negara mana?',
-        options: ['Prancis', 'Italia', 'Belanda', 'Rusia'],
-        correctIndex: 0,
-        explanation: 'Bendera Prancis, yang disebut Tricolore, memiliki tiga warna vertikal: biru, putih, dan merah yang melambangkan kebebasan, kesetaraan, dan persaudaraan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan Menara Eiffel.'
-    },
-    {
-        question: '🇩🇪 Bendera ini milik negara mana?',
-        options: ['Jerman', 'Belgia', 'Austria', 'Swiss'],
-        correctIndex: 0,
-        explanation: 'Bendera Jerman memiliki tiga garis horizontal: hitam, merah, dan emas yang melambangkan persatuan dan kebebasan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah salah satu negara terbesar di Eropa.'
-    },
-    {
-        question: '🇮🇹 Bendera ini adalah bendera dari negara mana?',
-        options: ['Italia', 'Prancis', 'Irlandia', 'Meksiko'],
-        correctIndex: 0,
-        explanation: 'Bendera Italia memiliki tiga warna vertikal: hijau, putih, dan merah yang melambangkan harapan, iman, dan cinta.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan bentuknya yang seperti sepatu bot.'
-    },
-    {
-        question: '🇪🇸 Bendera ini milik negara mana?',
-        options: ['Spanyol', 'Portugal', 'Andorra', 'Meksiko'],
-        correctIndex: 0,
-        explanation: 'Bendera Spanyol memiliki tiga garis horizontal: merah-kuning-merah dengan lambang negara di tengah.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan tomatina dan sepak bola.'
-    },
-    {
-        question: '🇵🇹 Bendera ini adalah bendera dari negara mana?',
-        options: ['Portugal', 'Spanyol', 'Brasil', 'Angola'],
-        correctIndex: 0,
-        explanation: 'Bendera Portugal memiliki dua warna: hijau dan merah dengan lambang negara di tengah yang melambangkan penjelajahan samudra.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terletak di ujung barat Eropa.'
-    },
-    {
-        question: '🇳🇱 Bendera ini milik negara mana?',
-        options: ['Belanda', 'Prancis', 'Rusia', 'Luksemburg'],
-        correctIndex: 0,
-        explanation: 'Bendera Belanda memiliki tiga garis horizontal: merah, putih, dan biru yang merupakan salah satu bendera tertua di dunia.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan kincir angin dan bunga tulip.'
-    },
-    {
-        question: '🇧🇪 Bendera ini adalah bendera dari negara mana?',
-        options: ['Belgia', 'Jerman', 'Prancis', 'Belanda'],
-        correctIndex: 0,
-        explanation: 'Bendera Belgia memiliki tiga warna vertikal: hitam, kuning, dan merah yang melambangkan perjuangan kemerdekaan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan cokelat dan wafel.'
-    },
-    {
-        question: '🇨🇭 Bendera ini milik negara mana?',
-        options: ['Swiss', 'Swedia', 'Norwegia', 'Finlandia'],
-        correctIndex: 0,
-        explanation: 'Bendera Swiss berbentuk persegi dengan latar merah dan salib putih di tengah, melambangkan netralitas dan perdamaian.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan gunung Alpen dan cokelat.'
-    },
-    {
-        question: '🇦🇹 Bendera ini adalah bendera dari negara mana?',
-        options: ['Austria', 'Jerman', 'Hungaria', 'Swiss'],
-        correctIndex: 0,
-        explanation: 'Bendera Austria memiliki tiga garis horizontal: merah-putih-merah yang melambangkan darah dan kedamaian.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan musik klasiknya.'
-    },
-    {
-        question: '🇬🇷 Bendera ini milik negara mana?',
-        options: ['Yunani', 'Siprus', 'Malta', 'Turki'],
-        correctIndex: 0,
-        explanation: 'Bendera Yunani memiliki sembilan garis biru-putih dan salib di sudut kiri atas, melambangkan kebebasan dan laut.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah tempat lahirnya demokrasi.'
-    },
-    {
-        question: '🇹🇷 Bendera ini adalah bendera dari negara mana?',
-        options: ['Turki', 'Mesir', 'Arab Saudi', 'Iran'],
-        correctIndex: 0,
-        explanation: 'Bendera Turki memiliki latar merah dengan bulan sabit dan bintang putih yang melambangkan Islam dan kemerdekaan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terletak di antara Eropa dan Asia.'
-    },
-    {
-        question: '🇪🇬 Bendera ini milik negara mana?',
-        options: ['Mesir', 'Libya', 'Sudan', 'Yordania'],
-        correctIndex: 0,
-        explanation: 'Bendera Mesir memiliki tiga garis horizontal: merah, putih, dan hitam dengan lambang elang di tengah.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan piramida dan Sungai Nil.'
-    },
-    {
-        question: '🇸🇦 Bendera ini adalah bendera dari negara mana?',
-        options: ['Arab Saudi', 'Uni Emirat Arab', 'Yaman', 'Oman'],
-        correctIndex: 0,
-        explanation: 'Bendera Arab Saudi memiliki latar hijau dengan tulisan syahadat dan pedang putih, melambangkan Islam dan keadilan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah tempat kelahiran Islam.'
-    },
-    {
-        question: '🇮🇷 Bendera ini milik negara mana?',
-        options: ['Iran', 'Irak', 'Afghanistan', 'Pakistan'],
-        correctIndex: 0,
-        explanation: 'Bendera Iran memiliki tiga garis horizontal: hijau, putih, dan merah dengan lambang Allah di tengah.',
-        difficulty: 'sedang',
-        hint: 'Negara ini dulunya dikenal sebagai Persia.'
-    },
-    {
-        question: '🇮🇳 Bendera ini adalah bendera dari negara mana?',
-        options: ['India', 'Pakistan', 'Bangladesh', 'Sri Lanka'],
-        correctIndex: 0,
-        explanation: 'Bendera India memiliki tiga warna: saffron, putih, dan hijau dengan roda Ashoka di tengah melambangkan hukum dan dharma.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah negara demokrasi terbesar di dunia.'
-    },
-    {
-        question: '🇵🇰 Bendera ini milik negara mana?',
-        options: ['Pakistan', 'India', 'Bangladesh', 'Afghanistan'],
-        correctIndex: 0,
-        explanation: 'Bendera Pakistan memiliki latar hijau dengan bulan sabit dan bintang putih, melambangkan Islam dan kemajuan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini merdeka dari India pada tahun 1947.'
-    },
-    {
-        question: '🇧🇩 Bendera ini adalah bendera dari negara mana?',
-        options: ['Bangladesh', 'Pakistan', 'India', 'Nepal'],
-        correctIndex: 0,
-        explanation: 'Bendera Bangladesh memiliki latar hijau dengan lingkaran merah yang melambangkan darah perjuangan kemerdekaan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terletak di delta sungai Ganges.'
-    },
-    {
-        question: '🇯🇵 Bendera ini milik negara mana?',
-        options: ['Jepang', 'Korea Selatan', 'Vietnam', 'Kamboja'],
-        correctIndex: 0,
-        explanation: 'Bendera Jepang adalah Hinomaru, yang berarti "lingkaran matahari", dengan warna merah dan putih.',
-        difficulty: 'sedang',
-        hint: 'Negara ini adalah negara kepulauan di Asia Timur.'
-    },
-    {
-        question: '🇰🇷 Bendera ini adalah bendera dari negara mana?',
-        options: ['Korea Selatan', 'Korea Utara', 'Jepang', 'China'],
-        correctIndex: 0,
-        explanation: 'Bendera Korea Selatan, yang disebut Taegukgi, memiliki simbol yin-yang di tengah dengan trigram di setiap sudut.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan K-Pop dan Samsung.'
-    },
-    {
-        question: '🇻🇳 Bendera ini milik negara mana?',
-        options: ['Vietnam', 'Kamboja', 'Laos', 'Thailand'],
-        correctIndex: 0,
-        explanation: 'Bendera Vietnam memiliki latar merah dengan bintang kuning di tengah, melambangkan revolusi dan persatuan.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan Perang Vietnam.'
-    },
-    {
-        question: '🇹🇭 Bendera ini adalah bendera dari negara mana?',
-        options: ['Thailand', 'Laos', 'Kamboja', 'Malaysia'],
-        correctIndex: 0,
-        explanation: 'Bendera Thailand memiliki tiga warna: merah, putih, dan biru yang melambangkan tanah air, agama, dan raja.',
-        difficulty: 'sedang',
-        hint: 'Negara ini dulunya dikenal sebagai Siam.'
-    },
-    {
-        question: '🇲🇾 Bendera ini milik negara mana?',
-        options: ['Malaysia', 'Indonesia', 'Filipina', 'Singapura'],
-        correctIndex: 0,
-        explanation: 'Bendera Malaysia, yang disebut Jalur Gemilang, memiliki 14 garis merah-putih dan bulan sabit dengan bintang.',
-        difficulty: 'sedang',
-        hint: 'Negara ini terbagi menjadi dua bagian: Semenanjung dan Kalimantan.'
-    },
-    {
-        question: '🇸🇬 Bendera ini adalah bendera dari negara mana?',
-        options: ['Singapura', 'Malaysia', 'Indonesia', 'Filipina'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Singapura', 'Malaysia', 'Indonesia', 'Brunei'],
         correctIndex: 0,
         explanation: 'Bendera Singapura memiliki dua warna: merah di atas dan putih di bawah dengan bulan sabit dan lima bintang.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah kota-negara di Asia Tenggara.'
+        hint: 'Negara ini adalah kota-negara di Asia Tenggara.',
+        flagCode: 'sg'
     },
+    // FILIPINA
     {
-        question: '🇵🇭 Bendera ini milik negara mana?',
+        question: 'Bendera ini milik negara mana?',
         options: ['Filipina', 'Indonesia', 'Malaysia', 'Thailand'],
         correctIndex: 0,
         explanation: 'Bendera Filipina memiliki tiga warna: biru, merah, dan putih dengan matahari dan tiga bintang di segitiga putih.',
         difficulty: 'sedang',
-        hint: 'Negara ini memiliki lebih dari 7.000 pulau.'
+        hint: 'Negara ini memiliki lebih dari 7.000 pulau.',
+        flagCode: 'ph'
     },
+    // THAILAND
     {
-        question: '🇦🇺 Bendera ini adalah bendera dari negara mana?',
-        options: ['Australia', 'Selandia Baru', 'Fiji', 'Papua Nugini'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Thailand', 'Laos', 'Kamboja', 'Vietnam'],
         correctIndex: 0,
-        explanation: 'Bendera Australia memiliki latar biru dengan Union Jack di sudut dan bintang persemakmuran serta salib selatan.',
+        explanation: 'Bendera Thailand memiliki tiga warna: merah, putih, dan biru yang melambangkan tanah air, agama, dan raja.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah benua sekaligus negara.'
+        hint: 'Negara ini dulunya dikenal sebagai Siam.',
+        flagCode: 'th'
     },
+    // VIETNAM
     {
-        question: '🇳🇿 Bendera ini milik negara mana?',
-        options: ['Selandia Baru', 'Australia', 'Fiji', 'Kepulauan Cook'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Vietnam', 'Laos', 'Kamboja', 'Thailand'],
         correctIndex: 0,
-        explanation: 'Bendera Selandia Baru memiliki latar biru dengan Union Jack dan empat bintang merah di sisi kanan.',
+        explanation: 'Bendera Vietnam memiliki latar merah dengan bintang kuning di tengah, melambangkan revolusi dan persatuan.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan film Lord of the Rings.'
+        hint: 'Negara ini terkenal dengan Perang Vietnam.',
+        flagCode: 'vn'
     },
+    // KAMBOJA
     {
-        question: '🇨🇦 Bendera ini adalah bendera dari negara mana?',
-        options: ['Kanada', 'Amerika Serikat', 'Inggris', 'Australia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kamboja', 'Thailand', 'Laos', 'Vietnam'],
         correctIndex: 0,
-        explanation: 'Bendera Kanada yang terkenal dengan daun maple merah di tengah dengan latar putih di antara dua garis merah.',
+        explanation: 'Bendera Kamboja memiliki gambar Angkor Wat di tengah dengan latar biru dan merah.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara terbesar kedua di dunia.'
+        hint: 'Negara ini memiliki candi Angkor Wat yang terkenal.',
+        flagCode: 'kh'
     },
+    // LAOS
     {
-        question: '🇲🇽 Bendera ini milik negara mana?',
-        options: ['Meksiko', 'Spanyol', 'Italia', 'Kolombia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Laos', 'Thailand', 'Kamboja', 'Vietnam'],
         correctIndex: 0,
-        explanation: 'Bendera Meksiko memiliki tiga warna vertikal: hijau, putih, dan merah dengan lambang elang di tengah.',
+        explanation: 'Bendera Laos memiliki tiga garis horizontal: merah-biru-merah dengan lingkaran putih di tengah.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan makanan pedasnya.'
+        hint: 'Negara ini adalah satu-satunya negara di Asia Tenggara yang tidak memiliki laut.',
+        flagCode: 'la'
     },
+    // MYANMAR
     {
-        question: '🇧🇷 Bendera ini adalah bendera dari negara mana?',
-        options: ['Brasil', 'Portugal', 'Kolombia', 'Argentina'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Myanmar', 'Thailand', 'Laos', 'Bangladesh'],
         correctIndex: 0,
-        explanation: 'Bendera Brasil memiliki latar hijau dengan berlian kuning dan lingkaran biru berisi bintang-bintang.',
+        explanation: 'Bendera Myanmar memiliki tiga garis horizontal: kuning, hijau, dan merah dengan bintang putih di tengah.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara terbesar di Amerika Selatan.'
+        hint: 'Negara ini dulunya dikenal sebagai Burma.',
+        flagCode: 'mm'
     },
+    // BRUNEI
     {
-        question: '🇦🇷 Bendera ini milik negara mana?',
-        options: ['Argentina', 'Uruguay', 'Chili', 'Peru'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Brunei', 'Malaysia', 'Singapura', 'Indonesia'],
         correctIndex: 0,
-        explanation: 'Bendera Argentina memiliki tiga garis horizontal: biru-putih-biru dengan matahari di tengah.',
+        explanation: 'Bendera Brunei memiliki latar kuning dengan garis hitam dan putih diagonal serta lambang negara di tengah.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan danau dan gunung es di Patagonia.'
+        hint: 'Negara ini terletak di pulau Kalimantan.',
+        flagCode: 'bn'
     },
+    // TIMOR LESTE
     {
-        question: '🇨🇱 Bendera ini adalah bendera dari negara mana?',
-        options: ['Chili', 'Argentina', 'Peru', 'Bolivia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Timor Leste', 'Indonesia', 'Filipina', 'Papua Nugini'],
         correctIndex: 0,
-        explanation: 'Bendera Chili memiliki dua warna: putih dan biru dengan bintang putih di sudut kiri, dan merah di bagian bawah.',
+        explanation: 'Bendera Timor Leste memiliki latar merah dengan segitiga kuning dan hitam serta bintang putih di sudut kiri.',
         difficulty: 'sedang',
-        hint: 'Negara ini berbentuk seperti cabai.'
+        hint: 'Negara ini berbatasan dengan Indonesia di pulau Timor.',
+        flagCode: 'tl'
     },
+    // JEPANG
     {
-        question: '🇵🇪 Bendera ini milik negara mana?',
-        options: ['Peru', 'Ekuador', 'Kolombia', 'Bolivia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Jepang', 'Korea Selatan', 'China', 'Taiwan'],
         correctIndex: 0,
-        explanation: 'Bendera Peru memiliki tiga garis vertikal: merah-putih-merah dengan lambang negara di tengah.',
+        explanation: 'Bendera Jepang, yang disebut Hinomaru, memiliki lingkaran merah di tengah yang melambangkan matahari terbit.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan Machu Picchu.'
+        hint: 'Negara ini dikenal sebagai "Negeri Matahari Terbit".',
+        flagCode: 'jp'
     },
+    // KOREA SELATAN
     {
-        question: '🇨🇴 Bendera ini adalah bendera dari negara mana?',
-        options: ['Kolombia', 'Ekuador', 'Venezuela', 'Panama'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Korea Selatan', 'Korea Utara', 'Jepang', 'China'],
         correctIndex: 0,
-        explanation: 'Bendera Kolombia memiliki tiga garis horizontal: kuning di atas (setengah), biru, dan merah.',
+        explanation: 'Bendera Korea Selatan, yang disebut Taegukgi, memiliki simbol yin-yang di tengah dengan trigram di setiap sudut.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan kopi dan salsa.'
+        hint: 'Negara ini terkenal dengan K-Pop dan Samsung.',
+        flagCode: 'kr'
     },
+    // KOREA UTARA
     {
-        question: '🇻🇪 Bendera ini milik negara mana?',
-        options: ['Venezuela', 'Kolombia', 'Ekuador', 'Peru'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Korea Utara', 'Korea Selatan', 'China', 'Jepang'],
         correctIndex: 0,
-        explanation: 'Bendera Venezuela memiliki tiga garis horizontal: kuning, biru, dan merah dengan bintang-bintang di tengah.',
+        explanation: 'Bendera Korea Utara memiliki bintang merah di dalam lingkaran putih dengan latar merah dan garis biru di tepi.',
         difficulty: 'sedang',
-        hint: 'Negara ini memiliki danau terbesar di Amerika Selatan.'
+        hint: 'Negara ini dipimpin oleh Kim Jong-un.',
+        flagCode: 'kp'
     },
+    // CHINA
     {
-        question: '🇿🇦 Bendera ini adalah bendera dari negara mana?',
-        options: ['Afrika Selatan', 'Namibia', 'Botswana', 'Zimbabwe'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['China', 'Taiwan', 'Vietnam', 'Korea Utara'],
         correctIndex: 0,
-        explanation: 'Bendera Afrika Selatan memiliki desain Y yang unik dengan enam warna yang melambangkan persatuan.',
+        explanation: 'Bendera China memiliki latar merah dengan lima bintang kuning di sudut kiri atas.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan Nelson Mandela.'
+        hint: 'Negara ini memiliki populasi terbesar di dunia.',
+        flagCode: 'cn'
     },
+    // TAIWAN
     {
-        question: '🇳🇬 Bendera ini milik negara mana?',
-        options: ['Nigeria', 'Ghana', 'Pantai Gading', 'Kamerun'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Taiwan', 'China', 'Jepang', 'Filipina'],
         correctIndex: 0,
-        explanation: 'Bendera Nigeria memiliki tiga garis vertikal: hijau-putih-hijau yang melambangkan pertanian dan perdamaian.',
+        explanation: 'Bendera Taiwan memiliki latar merah dengan matahari biru di sudut kiri atas.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara terpadat di Afrika.'
+        hint: 'Negara ini juga dikenal sebagai Republik Cina.',
+        flagCode: 'tw'
     },
+    // MONGOLIA
     {
-        question: '🇰🇪 Bendera ini adalah bendera dari negara mana?',
-        options: ['Kenya', 'Tanzania', 'Uganda', 'Etiopia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Mongolia', 'China', 'Rusia', 'Kazakhstan'],
         correctIndex: 0,
-        explanation: 'Bendera Kenya memiliki tiga warna: hitam, merah, dan hijau dengan perisai dan tombak tradisional.',
+        explanation: 'Bendera Mongolia memiliki tiga garis vertikal: merah-biru-merah dengan lambang negara di sisi kiri.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan safari dan maraton.'
+        hint: 'Negara ini adalah tempat kelahiran Genghis Khan.',
+        flagCode: 'mn'
     },
+    // INDIA
     {
-        question: '🇪🇹 Bendera ini milik negara mana?',
-        options: ['Etiopia', 'Eritrea', 'Somali', 'Sudan'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['India', 'Pakistan', 'Bangladesh', 'Sri Lanka'],
         correctIndex: 0,
-        explanation: 'Bendera Etiopia memiliki tiga warna: hijau, kuning, dan merah dengan lambang di tengah.',
+        explanation: 'Bendera India memiliki tiga warna: saffron, putih, dan hijau dengan roda Ashoka di tengah.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah salah satu yang tertua di dunia.'
+        hint: 'Negara ini adalah negara demokrasi terbesar di dunia.',
+        flagCode: 'in'
     },
+    // PAKISTAN
     {
-        question: '🇲🇦 Bendera ini adalah bendera dari negara mana?',
-        options: ['Maroko', 'Aljazair', 'Tunisia', 'Libya'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Pakistan', 'India', 'Bangladesh', 'Afghanistan'],
         correctIndex: 0,
-        explanation: 'Bendera Maroko memiliki latar merah dengan bintang hijau di tengah yang disebut Bintang Sulaiman.',
+        explanation: 'Bendera Pakistan memiliki latar hijau dengan bulan sabit dan bintang putih.',
         difficulty: 'sedang',
-        hint: 'Negara ini terletak di ujung barat laut Afrika.'
+        hint: 'Negara ini merdeka dari India pada tahun 1947.',
+        flagCode: 'pk'
     },
+    // BANGLADESH
     {
-        question: '🇩🇿 Bendera ini milik negara mana?',
-        options: ['Aljazair', 'Maroko', 'Tunisia', 'Libya'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Bangladesh', 'Pakistan', 'India', 'Nepal'],
         correctIndex: 0,
-        explanation: 'Bendera Aljazair memiliki dua warna: hijau dan putih dengan bulan sabit dan bintang merah di tengah.',
+        explanation: 'Bendera Bangladesh memiliki latar hijau dengan lingkaran merah yang melambangkan darah perjuangan kemerdekaan.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara terbesar di Afrika.'
+        hint: 'Negara ini terletak di delta sungai Ganges.',
+        flagCode: 'bd'
     },
+    // SRI LANKA
     {
-        question: '🇹🇳 Bendera ini adalah bendera dari negara mana?',
-        options: ['Tunisia', 'Aljazair', 'Maroko', 'Libya'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Sri Lanka', 'India', 'Bangladesh', 'Nepal'],
         correctIndex: 0,
-        explanation: 'Bendera Tunisia memiliki latar merah dengan lingkaran putih dan bulan sabit serta bintang merah.',
+        explanation: 'Bendera Sri Lanka memiliki latar merah dengan singa emas dan empat daun bodhi di sudut.',
         difficulty: 'sedang',
-        hint: 'Negara ini terkenal dengan Puncak Es Krim Tunisia.'
+        hint: 'Negara ini berbentuk seperti tetesan air mata di bawah India.',
+        flagCode: 'lk'
     },
+    // NEPAL
     {
-        question: '🇱🇾 Bendera ini milik negara mana?',
-        options: ['Libya', 'Mesir', 'Sudan', 'Tunisia'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Nepal', 'India', 'Bhutan', 'Bangladesh'],
         correctIndex: 0,
-        explanation: 'Bendera Libya memiliki tiga warna: merah, hitam, dan hijau dengan bulan sabit dan bintang di tengah.',
-        difficulty: 'sedang',
-        hint: 'Negara ini memiliki cadangan minyak terbesar di Afrika.'
+        explanation: 'Bendera Nepal adalah satu-satunya bendera nasional yang berbentuk bukan persegi panjang, dengan dua segitiga bersusun.',
+        difficulty: 'sulit',
+        hint: 'Negara ini memiliki Gunung Everest di perbatasannya.',
+        flagCode: 'np'
     },
+    // BHUTAN
     {
-        question: '🇸🇩 Bendera ini adalah bendera dari negara mana?',
-        options: ['Sudan', 'Mesir', 'Etiopia', 'Yaman'],
+        question: 'Bendera ini milik negara mana?',
+        options: ['Bhutan', 'Nepal', 'India', 'Tibet'],
         correctIndex: 0,
-        explanation: 'Bendera Sudan memiliki tiga garis horizontal: merah, putih, dan hitam dengan segitiga hijau di sisi kiri.',
+        explanation: 'Bendera Bhutan memiliki naga putih di tengah dengan latar kuning dan oranye.',
         difficulty: 'sedang',
-        hint: 'Negara ini adalah negara terbesar di Afrika.'
+        hint: 'Negara ini dikenal sebagai "Negeri Naga Guntur".',
+        flagCode: 'bt'
     },
+    // AFGHANISTAN
     {
-        question: '🇾🇪 Bendera ini milik negara mana?',
+        question: 'Bendera ini milik negara mana?',
+        options: ['Afghanistan', 'Iran', 'Pakistan', 'Tajikistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Afghanistan memiliki tiga warna vertikal: hitam, merah, dan hijau dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Asia Tengah.',
+        flagCode: 'af'
+    },
+    // IRAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Iran', 'Irak', 'Afghanistan', 'Pakistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Iran memiliki tiga garis horizontal: hijau, putih, dan merah dengan lambang Allah di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dulunya dikenal sebagai Persia.',
+        flagCode: 'ir'
+    },
+    // IRAK
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Irak', 'Iran', 'Suriah', 'Yordania'],
+        correctIndex: 0,
+        explanation: 'Bendera Irak memiliki tiga garis horizontal: merah, putih, dan hitam dengan tulisan Allahu Akbar di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di antara Sungai Tigris dan Efrat.',
+        flagCode: 'iq'
+    },
+    // SURIAH
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Suriah', 'Irak', 'Yordania', 'Lebanon'],
+        correctIndex: 0,
+        explanation: 'Bendera Suriah memiliki tiga garis horizontal: merah, putih, dan hitam dengan dua bintang hijau di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki ibu kota Damaskus, salah satu kota tertua di dunia.',
+        flagCode: 'sy'
+    },
+    // YORDANIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Yordania', 'Suriah', 'Irak', 'Arab Saudi'],
+        correctIndex: 0,
+        explanation: 'Bendera Yordania memiliki tiga garis horizontal: hitam, putih, dan hijau dengan segitiga merah di sisi kiri yang berisi bintang putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki situs Petra yang terkenal.',
+        flagCode: 'jo'
+    },
+    // LEBANON
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Lebanon', 'Suriah', 'Yordania', 'Israel'],
+        correctIndex: 0,
+        explanation: 'Bendera Lebanon memiliki tiga garis horizontal: merah-putih-merah dengan pohon cedar hijau di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki pohon cedar sebagai simbol nasionalnya.',
+        flagCode: 'lb'
+    },
+    // ISRAEL
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Israel', 'Lebanon', 'Yordania', 'Mesir'],
+        correctIndex: 0,
+        explanation: 'Bendera Israel memiliki bintang Daud biru di tengah dengan latar putih dan dua garis biru di tepi.',
+        difficulty: 'sedang',
+        hint: 'Negara ini didirikan pada tahun 1948.',
+        flagCode: 'il'
+    },
+    // ARAB SAUDI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Arab Saudi', 'Uni Emirat Arab', 'Yaman', 'Oman'],
+        correctIndex: 0,
+        explanation: 'Bendera Arab Saudi memiliki latar hijau dengan tulisan syahadat dan pedang putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah tempat kelahiran Islam.',
+        flagCode: 'sa'
+    },
+    // YAMAN
+    {
+        question: 'Bendera ini milik negara mana?',
         options: ['Yaman', 'Oman', 'Uni Emirat Arab', 'Arab Saudi'],
         correctIndex: 0,
-        explanation: 'Bendera Yaman memiliki tiga garis horizontal: merah, putih, dan hitam yang mewakili persatuan Arab.',
+        explanation: 'Bendera Yaman memiliki tiga garis horizontal: merah, putih, dan hitam.',
         difficulty: 'sedang',
-        hint: 'Negara ini terletak di ujung selatan Jazirah Arab.'
+        hint: 'Negara ini terletak di ujung selatan Jazirah Arab.',
+        flagCode: 'ye'
     },
+    // OMAN
     {
-        question: '🇦🇪 Bendera ini adalah bendera dari negara mana?',
-        options: ['Uni Emirat Arab', 'Arab Saudi', 'Yaman', 'Oman'],
-        correctIndex: 0,
-        explanation: 'Bendera Uni Emirat Arab memiliki tiga warna: hijau, putih, dan hitam dengan garis merah vertikal di sisi kiri.',
-        difficulty: 'sedang',
-        hint: 'Negara ini dikenal dengan gedung-gedung pencakar langitnya.'
-    },
-    {
-        question: '🇴🇲 Bendera ini milik negara mana?',
+        question: 'Bendera ini milik negara mana?',
         options: ['Oman', 'Yaman', 'Uni Emirat Arab', 'Arab Saudi'],
         correctIndex: 0,
         explanation: 'Bendera Oman memiliki tiga warna: putih, merah, dan hijau dengan lambang negara di sudut kiri.',
         difficulty: 'sedang',
-        hint: 'Negara ini terletak di ujung timur Jazirah Arab.'
+        hint: 'Negara ini terletak di ujung timur Jazirah Arab.',
+        flagCode: 'om'
+    },
+    // UAE
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Uni Emirat Arab', 'Arab Saudi', 'Yaman', 'Oman'],
+        correctIndex: 0,
+        explanation: 'Bendera Uni Emirat Arab memiliki tiga warna: hijau, putih, dan hitam dengan garis merah vertikal di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal dengan gedung-gedung pencakar langitnya.',
+        flagCode: 'ae'
+    },
+    // QATAR
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Qatar', 'Uni Emirat Arab', 'Arab Saudi', 'Oman'],
+        correctIndex: 0,
+        explanation: 'Bendera Qatar memiliki latar maroon dengan garis putih bergerigi di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu negara terkaya di dunia.',
+        flagCode: 'qa'
+    },
+    // KUWAIT
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kuwait', 'Irak', 'Arab Saudi', 'Qatar'],
+        correctIndex: 0,
+        explanation: 'Bendera Kuwait memiliki tiga garis horizontal: hijau, putih, dan merah dengan trapesium hitam di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Teluk Persia.',
+        flagCode: 'kw'
+    },
+    // BAHRAIN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Bahrain', 'Qatar', 'Kuwait', 'Uni Emirat Arab'],
+        correctIndex: 0,
+        explanation: 'Bendera Bahrain memiliki latar merah dengan garis putih bergerigi di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara kepulauan di Teluk Persia.',
+        flagCode: 'bh'
+    },
+    // TURKI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Turki', 'Suriah', 'Irak', 'Iran'],
+        correctIndex: 0,
+        explanation: 'Bendera Turki memiliki latar merah dengan bulan sabit dan bintang putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di antara Eropa dan Asia.',
+        flagCode: 'tr'
+    },
+    // GEORGIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Georgia', 'Armenia', 'Azerbaijan', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Georgia memiliki lima salib merah di latar putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di wilayah Kaukasus.',
+        flagCode: 'ge'
+    },
+    // ARMENIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Armenia', 'Georgia', 'Azerbaijan', 'Turki'],
+        correctIndex: 0,
+        explanation: 'Bendera Armenia memiliki tiga garis horizontal: merah, biru, dan oranye.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu negara tertua di dunia.',
+        flagCode: 'am'
+    },
+    // AZERBAIJAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Azerbaijan', 'Armenia', 'Georgia', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Azerbaijan memiliki tiga garis horizontal: biru, merah, dan hijau dengan bulan sabit dan bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di wilayah Kaukasus.',
+        flagCode: 'az'
+    },
+    // KAZAKHSTAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kazakhstan', 'Uzbekistan', 'Kirgizstan', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kazakhstan memiliki latar biru dengan matahari dan elang emas di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Asia Tengah.',
+        flagCode: 'kz'
+    },
+    // UZBEKISTAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Uzbekistan', 'Kazakhstan', 'Kirgizstan', 'Turkmenistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Uzbekistan memiliki tiga garis horizontal: biru, putih, dan hijau dengan bulan sabit dan bintang di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Asia Tengah.',
+        flagCode: 'uz'
+    },
+    // TURKMENISTAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Turkmenistan', 'Uzbekistan', 'Kazakhstan', 'Iran'],
+        correctIndex: 0,
+        explanation: 'Bendera Turkmenistan memiliki latar hijau dengan bulan sabit, bintang, dan karpet tradisional di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan karpet tradisionalnya.',
+        flagCode: 'tm'
+    },
+    // TAJIKISTAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Tajikistan', 'Uzbekistan', 'Kirgizstan', 'Afghanistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Tajikistan memiliki tiga garis horizontal: merah, putih, dan hijau dengan mahkota dan bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Asia Tengah.',
+        flagCode: 'tj'
+    },
+    // KYRGYZSTAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kirgizstan', 'Kazakhstan', 'Uzbekistan', 'Tajikistan'],
+        correctIndex: 0,
+        explanation: 'Bendera Kirgizstan memiliki latar merah dengan matahari dan tiang tenda tradisional di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Asia Tengah.',
+        flagCode: 'kg'
+    },
+
+    // ===== EROPA (44 Negara) =====
+    // INGGRIS
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Inggris', 'Amerika Serikat', 'Australia', 'Selandia Baru'],
+        correctIndex: 0,
+        explanation: 'Bendera Inggris, yang disebut Union Jack, menggabungkan salib dari tiga santo pelindung.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah bagian dari Britania Raya.',
+        flagCode: 'gb'
+    },
+    // PRANCIS
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Prancis', 'Italia', 'Belanda', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Prancis, yang disebut Tricolore, memiliki tiga warna vertikal: biru, putih, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Menara Eiffel.',
+        flagCode: 'fr'
+    },
+    // JERMAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Jerman', 'Belgia', 'Austria', 'Swiss'],
+        correctIndex: 0,
+        explanation: 'Bendera Jerman memiliki tiga garis horizontal: hitam, merah, dan emas.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu negara terbesar di Eropa.',
+        flagCode: 'de'
+    },
+    // ITALIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Italia', 'Prancis', 'Irlandia', 'Meksiko'],
+        correctIndex: 0,
+        explanation: 'Bendera Italia memiliki tiga warna vertikal: hijau, putih, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan bentuknya yang seperti sepatu bot.',
+        flagCode: 'it'
+    },
+    // SPANYOL
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Spanyol', 'Portugal', 'Andorra', 'Meksiko'],
+        correctIndex: 0,
+        explanation: 'Bendera Spanyol memiliki tiga garis horizontal: merah-kuning-merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan tomatina dan sepak bola.',
+        flagCode: 'es'
+    },
+    // PORTUGAL
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Portugal', 'Spanyol', 'Brasil', 'Angola'],
+        correctIndex: 0,
+        explanation: 'Bendera Portugal memiliki dua warna: hijau dan merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung barat Eropa.',
+        flagCode: 'pt'
+    },
+    // BELANDA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Belanda', 'Prancis', 'Rusia', 'Luksemburg'],
+        correctIndex: 0,
+        explanation: 'Bendera Belanda memiliki tiga garis horizontal: merah, putih, dan biru.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan kincir angin dan bunga tulip.',
+        flagCode: 'nl'
+    },
+    // BELGIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Belgia', 'Jerman', 'Prancis', 'Belanda'],
+        correctIndex: 0,
+        explanation: 'Bendera Belgia memiliki tiga warna vertikal: hitam, kuning, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan cokelat dan wafel.',
+        flagCode: 'be'
+    },
+    // SWISS
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Swiss', 'Swedia', 'Norwegia', 'Finlandia'],
+        correctIndex: 0,
+        explanation: 'Bendera Swiss berbentuk persegi dengan latar merah dan salib putih di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan gunung Alpen dan cokelat.',
+        flagCode: 'ch'
+    },
+    // AUSTRIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Austria', 'Jerman', 'Hungaria', 'Swiss'],
+        correctIndex: 0,
+        explanation: 'Bendera Austria memiliki tiga garis horizontal: merah-putih-merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan musik klasiknya.',
+        flagCode: 'at'
+    },
+    // YUNANI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Yunani', 'Siprus', 'Malta', 'Turki'],
+        correctIndex: 0,
+        explanation: 'Bendera Yunani memiliki sembilan garis biru-putih dan salib di sudut kiri atas.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah tempat lahirnya demokrasi.',
+        flagCode: 'gr'
+    },
+    // RUSIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Rusia', 'Prancis', 'Belanda', 'Bulgaria'],
+        correctIndex: 0,
+        explanation: 'Bendera Rusia memiliki tiga garis horizontal: putih, biru, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di dunia.',
+        flagCode: 'ru'
+    },
+    // UKRAINA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Ukraina', 'Polandia', 'Rusia', 'Belarus'],
+        correctIndex: 0,
+        explanation: 'Bendera Ukraina memiliki dua garis horizontal: biru dan kuning.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Eropa Timur.',
+        flagCode: 'ua'
+    },
+    // POLANDIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Polandia', 'Ukraina', 'Rusia', 'Jerman'],
+        correctIndex: 0,
+        explanation: 'Bendera Polandia memiliki dua garis horizontal: putih dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Eropa Tengah.',
+        flagCode: 'pl'
+    },
+    // HUNGARIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Hungaria', 'Austria', 'Rumania', 'Bulgaria'],
+        correctIndex: 0,
+        explanation: 'Bendera Hungaria memiliki tiga garis horizontal: merah, putih, dan hijau.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki ibu kota Budapest yang terkenal.',
+        flagCode: 'hu'
+    },
+    // RUMANIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Rumania', 'Hungaria', 'Bulgaria', 'Moldova'],
+        correctIndex: 0,
+        explanation: 'Bendera Rumania memiliki tiga warna vertikal: biru, kuning, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Dracula.',
+        flagCode: 'ro'
+    },
+    // BULGARIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Bulgaria', 'Rumania', 'Yunani', 'Turki'],
+        correctIndex: 0,
+        explanation: 'Bendera Bulgaria memiliki tiga garis horizontal: putih, hijau, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Semenanjung Balkan.',
+        flagCode: 'bg'
+    },
+    // SERBIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Serbia', 'Kroasia', 'Slovenia', 'Montenegro'],
+        correctIndex: 0,
+        explanation: 'Bendera Serbia memiliki tiga garis horizontal: merah, biru, dan putih dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Semenanjung Balkan.',
+        flagCode: 'rs'
+    },
+    // KROASIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kroasia', 'Serbia', 'Slovenia', 'Bosnia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kroasia memiliki tiga garis horizontal: merah, putih, dan biru dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan pantai Adriatiknya.',
+        flagCode: 'hr'
+    },
+    // SLOVENIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Slovenia', 'Kroasia', 'Serbia', 'Austria'],
+        correctIndex: 0,
+        explanation: 'Bendera Slovenia memiliki tiga garis horizontal: putih, biru, dan merah dengan lambang negara di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Eropa Tengah.',
+        flagCode: 'si'
+    },
+    // SWEDIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Swedia', 'Norwegia', 'Finlandia', 'Denmark'],
+        correctIndex: 0,
+        explanation: 'Bendera Swedia memiliki latar biru dengan salib kuning.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara Skandinavia terbesar.',
+        flagCode: 'se'
+    },
+    // NORWEGIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Norwegia', 'Swedia', 'Finlandia', 'Denmark'],
+        correctIndex: 0,
+        explanation: 'Bendera Norwegia memiliki latar merah dengan salib biru bergaris putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan fjordnya.',
+        flagCode: 'no'
+    },
+    // DENMARK
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Denmark', 'Swedia', 'Norwegia', 'Finlandia'],
+        correctIndex: 0,
+        explanation: 'Bendera Denmark, yang disebut Dannebrog, memiliki latar merah dengan salib putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu negara tertua di Eropa.',
+        flagCode: 'dk'
+    },
+    // FINLANDIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Finlandia', 'Swedia', 'Norwegia', 'Rusia'],
+        correctIndex: 0,
+        explanation: 'Bendera Finlandia memiliki latar putih dengan salib biru.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal sebagai "Negeri Seribu Danau".',
+        flagCode: 'fi'
+    },
+    // IRLANDIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Irlandia', 'Inggris', 'Prancis', 'Italia'],
+        correctIndex: 0,
+        explanation: 'Bendera Irlandia memiliki tiga warna vertikal: hijau, putih, dan oranye.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Hari St. Patrick.',
+        flagCode: 'ie'
+    },
+
+    // ===== AMERIKA (35 Negara) =====
+    // AMERIKA SERIKAT
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Amerika Serikat', 'Inggris', 'Kanada', 'Australia'],
+        correctIndex: 0,
+        explanation: 'Bendera Amerika Serikat memiliki 13 garis merah-putih dan 50 bintang putih di bidang biru.',
+        difficulty: 'sedang',
+        hint: 'Negara ini dikenal sebagai "Negeri Paman Sam".',
+        flagCode: 'us'
+    },
+    // KANADA    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kanada', 'Amerika Serikat', 'Inggris', 'Australia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kanada terkenal dengan daun maple merah di tengah dengan latar putih di antara dua garis merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar kedua di dunia.',
+        flagCode: 'ca'
+    },
+    // MEKSIKO
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Meksiko', 'Spanyol', 'Italia', 'Kolombia'],
+        correctIndex: 0,
+        explanation: 'Bendera Meksiko memiliki tiga warna vertikal: hijau, putih, dan merah dengan lambang elang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan makanan pedasnya.',
+        flagCode: 'mx'
+    },
+    // BRASIL
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Brasil', 'Portugal', 'Kolombia', 'Argentina'],
+        correctIndex: 0,
+        explanation: 'Bendera Brasil memiliki latar hijau dengan berlian kuning dan lingkaran biru berisi bintang-bintang.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Amerika Selatan.',
+        flagCode: 'br'
+    },
+    // ARGENTINA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Argentina', 'Uruguay', 'Chili', 'Peru'],
+        correctIndex: 0,
+        explanation: 'Bendera Argentina memiliki tiga garis horizontal: biru-putih-biru dengan matahari di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan danau dan gunung es di Patagonia.',
+        flagCode: 'ar'
+    },
+    // CHILI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Chili', 'Argentina', 'Peru', 'Bolivia'],
+        correctIndex: 0,
+        explanation: 'Bendera Chili memiliki dua warna: putih dan biru dengan bintang putih di sudut kiri, dan merah di bagian bawah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini berbentuk seperti cabai.',
+        flagCode: 'cl'
+    },
+    // PERU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Peru', 'Ekuador', 'Kolombia', 'Bolivia'],
+        correctIndex: 0,
+        explanation: 'Bendera Peru memiliki tiga garis vertikal: merah-putih-merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Machu Picchu.',
+        flagCode: 'pe'
+    },
+    // KOLOMBIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kolombia', 'Ekuador', 'Venezuela', 'Panama'],
+        correctIndex: 0,
+        explanation: 'Bendera Kolombia memiliki tiga garis horizontal: kuning di atas (setengah), biru, dan merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan kopi dan salsa.',
+        flagCode: 'co'
+    },
+    // VENEZUELA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Venezuela', 'Kolombia', 'Ekuador', 'Peru'],
+        correctIndex: 0,
+        explanation: 'Bendera Venezuela memiliki tiga garis horizontal: kuning, biru, dan merah dengan bintang-bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki danau terbesar di Amerika Selatan.',
+        flagCode: 've'
+    },
+    // EKUADOR
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Ekuador', 'Kolombia', 'Peru', 'Venezuela'],
+        correctIndex: 0,
+        explanation: 'Bendera Ekuador memiliki tiga garis horizontal: kuning, biru, dan merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di garis khatulistiwa.',
+        flagCode: 'ec'
+    },
+    // BOLIVIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Bolivia', 'Peru', 'Chili', 'Argentina'],
+        correctIndex: 0,
+        explanation: 'Bendera Bolivia memiliki tiga garis horizontal: merah, kuning, dan hijau.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di pegunungan Andes.',
+        flagCode: 'bo'
+    },
+    // PARAGUAY
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Paraguay', 'Argentina', 'Brasil', 'Uruguay'],
+        correctIndex: 0,
+        explanation: 'Bendera Paraguay memiliki tiga garis horizontal: merah, putih, dan biru dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Amerika Selatan bagian tengah.',
+        flagCode: 'py'
+    },
+    // URUGUAY
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Uruguay', 'Argentina', 'Brasil', 'Paraguay'],
+        correctIndex: 0,
+        explanation: 'Bendera Uruguay memiliki sembilan garis biru-putih dan matahari di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di antara Argentina dan Brasil.',
+        flagCode: 'uy'
+    },
+    // KOSTA RIKA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kosta Rika', 'Panama', 'Nikaragua', 'Honduras'],
+        correctIndex: 0,
+        explanation: 'Bendera Kosta Rika memiliki lima garis: biru-putih-merah-putih-biru dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan keindahan alamnya.',
+        flagCode: 'cr'
+    },
+    // PANAMA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Panama', 'Kosta Rika', 'Kolombia', 'Nikaragua'],
+        correctIndex: 0,
+        explanation: 'Bendera Panama memiliki empat bagian: putih dengan bintang biru di kiri atas, putih dengan bintang merah di kanan atas, biru di kiri bawah, dan merah di kanan bawah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki terusan yang menghubungkan Samudra Pasifik dan Atlantik.',
+        flagCode: 'pa'
+    },
+    // KUBA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kuba', 'Puerto Riko', 'Republik Dominika', 'Haiti'],
+        correctIndex: 0,
+        explanation: 'Bendera Kuba memiliki tiga garis biru dan dua garis putih dengan segitiga merah dan bintang putih di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan cerutu dan mobil klasiknya.',
+        flagCode: 'cu'
+    },
+    // REPUBLIK DOMINIKA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Republik Dominika', 'Kuba', 'Puerto Riko', 'Haiti'],
+        correctIndex: 0,
+        explanation: 'Bendera Republik Dominika memiliki salib putih dengan empat bagian biru dan merah serta lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini berbagi pulau dengan Haiti.',
+        flagCode: 'do'
+    },
+    // HAITI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Haiti', 'Republik Dominika', 'Kuba', 'Jamaika'],
+        correctIndex: 0,
+        explanation: 'Bendera Haiti memiliki dua garis horizontal: biru dan merah dengan lambang negara di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara merdeka pertama di Karibia.',
+        flagCode: 'ht'
+    },
+    // JAMAICA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Jamaika', 'Kuba', 'Haiti', 'Bahama'],
+        correctIndex: 0,
+        explanation: 'Bendera Jamaika memiliki latar kuning dengan segitiga hijau di atas dan bawah serta segitiga hitam di kiri dan kanan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan musik reggae.',
+        flagCode: 'jm'
+    },
+
+    // ===== AFRIKA (54 Negara) =====
+    // MESIR
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Mesir', 'Libya', 'Sudan', 'Yordania'],
+        correctIndex: 0,
+        explanation: 'Bendera Mesir memiliki tiga garis horizontal: merah, putih, dan hitam dengan lambang elang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan piramida dan Sungai Nil.',
+        flagCode: 'eg'
+    },
+    // NIGERIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Nigeria', 'Ghana', 'Pantai Gading', 'Kamerun'],
+        correctIndex: 0,
+        explanation: 'Bendera Nigeria memiliki tiga garis vertikal: hijau-putih-hijau.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terpadat di Afrika.',
+        flagCode: 'ng'
+    },
+    // AFRIKA SELATAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Afrika Selatan', 'Namibia', 'Botswana', 'Zimbabwe'],
+        correctIndex: 0,
+        explanation: 'Bendera Afrika Selatan memiliki desain Y yang unik dengan enam warna yang melambangkan persatuan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Nelson Mandela.',
+        flagCode: 'za'
+    },
+    // MAROKO
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Maroko', 'Aljazair', 'Tunisia', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Maroko memiliki latar merah dengan bintang hijau di tengah yang disebut Bintang Sulaiman.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di ujung barat laut Afrika.',
+        flagCode: 'ma'
+    },
+    // ALJAZAIR
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Aljazair', 'Maroko', 'Tunisia', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Aljazair memiliki dua warna: hijau dan putih dengan bulan sabit dan bintang merah di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Afrika.',
+        flagCode: 'dz'
+    },
+    // TUNISIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Tunisia', 'Aljazair', 'Maroko', 'Libya'],
+        correctIndex: 0,
+        explanation: 'Bendera Tunisia memiliki latar merah dengan lingkaran putih dan bulan sabit serta bintang merah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan Puncak Es Krim Tunisia.',
+        flagCode: 'tn'
+    },
+    // LIBYA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Libya', 'Mesir', 'Sudan', 'Tunisia'],
+        correctIndex: 0,
+        explanation: 'Bendera Libya memiliki tiga warna: merah, hitam, dan hijau dengan bulan sabit dan bintang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini memiliki cadangan minyak terbesar di Afrika.',
+        flagCode: 'ly'
+    },
+    // SUDAN
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Sudan', 'Mesir', 'Etiopia', 'Yaman'],
+        correctIndex: 0,
+        explanation: 'Bendera Sudan memiliki tiga garis horizontal: merah, putih, dan hitam dengan segitiga hijau di sisi kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Afrika.',
+        flagCode: 'sd'
+    },
+    // ETHIOPIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Etiopia', 'Eritrea', 'Somali', 'Sudan'],
+        correctIndex: 0,
+        explanation: 'Bendera Etiopia memiliki tiga warna: hijau, kuning, dan merah dengan lambang di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu yang tertua di dunia.',
+        flagCode: 'et'
+    },
+    // KENYA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kenya', 'Tanzania', 'Uganda', 'Etiopia'],
+        correctIndex: 0,
+        explanation: 'Bendera Kenya memiliki tiga warna: hitam, merah, dan hijau dengan perisai dan tombak tradisional.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan safari dan maraton.',
+        flagCode: 'ke'
+    },
+    // GHANA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Ghana', 'Nigeria', 'Pantai Gading', 'Togo'],
+        correctIndex: 0,
+        explanation: 'Bendera Ghana memiliki tiga garis horizontal: merah, kuning, dan hijau dengan bintang hitam di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara pertama di Afrika yang merdeka dari kolonial.',
+        flagCode: 'gh'
+    },
+
+    // ===== OSEANIA (14 Negara) =====
+    // AUSTRALIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Australia', 'Selandia Baru', 'Fiji', 'Papua Nugini'],
+        correctIndex: 0,
+        explanation: 'Bendera Australia memiliki latar biru dengan Union Jack di sudut dan bintang persemakmuran serta salib selatan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah benua sekaligus negara.',
+        flagCode: 'au'
+    },
+    // SELANDIA BARU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Selandia Baru', 'Australia', 'Fiji', 'Kepulauan Cook'],
+        correctIndex: 0,
+        explanation: 'Bendera Selandia Baru memiliki latar biru dengan Union Jack dan empat bintang merah di sisi kanan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan film Lord of the Rings.',
+        flagCode: 'nz'
+    },
+    // PAPUA NUGINI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Papua Nugini', 'Australia', 'Indonesia', 'Kepulauan Solomon'],
+        correctIndex: 0,
+        explanation: 'Bendera Papua Nugini memiliki dua bagian: merah dengan burung cendrawasih dan hitam dengan bintang salib selatan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini berbatasan dengan Indonesia di bagian timur.',
+        flagCode: 'pg'
+    },
+    // FIJI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Fiji', 'Australia', 'Selandia Baru', 'Tonga'],
+        correctIndex: 0,
+        explanation: 'Bendera Fiji memiliki latar biru dengan Union Jack dan lambang negara di sisi kanan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan pantai dan resornya.',
+        flagCode: 'fj'
+    },
+    // KEPULAUAN SOLOMON
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kepulauan Solomon', 'Papua Nugini', 'Vanuatu', 'Fiji'],
+        correctIndex: 0,
+        explanation: 'Bendera Kepulauan Solomon memiliki segitiga biru dan hijau dengan garis kuning diagonal dan bintang putih di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Pasifik Selatan.',
+        flagCode: 'sb'
+    },
+    // VANUATU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Vanuatu', 'Kepulauan Solomon', 'Fiji', 'Papua Nugini'],
+        correctIndex: 0,
+        explanation: 'Bendera Vanuatu memiliki dua warna utama: merah dan hijau dengan garis kuning dan lambang negara di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan gunung berapi aktifnya.',
+        flagCode: 'vu'
+    },
+    // SAMOA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Samoa', 'Tonga', 'Fiji', 'Kepulauan Cook'],
+        correctIndex: 0,
+        explanation: 'Bendera Samoa memiliki latar merah dengan bintang putih di sudut kiri dan Union Jack di sudut kanan.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan budaya Polinesianya.',
+        flagCode: 'ws'
+    },
+    // TONGA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Tonga', 'Samoa', 'Fiji', 'Kepulauan Cook'],
+        correctIndex: 0,
+        explanation: 'Bendera Tonga memiliki latar merah dengan salib putih di sudut kiri.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah satu-satunya kerajaan di Polinesia.',
+        flagCode: 'to'
+    },
+    // KIRIBATI
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kiribati', 'Tuvalu', 'Nauru', 'Kepulauan Marshall'],
+        correctIndex: 0,
+        explanation: 'Bendera Kiribati memiliki matahari terbit di atas laut dengan burung frigate di atasnya.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terdiri dari 33 atol.',
+        flagCode: 'ki'
+    },
+    // TUVALU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Tuvalu', 'Kiribati', 'Nauru', 'Kepulauan Marshall'],
+        correctIndex: 0,
+        explanation: 'Bendera Tuvalu memiliki latar biru dengan Union Jack dan sembilan bintang kuning.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah salah satu yang terkecil di dunia.',
+        flagCode: 'tv'
+    },
+    // NAURU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Nauru', 'Tuvalu', 'Kiribati', 'Kepulauan Marshall'],
+        correctIndex: 0,
+        explanation: 'Bendera Nauru memiliki latar biru dengan garis kuning dan bintang putih di bawah garis.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara pulau terkecil di dunia.',
+        flagCode: 'nr'
+    },
+    // KEPULAUAN MARSHALL
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Kepulauan Marshall', 'Nauru', 'Tuvalu', 'Kiribati'],
+        correctIndex: 0,
+        explanation: 'Bendera Kepulauan Marshall memiliki latar biru dengan garis oranye dan putih diagonal serta bintang putih.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terletak di Samudra Pasifik.',
+        flagCode: 'mh'
+    },
+    // PALAU
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Palau', 'Kepulauan Marshall', 'Nauru', 'Tuvalu'],
+        correctIndex: 0,
+        explanation: 'Bendera Palau memiliki latar biru dengan bulan sabit kuning di tengah.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terkenal dengan danau ubur-uburnya.',
+        flagCode: 'pw'
+    },
+    // MICRONESIA
+    {
+        question: 'Bendera ini milik negara mana?',
+        options: ['Mikronesia', 'Palau', 'Kepulauan Marshall', 'Nauru'],
+        correctIndex: 0,
+        explanation: 'Bendera Mikronesia memiliki latar biru dengan empat bintang putih yang melambangkan empat negara bagian.',
+        difficulty: 'sedang',
+        hint: 'Negara ini terdiri dari empat negara bagian utama.',
+        flagCode: 'fm'
     }
 ];
 

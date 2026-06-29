@@ -416,63 +416,79 @@ class QuizEngine {
     }
 
     showQuestion() {
-        const questions = this.state.questions;
-        const index = this.state.currentIndex;
+    const questions = this.state.questions;
+    const index = this.state.currentIndex;
 
-        if (index >= questions.length) {
-            this.finishQuiz();
-            return;
-        }
-
-        const question = questions[index];
-        this.state.answered = false;
-        this.state.hintUsed = false;
-        
-        // Sembunyikan hint saat ganti soal
-        DOM.hintContainer.style.display = 'none';
-        DOM.hintContainer.classList.remove('active');
-
-        DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
-        DOM.questionText.textContent = question.question;
-
-        const shuffledOptions = shuffleArray(
-            question.options.map((text, i) => ({
-                text,
-                index: i,
-                isCorrect: i === question.correctIndex
-            }))
-        );
-
-        DOM.optionsContainer.innerHTML = '';
-        const letters = ['A', 'B', 'C', 'D'];
-        shuffledOptions.forEach((option, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.dataset.index = option.index;
-            btn.dataset.correct = option.isCorrect;
-            btn.innerHTML = `
-                <span class="option-letter">${letters[i]}</span>
-                <span>${option.text}</span>
-            `;
-            btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
-            DOM.optionsContainer.appendChild(btn);
-        });
-
-        DOM.hintText.textContent = '';
-
-        this.updateProgress();
-        this.updateScore();
-
-        DOM.timerBar.classList.remove('warning', 'danger');
-
-        this.updateTimerVisibility();
-
-        if (this.state.timerEnabled) {
-            this.state.timeLeft = this.state.maxTime;
-            this.updateTimerUI();
-            this.startTimer();
-        }
+    if (index >= questions.length) {
+        this.finishQuiz();
+        return;
     }
+
+    const question = questions[index];
+    this.state.answered = false;
+    this.state.hintUsed = false;
+    
+    // Sembunyikan hint saat ganti soal
+    DOM.hintContainer.style.display = 'none';
+    DOM.hintContainer.classList.remove('active');
+
+    DOM.questionNumber.textContent = `Pertanyaan #${index + 1}`;
+    
+    // CEK: Jika kategori adalah "Nama Bendera Dunia" dan ada flagCode
+    if (question.category === 'Nama Bendera Dunia' && question.flagCode) {
+        // Tampilkan gambar bendera di atas pertanyaan
+        DOM.questionText.innerHTML = `
+            <div class="flag-container">
+                <img src="https://flagcdn.com/w320/${question.flagCode}.png" 
+                     alt="Bendera" 
+                     class="flag-image"
+                     loading="lazy"
+                     onerror="this.style.display='none'">
+            </div>
+            <div class="question-text-only">${question.question}</div>
+        `;
+    } else {
+        DOM.questionText.innerHTML = question.question;
+    }
+
+    const shuffledOptions = shuffleArray(
+        question.options.map((text, i) => ({
+            text,
+            index: i,
+            isCorrect: i === question.correctIndex
+        }))
+    );
+
+    DOM.optionsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    shuffledOptions.forEach((option, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.dataset.index = option.index;
+        btn.dataset.correct = option.isCorrect;
+        btn.innerHTML = `
+            <span class="option-letter">${letters[i]}</span>
+            <span>${option.text}</span>
+        `;
+        btn.addEventListener('click', () => this.handleAnswer(btn, option.isCorrect, question));
+        DOM.optionsContainer.appendChild(btn);
+    });
+
+    DOM.hintText.textContent = '';
+
+    this.updateProgress();
+    this.updateScore();
+
+    DOM.timerBar.classList.remove('warning', 'danger');
+
+    this.updateTimerVisibility();
+
+    if (this.state.timerEnabled) {
+        this.state.timeLeft = this.state.maxTime;
+        this.updateTimerUI();
+        this.startTimer();
+    }
+}
 
     handleAnswer(btn, isCorrect, question) {
         if (this.state.answered) return;
