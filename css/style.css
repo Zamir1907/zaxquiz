@@ -124,61 +124,129 @@ body {
 /* ============================================ */
 /* HINT SECTION & QUIZ ACTIONS - FIX LAYOUT   */
 /* ============================================ */
+
+/* === CONTAINER UTAMA === */
 .hint-section {
     margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+/* === BARIS TOMBOL (HINT + KELUAR) - HORIZONTAL === */
+.hint-actions-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
 }
 
+/* === TOMBOL HINT === */
+.btn-hint {
+    background: var(--accent);
+    color: var(--text-primary);
+    min-width: 100px;
+    flex: 0 0 auto;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+}
+
+.btn-hint:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.btn-hint:active {
+    transform: scale(0.95);
+}
+
+/* === TOMBOL KELUAR === */
 .quiz-actions {
     display: flex;
     justify-content: flex-start;
     gap: 12px;
     flex-wrap: wrap;
-    flex: 1;
-    min-width: 180px;
+    flex: 0 1 auto;
     margin-top: 0;
     position: relative;
     z-index: 1;
 }
 
-@media (max-width: 768px) {
-    .hint-section {
-        flex-direction: column;
-        gap: 12px;
-    }
-    
-    .hint-container {
-        min-width: 100%;
-        flex: none;
-    }
-    
-    .hint-container.active {
-        flex: none;
-        min-width: 100%;
-    }
-    
-    .hint-container:not(.active) {
-        flex: 0 0 auto;
-        min-width: 0;
-        width: 0;
-        padding: 0;
-        margin: 0;
-        border: none;
-        box-shadow: none;
-        overflow: hidden;
-        display: none;
-    }
-    
-    .quiz-actions {
-        min-width: 100%;
-        flex: none;
-        justify-content: center;
-    }
+.quiz-actions .btn-danger {
+    flex-shrink: 0;
+    min-width: 100px;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    background: var(--danger);
+    color: white;
+}
+
+.quiz-actions .btn-danger:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.quiz-actions .btn-danger:active {
+    transform: scale(0.95);
+}
+
+/* === HINT CONTAINER (Muncul di bawah tombol) === */
+.hint-container {
+    width: 100%;
+    margin-top: 0;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--accent);
+    animation: fadeSlideIn 0.3s ease;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    display: none;
+}
+
+.hint-container.active {
+    display: block;
+}
+
+.hint-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.hint-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.hint-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 /* ============================================ */
@@ -577,17 +645,6 @@ button:focus {
 }
 
 .btn-danger:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.05);
-}
-
-.btn-hint {
-    background: var(--accent);
-    color: var(--text-primary);
-    min-width: 100px;
-}
-
-.btn-hint:hover {
     transform: translateY(-2px);
     filter: brightness(1.05);
 }
@@ -1057,60 +1114,6 @@ button:focus {
 }
 
 /* ============================================ */
-/* HINT CONTAINER - FIX LAYOUT SIDE BY SIDE   */
-/* ============================================ */
-.hint-container {
-    flex: 1;
-    min-width: 200px;
-    margin-top: 0;
-    padding: 16px 20px;
-    background: var(--bg-card);
-    border-radius: var(--radius-sm);
-    border-left: 4px solid var(--accent);
-    animation: fadeSlideIn 0.3s ease;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    display: none;
-}
-
-/* Saat hint aktif */
-.hint-container.active {
-    display: block;
-    flex: 1;
-    min-width: 200px;
-}
-
-/* Saat hint tidak aktif, jangan makan space */
-.hint-container:not(.active) {
-    flex: 0 0 auto;
-    min-width: 0;
-    width: 0;
-    padding: 0;
-    margin: 0;
-    border: none;
-    box-shadow: none;
-    overflow: hidden;
-    display: none;
-}
-
-.hint-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.hint-icon {
-    font-size: 1.2rem;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.hint-text {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-}
-
-/* ============================================ */
 /* EXPLANATION SCREEN                        */
 /* ============================================ */
 
@@ -1528,21 +1531,42 @@ button:focus {
         justify-content: space-between;
     }
 
-    /* Fix hint section di mobile */
-    .hint-section {
-        flex-direction: column;
-        gap: 12px;
+    /* === FIX MOBILE: Tombol hint & keluar tetap horizontal === */
+    .hint-actions-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-start;
     }
-    
-    .hint-container {
-        min-width: 100%;
-        flex: none;
+
+    .btn-hint {
+        min-width: 80px;
+        flex: 0 0 auto;
+        padding: 12px 18px;
+        font-size: 0.9rem;
+        min-height: 44px;
     }
-    
+
     .quiz-actions {
-        min-width: 100%;
-        flex: none;
-        justify-content: center;
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    .quiz-actions .btn-danger {
+        min-width: 80px;
+        padding: 12px 18px;
+        font-size: 0.9rem;
+        min-height: 44px;
+        flex: 0 0 auto;
+    }
+
+    .hint-container {
+        width: 100%;
+        padding: 14px 16px;
+    }
+
+    .hint-text {
+        font-size: 0.9rem;
     }
 }
 
@@ -1713,6 +1737,44 @@ button:focus {
     .timer-text {
         font-size: 0.7rem;
         top: -18px;
+    }
+
+    /* === FIX MOBILE KECIL: Tombol hint & keluar tetap horizontal === */
+    .hint-actions-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: flex-start;
+    }
+
+    .btn-hint {
+        min-width: 70px;
+        flex: 0 0 auto;
+        padding: 10px 14px;
+        font-size: 0.8rem;
+        min-height: 38px;
+    }
+
+    .quiz-actions {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    .quiz-actions .btn-danger {
+        min-width: 70px;
+        padding: 10px 14px;
+        font-size: 0.8rem;
+        min-height: 38px;
+        flex: 0 0 auto;
+    }
+
+    .hint-container {
+        width: 100%;
+        padding: 12px 14px;
+    }
+
+    .hint-text {
+        font-size: 0.85rem;
     }
 }
 
