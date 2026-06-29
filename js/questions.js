@@ -1994,7 +1994,7 @@ const namaBenderaQuestions = [
         hint: 'Negara ini dikenal sebagai "Negeri Paman Sam".',
         flagCode: 'us'
     },
-    // KANADA    
+    // KANADA
     {
         question: 'Bendera ini milik negara mana?',
         options: ['Kanada', 'Amerika Serikat', 'Inggris', 'Australia'],
