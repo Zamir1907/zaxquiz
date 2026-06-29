@@ -168,10 +168,10 @@ class SoundManager {
 
     loadSounds() {
         const soundFiles = {
-            click: 'sounds/click.mp3',
-            correct: 'sounds/correct.mp3',
-            wrong: 'sounds/wrong.mp3',
-            complete: 'sounds/complete.mp3'
+            click: 'assets/sounds/click.mp3',
+            correct: 'assets/sounds/correct.mp3',
+            wrong: 'assets/sounds/wrong.mp3',
+            complete: 'assets/sounds/complete.mp3'
         };
 
         for (const [key, path] of Object.entries(soundFiles)) {
@@ -893,6 +893,30 @@ function setupEventListeners() {
             if (btns[idx]) btns[idx].click();
         }
     });
+    
+// ============================================
+// BACK NAVIGATION - CEKEL TOMBOL BACK BROWSER
+// ============================================
+window.addEventListener('popstate', function(e) {
+    if (quizEngine.state.isQuizActive) {
+        sound.playClick();
+        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.')) {
+            sound.playClick();
+            quizEngine.resetQuiz();
+            // Hapus state agar tidak kembali ke halaman sebelumnya
+            history.pushState(null, '', window.location.href);
+        } else {
+            sound.playClick();
+            // Tambahkan state baru agar tombol back tidak langsung keluar
+            history.pushState(null, '', window.location.href);
+        }
+    }
+});
+
+// Tambahkan state awal saat halaman dimuat
+window.addEventListener('load', function() {
+    history.pushState(null, '', window.location.href);
+});
 
     // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
