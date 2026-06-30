@@ -741,7 +741,7 @@ class QuizEngine {
         // === AMBIL EMOJI & TEKS BERDASARKAN SKOR ===
         const resultData = getResultMessageData(correct, total);
         DOM.resultEmoji.textContent = resultData.emoji;
-        DOM.resultTitle.textContent = `${resultData.emoji} ${resultData.text}`;
+        DOM.resultTitle.textContent = resultData.text;
         
         DOM.resultTotalLabel.textContent = `dari ${total}`;
         DOM.resultScore.textContent = `${correct}/${total}`;
