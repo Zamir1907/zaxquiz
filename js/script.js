@@ -1075,15 +1075,15 @@ function setupEventListeners() {
         quizEngine.initQuiz(category, difficulty, timerEnabled);
     });
 
-    DOM.exitQuizBtn.addEventListener('click', () => {
+    DOM.exitQuizBtn.addEventListener('click', async () => {
+    sound.playClick();
+    if (await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
         sound.playClick();
-       if (await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
-            sound.playClick();
-            quizEngine.resetQuiz();
-        } else {
-            sound.playClick();
-        }
-    });
+        quizEngine.resetQuiz();
+    } else {
+        sound.playClick();
+    }
+});
 
     DOM.continueBtn.addEventListener('click', () => {
         sound.playClick();
@@ -1121,7 +1121,7 @@ function setupEventListeners() {
         history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
     });
 
-    DOM.clearHistoryBtn.addEventListener('click', () => {
+    DOM.clearHistoryBtn.addEventListener('click', async () => {
         sound.playClick();
         if (await showCustomDialog('Yakin ingin menghapus semua riwayat?')) {
             sound.playClick();
@@ -1135,15 +1135,18 @@ function setupEventListeners() {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
+       if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
+    e.preventDefault();
+    sound.playClick();
+    (async () => {
+        if (await showCustomDialog('Yakin ingin keluar dari quiz?')) {
             sound.playClick();
-         if (await showCustomDialog('Yakin ingin keluar dari quiz?')) {
-                sound.playClick();
-                quizEngine.resetQuiz();
-            } else {
-                sound.playClick();
-            }
+            quizEngine.resetQuiz();
+        } else {
+            sound.playClick();
         }
+    })();
+}
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
             quizEngine.showHint();
             e.preventDefault();
