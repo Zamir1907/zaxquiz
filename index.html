@@ -351,10 +351,30 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- SCRIPTS                                     -->
+    <!-- SCRIPTS
     <!-- ============================================ -->
     <script src="js/questions.js"></script>
     <script src="js/script.js"></script>
+    
+<!-- ========================================== -->
+<!-- CUSTOM DIALOG
+<!-- ========================================== -->
+<div id="customDialog" class="custom-dialog" style="display: none;">
+    <div class="custom-dialog-overlay"></div>
+    <div class="custom-dialog-content">
+        <div class="custom-dialog-header">
+            <span class="custom-dialog-title">⚠️ INFORMATION BY ZAX</span>
+            <button class="custom-dialog-close" id="dialogCloseBtn">&times;</button>
+        </div>
+        <div class="custom-dialog-body">
+            <p id="dialogMessage">Pesan akan muncul di sini...</p>
+        </div>
+        <div class="custom-dialog-footer">
+            <button class="btn btn-secondary" id="dialogCancelBtn">Batal</button>
+            <button class="btn btn-primary" id="dialogConfirmBtn">OK</button>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
