@@ -28,6 +28,74 @@ const AppState = {
 };
 
 // ============================================
+// CUSTOM DIALOG SYSTEM
+// ============================================
+function showCustomDialog(message, options = {}) {
+    return new Promise((resolve) => {
+        const dialog = document.getElementById('customDialog');
+        const msgEl = document.getElementById('dialogMessage');
+        const confirmBtn = document.getElementById('dialogConfirmBtn');
+        const cancelBtn = document.getElementById('dialogCancelBtn');
+        const closeBtn = document.getElementById('dialogCloseBtn');
+        
+        // Set pesan
+        msgEl.textContent = message;
+        
+        // Tampilkan dialog
+        dialog.style.display = 'flex';
+        
+        // Sembunyikan tombol yang tidak diperlukan
+        if (options.type === 'alert') {
+            cancelBtn.style.display = 'none';
+            confirmBtn.textContent = 'OK';
+        } else {
+            cancelBtn.style.display = 'inline-flex';
+            confirmBtn.textContent = options.confirmText || 'OK';
+            cancelBtn.textContent = options.cancelText || 'Batal';
+        }
+        
+        // Fungsi close
+        function close(result) {
+            dialog.style.display = 'none';
+            resolve(result);
+        }
+        
+        // Event listeners
+        confirmBtn.onclick = () => {
+    sound.playClick();
+    close(true);
+};
+
+cancelBtn.onclick = () => {
+    sound.playClick();
+    close(false);
+};
+
+closeBtn.onclick = () => {
+    sound.playClick();
+    close(false);
+};
+        
+        // Klik di luar overlay (opsional)
+        const overlay = dialog.querySelector('.custom-dialog-overlay');
+        overlay.onclick = () => {
+            if (options.type !== 'alert') {
+                close(false);
+            }
+        };
+        
+        // Escape key
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                close(false);
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    });
+}
+
+// ============================================
 // DOM REFERENCES
 // ============================================
 const DOM = {};
@@ -1009,7 +1077,7 @@ function setupEventListeners() {
 
     DOM.exitQuizBtn.addEventListener('click', () => {
         sound.playClick();
-        if (confirm('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
+       if (await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
             sound.playClick();
             quizEngine.resetQuiz();
         } else {
@@ -1055,7 +1123,7 @@ function setupEventListeners() {
 
     DOM.clearHistoryBtn.addEventListener('click', () => {
         sound.playClick();
-        if (confirm('Yakin ingin menghapus semua riwayat?')) {
+        if (await showCustomDialog('Yakin ingin menghapus semua riwayat?')) {
             sound.playClick();
             StorageManager.clearHistory();
             renderHistory();
@@ -1069,7 +1137,7 @@ function setupEventListeners() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
             sound.playClick();
-            if (confirm('Yakin ingin keluar dari quiz?')) {
+         if (await showCustomDialog('Yakin ingin keluar dari quiz?')) {
                 sound.playClick();
                 quizEngine.resetQuiz();
             } else {
@@ -1091,8 +1159,23 @@ function setupEventListeners() {
         }
     });
 
+// Sound saat ganti kategori
+DOM.categorySelect.addEventListener('change', function() {
+    sound.playClick();
+});
+
+// Sound saat ganti tingkat kesulitan
+DOM.difficultySelect.addEventListener('change', function() {
+    sound.playClick();
+});
+
+// Sound saat timer toggle
+DOM.timerToggle.addEventListener('change', function() {
+    sound.playClick();
+});
+
     // ============================================
-    // BACK NAVIGATION - FIX SEMPURNA
+    // BACK NAVIGATION
     // ============================================
     window.addEventListener('popstate', function(e) {
         console.log('🔙 Back button pressed! State:', e.state);
