@@ -122,73 +122,34 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
-// RESULT MESSAGE - BERDASARKAN SKOR (BUKAN PERSENTASE)
+// RESULT MESSAGE - BERDASARKAN SKOR (CUSTOM)
 // ============================================
-function getResultMessage(score, total) {
+function getResultMessageData(score, total) {
     const messages = [
-        {
-            range: [0, 0],
-            emoji: "💀",
-            text: "Anjir kosong 😭"
-        },
-        {
-            range: [1, 1],
-            emoji: "🗿",
-            text: "Yang penting nyentuh."
-        },
-        {
-            range: [2, 2],
-            emoji: "😭",
-            text: "Dikit amat bjir."
-        },
-        {
-            range: [3, 3],
-            emoji: "😂",
-            text: "Masih mending lah."
-        },
-        {
-            range: [4, 4],
-            emoji: "🤏",
-            text: "Tipis banget."
-        },
-        {
-            range: [5, 5],
-            emoji: "😎",
-            text: "Ya lumayan."
-        },
-        {
-            range: [6, 7],
-            emoji: "🔥",
-            text: "Mulai gacor."
-        },
-        {
-            range: [8, 9],
-            emoji: "🧠",
-            text: "Buset gacor juga."
-        },
-        {
-            range: [10, 12],
-            emoji: "🚀",
-            text: "Si paling ngerti."
-        },
-        {
-            range: [13, 14],
-            emoji: "👑",
-            text: "WOI SANTAI WOI 😭"
-        },
-        {
-            range: [15, 15],
-            emoji: "🏆",
-            text: "FIX LU ADMIN 😭"
-        }
-    ];;
+        { range: [0, 0], emoji: "👍", text: "Agak ngontol tapi oke." },
+        { range: [1, 1], emoji: "🗿", text: "Yang penting nyentuh." },
+        { range: [2, 2], emoji: "😭", text: "Skor kayak biji pler." },
+        { range: [3, 3], emoji: "😂", text: "Masih mending lah." },
+        { range: [4, 4], emoji: "🤭", text: "Jari aja ada lima." },
+        { range: [5, 5], emoji: "😎", text: "Ya lumayan." },
+        { range: [6, 7], emoji: "🔥", text: "Mulai gacor." },
+        { range: [8, 9], emoji: "🧠", text: "Buset KKM." },
+        { range: [10, 12], emoji: "😍", text: "Idaman banget." },
+        { range: [13, 14], emoji: "👑", text: "Mahkotamu king." },
+        { range: [15, 15], emoji: "🏆", text: "FIX LU ADMIN." }
+    ];
 
     for (const msg of messages) {
         if (score >= msg.range[0] && score <= msg.range[1]) {
-            return `${msg.emoji} ${msg.text}`;
+            return msg;
         }
     }
-    return `💪 Gas lagi! (${score}/${total})`;
+    return { emoji: "🗿", text: `Gas lagi! (${score}/${total})` };
+}
+
+function getResultMessage(score, total) {
+    const data = getResultMessageData(score, total);
+    return `${data.emoji} ${data.text}`;
 }
 
 // ============================================
@@ -777,12 +738,10 @@ class QuizEngine {
         const percentage = Math.round((correct / total) * 100);
         const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
 
-        // Emoji berdasarkan persentase (tetap)
-        DOM.resultEmoji.textContent = getScoreEmoji(percentage);
-        
-        // === TEKS BERDASARKAN SKOR (BUKAN PERSENTASE) ===
-        const resultMessage = getResultMessage(correct, total);
-        DOM.resultTitle.textContent = resultMessage;
+        // === AMBIL EMOJI & TEKS BERDASARKAN SKOR ===
+        const resultData = getResultMessageData(correct, total);
+        DOM.resultEmoji.textContent = resultData.emoji;
+        DOM.resultTitle.textContent = `${resultData.emoji} ${resultData.text}`;
         
         DOM.resultTotalLabel.textContent = `dari ${total}`;
         DOM.resultScore.textContent = `${correct}/${total}`;
@@ -1446,6 +1405,7 @@ window.ZaxQuiz = {
     shuffleArray,
     formatTime,
     getScoreEmoji,
+    getResultMessageData,
     getResultMessage,
     getRandomQuestions,
     loadUsedQuestions,
@@ -1453,4 +1413,4 @@ window.ZaxQuiz = {
     resetUsedQuestions
 };
 
-console.log('🚀 ZaxQuiz v5.0.0 - Result Message berdasarkan SKOR loaded successfully!');
+console.log('🚀 ZaxQuiz v6.0.0 - Result Emoji & Message berdasarkan SKOR loaded successfully!');
