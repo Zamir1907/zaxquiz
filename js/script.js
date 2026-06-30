@@ -1,11 +1,4 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v4)
-// ============================================
-// FIX: 15 soal acak per kategori dengan mekanisme tidak berulang
-// FIX: Hint toggle buka/tutup
-// FIX: Back button dan refresh sempurna
-
-// ============================================
 // APP STATE
 // ============================================
 const AppState = {
@@ -733,7 +726,56 @@ class QuizEngine {
         const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
 
         DOM.resultEmoji.textContent = getScoreEmoji(percentage);
-        DOM.resultTitle.textContent = percentage >= 70 ? '🎉 Hebat sekali!' : '💪 Terus belajar!';
+        
+        // === GENERATE RESULT MESSAGE ===
+function getResultMessage(percentage) {
+    const messages = [
+        {
+            range: [0, 20],
+            emoji: "💀",
+            text: "HP doang yang mahal, jawaban kagak ada yang bener 😭"
+        },
+        {
+            range: [21, 40],
+            emoji: "🗿",
+            text: "Gapapa... yang penting udah nyoba 😭🙏"
+        },
+        {
+            range: [41, 60],
+            emoji: "😂",
+            text: "Tipis-tipis lah... dikit lagi jadi manusia berguna 😭"
+        },
+        {
+            range: [61, 80],
+            emoji: "😎",
+            text: "Nah gini dong, mulai keliatan isi kepalanya 🔥"
+        },
+        {
+            range: [81, 90],
+            emoji: "🧠",
+            text: "Buset... ternyata bukan NPC 😭👏"
+        },
+        {
+            range: [91, 100],
+            emoji: "👑",
+            text: "FIX INI MAH MONSTER QUIZ 😭🏆"
+        }
+    ];
+
+    return messages.find(msg =>
+        percentage >= msg.range[0] &&
+        percentage <= msg.range[1]
+    ) || {
+        emoji: "💪",
+        text: "Gas lagi!"
+    };
+}
+
+// Di dalam finishQuiz():
+const result = getResultMessage(percentage);
+DOM.resultTitle.textContent = `${result.emoji} ${result.text}`;
+        
+        DOM.resultTotalLabel.textContent = `dari ${total}`;
         DOM.resultScore.textContent = `${correct}/${total}`;
         DOM.resultCorrect.textContent = correct;
         DOM.resultWrong.textContent = wrong;
