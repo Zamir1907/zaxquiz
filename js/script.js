@@ -37,6 +37,7 @@ function initDOM() {
     DOM.quizScreen = document.getElementById('quizScreen');
     DOM.explanationScreen = document.getElementById('explanationScreen');
     DOM.resultScreen = document.getElementById('resultScreen');
+    DOM.resultTotalLabel = document.getElementById('resultTotalLabel');
     DOM.historyScreen = document.getElementById('historyScreen');
     DOM.themeToggle = document.getElementById('themeToggle');
     DOM.soundToggle = document.getElementById('soundToggle');
