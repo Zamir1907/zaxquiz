@@ -1,8 +1,9 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v3)
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v4)
 // ============================================
-// FIX: Hint sekarang berfungsi dengan toggle (buka/tutup)
-// FIX: Back button dan refresh di page quiz berfungsi sempurna!
+// FIX: 15 soal acak per kategori dengan mekanisme tidak berulang
+// FIX: Hint toggle buka/tutup
+// FIX: Back button dan refresh sempurna
 
 // ============================================
 // APP STATE
@@ -16,7 +17,7 @@ const AppState = {
     questions: [],
     currentIndex: 0,
     score: 0,
-    totalQuestions: 50,
+    totalQuestions: 15, // Default 15, akan diupdate dinamis
     correctAnswers: 0,
     wrongAnswers: 0,
     answered: false,
@@ -29,6 +30,8 @@ const AppState = {
     hintUsed: false,
     isQuizActive: false,
     isLoading: false,
+    usedQuestions: {}, // Untuk melacak soal yang sudah pernah keluar per kategori
+    currentUsedIndices: [], // Indeks soal yang sedang dipakai di quiz ini
 };
 
 // ============================================
@@ -125,6 +128,94 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
+// USED QUESTIONS TRACKING - UNTUK SOAL TIDAK BERULANG
+// ============================================
+function getUsedQuestionsKey(category) {
+    return `zaxquiz_used_${category}`;
+}
+
+function loadUsedQuestions(category) {
+    try {
+        const key = getUsedQuestionsKey(category);
+        const data = localStorage.getItem(key);
+        if (!data) return [];
+        return JSON.parse(data);
+    } catch (e) {
+        console.warn('Gagal memuat used questions:', e);
+        return [];
+    }
+}
+
+function saveUsedQuestions(category, usedIndices) {
+    try {
+        const key = getUsedQuestionsKey(category);
+        localStorage.setItem(key, JSON.stringify(usedIndices));
+    } catch (e) {
+        console.warn('Gagal menyimpan used questions:', e);
+    }
+}
+
+function resetUsedQuestions(category) {
+    try {
+        const key = getUsedQuestionsKey(category);
+        localStorage.removeItem(key);
+    } catch (e) {
+        console.warn('Gagal reset used questions:', e);
+    }
+}
+
+function getRandomQuestions(allQuestions, category, count = 15) {
+    const totalAvailable = allQuestions.length;
+    
+    // Jika jumlah soal kurang dari count, kembalikan semua
+    if (totalAvailable <= count) {
+        return shuffleArray([...allQuestions]);
+    }
+    
+    // Load daftar indeks yang sudah pernah keluar
+    let usedIndices = loadUsedQuestions(category);
+    
+    // Buat set indeks yang tersedia (belum pernah keluar)
+    const allIndices = Array.from({ length: totalAvailable }, (_, i) => i);
+    const usedSet = new Set(usedIndices);
+    const availableIndices = allIndices.filter(i => !usedSet.has(i));
+    
+    let selectedIndices = [];
+    
+    // Jika masih ada cukup soal yang belum pernah keluar
+    if (availableIndices.length >= count) {
+        // Acak dan ambil 'count' dari yang belum pernah keluar
+        const shuffledAvailable = shuffleArray(availableIndices);
+        selectedIndices = shuffledAvailable.slice(0, count);
+    } else {
+        // Jika sisa soal yang belum pernah keluar < count
+        // Ambil semua yang tersisa + acak dari yang sudah pernah keluar
+        const remaining = shuffleArray(availableIndices);
+        const needed = count - remaining.length;
+        
+        // Acak indeks yang sudah pernah keluar
+        const shuffledUsed = shuffleArray(usedIndices);
+        const additional = shuffledUsed.slice(0, needed);
+        
+        selectedIndices = [...remaining, ...additional];
+        
+        // Reset used questions karena sudah hampir habis
+        // Kita tetap simpan yang baru dipakai setelah quiz selesai
+    }
+    
+    // Acak hasil akhir
+    selectedIndices = shuffleArray(selectedIndices);
+    
+    // Simpan indeks yang dipilih untuk digunakan di quiz ini
+    AppState.currentUsedIndices = selectedIndices;
+    
+    // Ambil soal berdasarkan indeks yang dipilih
+    const selectedQuestions = selectedIndices.map(i => allQuestions[i]);
+    
+    return selectedQuestions;
+}
+
+// ============================================
 // STATE PERSISTENCE - UNTUK REFRESH
 // ============================================
 function saveQuizState() {
@@ -144,6 +235,7 @@ function saveQuizState() {
             hintUsed: AppState.hintUsed,
             isQuizActive: AppState.isQuizActive,
             timeLeft: AppState.timeLeft,
+            currentUsedIndices: AppState.currentUsedIndices,
             timestamp: Date.now()
         };
         sessionStorage.setItem('zaxquiz_state', JSON.stringify(state));
@@ -415,23 +507,34 @@ class QuizEngine {
 
         sound.initAudioContext();
 
-        let questions = this.getQuestionsForCategory(category);
+        // Ambil semua soal dari kategori
+        let allQuestions = this.getQuestionsForCategory(category);
 
+        // Filter berdasarkan difficulty jika tidak 'all'
         if (difficulty !== 'all') {
-            questions = questions.filter(q => q.difficulty === difficulty);
-            if (questions.length < 50) {
-                const allQuestions = this.getAllQuestions();
-                const filtered = allQuestions.filter(q => q.difficulty === difficulty);
-                const shuffled = shuffleArray(filtered);
-                const need = 50 - questions.length;
+            allQuestions = allQuestions.filter(q => q.difficulty === difficulty);
+            // Jika hasil filter kurang dari 15, tambahkan dari soal lain
+            if (allQuestions.length < 15) {
+                const backupQuestions = this.getAllQuestions().filter(q => q.difficulty === difficulty);
+                const shuffled = shuffleArray(backupQuestions);
+                const need = 15 - allQuestions.length;
                 const additional = shuffled.slice(0, need);
-                questions = [...questions, ...additional];
+                allQuestions = [...allQuestions, ...additional];
             }
         }
 
-        questions = shuffleArray(questions);
-        this.state.questions = questions;
-        this.state.totalQuestions = this.state.questions.length;
+        // Jika total soal masih kurang dari 15, gunakan semua yang ada
+        if (allQuestions.length < 15) {
+            this.state.questions = shuffleArray([...allQuestions]);
+            this.state.totalQuestions = this.state.questions.length;
+            console.log(`⚠️ Hanya ${this.state.totalQuestions} soal tersedia untuk kategori ini`);
+        } else {
+            // Ambil 15 soal acak dengan mekanisme tidak berulang
+            const selectedQuestions = getRandomQuestions(allQuestions, category, 15);
+            this.state.questions = selectedQuestions;
+            this.state.totalQuestions = this.state.questions.length;
+            console.log(`✅ ${this.state.totalQuestions} soal acak dipilih (tidak berulang)`);
+        }
         
         this.updateTimerVisibility();
         this.showQuestion();
@@ -445,7 +548,6 @@ class QuizEngine {
         saveQuizState();
         this.sound.playClick();
         
-        // ✅ FIX: Push new state untuk quiz
         history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
     }
 
@@ -487,7 +589,6 @@ class QuizEngine {
         this.state.answered = false;
         this.state.hintUsed = false;
         
-        // Sembunyikan hint saat ganti soal
         DOM.hintContainer.style.display = 'none';
         DOM.hintContainer.classList.remove('active');
 
@@ -611,6 +712,17 @@ class QuizEngine {
         this.state.isQuizActive = false;
         this.state.endTime = Date.now();
         this.stopTimer();
+
+        // Simpan indeks soal yang sudah dipakai ke used questions
+        const category = this.state.currentCategory;
+        if (this.state.currentUsedIndices && this.state.currentUsedIndices.length > 0) {
+            const existingUsed = loadUsedQuestions(category);
+            const newUsed = [...existingUsed, ...this.state.currentUsedIndices];
+            // Hapus duplikat
+            const uniqueUsed = [...new Set(newUsed)];
+            saveUsedQuestions(category, uniqueUsed);
+            console.log(`✅ ${this.state.currentUsedIndices.length} soal ditandai sebagai sudah pernah keluar`);
+        }
 
         clearQuizState();
 
@@ -744,14 +856,9 @@ class QuizEngine {
         this.updateProgress();
     }
 
-    // ============================================
-    // SHOW HINT - FIX TOGGLE BUKA/TUTUP
-    // ============================================
     showHint() {
-        // Jika sudah menjawab, tidak bisa pakai hint
         if (this.state.answered) return;
         
-        // Toggle hint: jika sudah tampil, sembunyikan
         if (DOM.hintContainer.style.display === 'block') {
             DOM.hintContainer.style.display = 'none';
             DOM.hintContainer.classList.remove('active');
@@ -781,6 +888,7 @@ class QuizEngine {
         this.state.correctAnswers = 0;
         this.state.wrongAnswers = 0;
         this.state.questions = [];
+        this.state.currentUsedIndices = [];
         
         clearQuizState();
         
@@ -979,7 +1087,6 @@ function setupEventListeners() {
     window.addEventListener('popstate', function(e) {
         console.log('🔙 Back button pressed! State:', e.state);
         
-        // Jika quiz sedang aktif, tanyakan konfirmasi
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
             const confirmed = confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.');
@@ -988,16 +1095,13 @@ function setupEventListeners() {
                 sound.playClick();
                 clearQuizState();
                 quizEngine.resetQuiz();
-                // Jangan push state lagi, biarkan popstate bekerja
             } else {
                 sound.playClick();
-                // User batal, push state back ke quiz
                 history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
             }
             return;
         }
         
-        // Jika tidak ada quiz, tangani state dengan benar
         if (e.state && e.state.source === 'zaxquiz') {
             const page = e.state.page;
             
@@ -1007,7 +1111,6 @@ function setupEventListeners() {
                     quizEngine.updateHomeStats();
                     break;
                 case 'quiz':
-                    // Restore quiz state
                     const savedState = loadQuizState();
                     if (savedState && savedState.isQuizActive) {
                         AppState.currentCategory = savedState.currentCategory;
@@ -1024,6 +1127,7 @@ function setupEventListeners() {
                         AppState.hintUsed = savedState.hintUsed;
                         AppState.isQuizActive = savedState.isQuizActive;
                         AppState.timeLeft = savedState.timeLeft;
+                        AppState.currentUsedIndices = savedState.currentUsedIndices || [];
                         
                         quizEngine.updateUI();
                         quizEngine.updateProgress();
@@ -1050,14 +1154,12 @@ function setupEventListeners() {
                     quizEngine.showScreen('homeScreen');
             }
         } else {
-            // No state, go to home
             quizEngine.showScreen('homeScreen');
             quizEngine.updateHomeStats();
             history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
         }
     });
 
-    // Hilangkan efek focus/outline setelah klik
     document.addEventListener('mousedown', function(e) {
         const target = e.target.closest('button, .btn, .option-btn, .header-btn');
         if (target) {
@@ -1072,7 +1174,6 @@ function setupEventListeners() {
         }
     });
 
-    // Load sound preference
     const soundPref = localStorage.getItem('zaxquiz-sound');
     if (soundPref === 'off') {
         sound.setEnabled(false);
@@ -1211,7 +1312,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     quizEngine.updateHomeStats();
 
-    // Load categories ke select
     if (window.questionsByCategory) {
         const select = DOM.categorySelect;
         select.innerHTML = '';
@@ -1237,13 +1337,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ============================================
-    // HISTORY STATE INITIALIZATION
-    // ============================================
     const savedState = loadQuizState();
     
     if (savedState && savedState.isQuizActive && savedState.questions && savedState.questions.length > 0) {
-        // Restore quiz jika ada yang belum selesai
         AppState.currentCategory = savedState.currentCategory;
         AppState.currentDifficulty = savedState.currentDifficulty;
         AppState.timerEnabled = savedState.timerEnabled;
@@ -1258,6 +1354,7 @@ document.addEventListener('DOMContentLoaded', function() {
         AppState.hintUsed = savedState.hintUsed;
         AppState.isQuizActive = savedState.isQuizActive;
         AppState.timeLeft = savedState.timeLeft;
+        AppState.currentUsedIndices = savedState.currentUsedIndices || [];
         
         quizEngine.updateUI();
         quizEngine.updateProgress();
@@ -1275,7 +1372,6 @@ document.addEventListener('DOMContentLoaded', function() {
         history.replaceState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
         console.log('✅ State restored from refresh!');
     } else {
-        // Tampilkan home screen
         quizEngine.showScreen('homeScreen');
         history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
     }
@@ -1286,6 +1382,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ ZaxQuiz ready!');
     console.log(`📚 ${Object.keys(window.questionsByCategory || {}).length} categories`);
     console.log(`📝 ${window.totalQuestions || 0} total questions`);
+    console.log('🎯 Setiap quiz menampilkan 15 soal acak (tidak berulang)');
 });
 
 // Global exposure
@@ -1297,7 +1394,11 @@ window.ZaxQuiz = {
     StorageManager,
     shuffleArray,
     formatTime,
-    getScoreEmoji
+    getScoreEmoji,
+    getRandomQuestions,
+    loadUsedQuestions,
+    saveUsedQuestions,
+    resetUsedQuestions
 };
 
-console.log('🚀 ZaxQuiz v3.0.0 FULL FIX loaded successfully!');
+console.log('🚀 ZaxQuiz v4.0.0 - 15 Soal Acak per Quiz loaded successfully!');

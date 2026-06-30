@@ -16,23 +16,428 @@ function createCategoryQuestions(questions, category) {
 }
 
 // ============================================
-// KATEGORI 1: PENGETAHUAN UMUM (50 Soal)
+// KATEGORI 1: PENGETAHUAN UMUM (100 Soal)
 // ============================================
 
 const pengetahuanUmumQuestions = [
+    // ===== GEOGRAFI & WISATA =====
     {
         question: 'Apa ibu kota Indonesia?',
         options: ['Jakarta', 'Bandung', 'Surabaya', 'Medan'],
         correctIndex: 0,
-        explanation: 'Jakarta adalah ibu kota Indonesia sejak tahun 1945.',
+        explanation: 'Jakarta adalah ibu kota Indonesia sejak tahun 1945, terletak di pulau Jawa.',
         difficulty: 'sedang',
         hint: 'Kota ini juga dikenal sebagai Kota Metropolitan terbesar di Indonesia.'
     },
     {
-        question: 'Berapa jumlah provinsi di Indonesia pada tahun 2024?',
-        options: ['34', '35', '36', '37'],
-        correctIndex: 2,
-        explanation: 'Indonesia memiliki 38 provinsi pada tahun 2024 setelah pemekaran Papua.',
+        question: 'Negara dengan jumlah pulau terbanyak di dunia adalah?',
+        options: ['Indonesia', 'Filipina', 'Jepang', 'Maladewa'],
+        correctIndex: 0,
+        explanation: 'Indonesia memiliki lebih dari 17.000 pulau, menjadikannya negara dengan pulau terbanyak di dunia.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara kepulauan terbesar di dunia.'
+    },
+    {
+        question: 'Air terjun tertinggi di dunia adalah?',
+        options: ['Angel Falls', 'Niagara Falls', 'Victoria Falls', 'Iguazu Falls'],
+        correctIndex: 0,
+        explanation: 'Angel Falls di Venezuela memiliki ketinggian 979 meter, menjadikannya air terjun tertinggi di dunia.',
+        difficulty: 'sulit',
+        hint: 'Air terjun ini terletak di Amerika Selatan.'
+    },
+    {
+        question: 'Danau terbesar di dunia berdasarkan luas adalah?',
+        options: ['Laut Kaspia', 'Danau Superior', 'Danau Victoria', 'Danau Toba'],
+        correctIndex: 0,
+        explanation: 'Laut Kaspia adalah danau terbesar di dunia dengan luas sekitar 371.000 km².',
+        difficulty: 'sedang',
+        hint: 'Danau ini sebenarnya adalah laut tertutup.'
+    },
+    {
+        question: 'Negara yang dilalui oleh garis khatulistiwa adalah?',
+        options: ['Indonesia', 'Brasil', 'Kenya', 'Semua benar'],
+        correctIndex: 3,
+        explanation: 'Garis khatulistiwa melewati Indonesia, Brasil, Kenya, dan beberapa negara lainnya.',
+        difficulty: 'sedang',
+        hint: 'Garis ini membagi bumi menjadi belahan utara dan selatan.'
+    },
+    {
+        question: 'Gurun terkecil di dunia adalah?',
+        options: ['Gurun Mojave', 'Gurun Atacama', 'Gurun Kalahari', 'Gurun Gobi'],
+        correctIndex: 0,
+        explanation: 'Gurun Mojave di Amerika Serikat adalah gurun terkecil di dunia dengan luas sekitar 124.000 km².',
+        difficulty: 'sulit',
+        hint: 'Gurun ini terletak di Amerika Utara.'
+    },
+    {
+        question: 'Negara dengan hutan hujan Amazon terbesar adalah?',
+        options: ['Brasil', 'Peru', 'Kolombia', 'Venezuela'],
+        correctIndex: 0,
+        explanation: 'Brasil memiliki sekitar 60% dari hutan hujan Amazon, menjadikannya pemilik terbesar.',
+        difficulty: 'sedang',
+        hint: 'Negara ini adalah negara terbesar di Amerika Selatan.'
+    },
+    {
+        question: 'Gunung berapi tertinggi di dunia adalah?',
+        options: ['Ojos del Salado', 'Everest', 'Kilimanjaro', 'Fuji'],
+        correctIndex: 0,
+        explanation: 'Ojos del Salado di Chili/Argentina adalah gunung berapi tertinggi di dunia dengan ketinggian 6.893 meter.',
+        difficulty: 'sulit',
+        hint: 'Gunung ini terletak di Pegunungan Andes.'
+    },
+    {
+        question: 'Benua terpadat di dunia adalah?',
+        options: ['Asia', 'Afrika', 'Eropa', 'Amerika Utara'],
+        correctIndex: 0,
+        explanation: 'Asia adalah benua terpadat di dunia dengan populasi lebih dari 4,6 miliar jiwa.',
+        difficulty: 'sedang',
+        hint: 'Benua ini memiliki negara dengan populasi terbesar di dunia.'
+    },
+    {
+        question: 'Tempat terdingin di dunia adalah?',
+        options: ['Antartika', 'Siberia', 'Greenland', 'Kanada'],
+        correctIndex: 0,
+        explanation: 'Antartika adalah tempat terdingin di dunia dengan suhu mencapai -89,2°C.',
+        difficulty: 'sedang',
+        hint: 'Benua ini tertutup es sepanjang tahun.'
+    },
+
+    // ===== SEJARAH & BUDAYA =====
+    {
+        question: 'Siapa penulis drama "Hamlet"?',
+        options: ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'Mark Twain'],
+        correctIndex: 0,
+        explanation: 'William Shakespeare adalah penulis drama Hamlet, salah satu karyanya yang paling terkenal.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah penulis terkenal dari Inggris.'
+    },
+    {
+        question: 'Peradaban yang membangun Colosseum adalah?',
+        options: ['Romawi', 'Yunani', 'Mesir', 'Maya'],
+        correctIndex: 0,
+        explanation: 'Colosseum dibangun oleh Kekaisaran Romawi pada abad ke-1 Masehi.',
+        difficulty: 'sedang',
+        hint: 'Bangunan ini terletak di Roma, Italia.'
+    },
+    {
+        question: 'Siapa tokoh yang menciptakan teori relativitas?',
+        options: ['Albert Einstein', 'Isaac Newton', 'Galileo Galilei', 'Nikola Tesla'],
+        correctIndex: 0,
+        explanation: 'Albert Einstein menciptakan teori relativitas pada awal abad ke-20.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah ilmuwan terkenal dengan rambut yang khas.'
+    },
+    {
+        question: 'Kapan Perang Dunia II dimulai?',
+        options: ['1939', '1940', '1941', '1938'],
+        correctIndex: 0,
+        explanation: 'Perang Dunia II dimulai pada 1 September 1939 ketika Jerman menginvasi Polandia.',
+        difficulty: 'sedang',
+        hint: 'Invasi Jerman ke Polandia.'
+    },
+    {
+        question: 'Siapa presiden pertama Amerika Serikat?',
+        options: ['George Washington', 'Abraham Lincoln', 'Thomas Jefferson', 'John Adams'],
+        correctIndex: 0,
+        explanation: 'George Washington adalah presiden pertama Amerika Serikat yang menjabat dari 1789-1797.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah salah satu pendiri AS.'
+    },
+    {
+        question: 'Siapa yang menemukan vaksin polio?',
+        options: ['Jonas Salk', 'Albert Sabin', 'Edward Jenner', 'Louis Pasteur'],
+        correctIndex: 0,
+        explanation: 'Jonas Salk mengembangkan vaksin polio pertama yang efektif pada tahun 1952.',
+        difficulty: 'sulit',
+        hint: 'Vaksin ini ditemukan pada abad ke-20.'
+    },
+    {
+        question: 'Siapa pelukis "Mona Lisa"?',
+        options: ['Leonardo da Vinci', 'Michelangelo', 'Rafael', 'Donatello'],
+        correctIndex: 0,
+        explanation: 'Leonardo da Vinci melukis Mona Lisa, salah satu lukisan paling terkenal di dunia.',
+        difficulty: 'sedang',
+        hint: 'Lukisan ini sekarang disimpan di Louvre, Paris.'
+    },
+    {
+        question: 'Raja Inggris yang memerintah terlama adalah?',
+        options: ['Ratu Elizabeth II', 'Ratu Victoria', 'George III', 'Henry VIII'],
+        correctIndex: 0,
+        explanation: 'Ratu Elizabeth II memerintah selama 70 tahun, menjadikannya raja Inggris terlama.',
+        difficulty: 'sedang',
+        hint: 'Beliau baru saja meninggal pada tahun 2022.'
+    },
+    {
+        question: 'Candi Borobudur dibangun sekitar abad ke-?',
+        options: ['9 Masehi', '8 Masehi', '10 Masehi', '7 Masehi'],
+        correctIndex: 0,
+        explanation: 'Candi Borobudur dibangun pada abad ke-9 Masehi oleh Dinasti Syailendra.',
+        difficulty: 'sedang',
+        hint: 'Candi ini terletak di Jawa Tengah.'
+    },
+    {
+        question: 'Siapa tokoh yang dijuluki "Bapak Proklamator Indonesia"?',
+        options: ['Soekarno', 'Mohammad Hatta', 'Ahmad Soebardjo', 'Sayuti Melik'],
+        correctIndex: 0,
+        explanation: 'Ir. Soekarno adalah Bapak Proklamator Indonesia yang membacakan teks proklamasi.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden pertama Indonesia.'
+    },
+
+    // ===== SAINS & TEKNOLOGI =====
+    {
+        question: 'Unsur kimia paling melimpah di alam semesta adalah?',
+        options: ['Hidrogen', 'Helium', 'Oksigen', 'Karbon'],
+        correctIndex: 0,
+        explanation: 'Hidrogen adalah unsur kimia paling melimpah di alam semesta, mencakup sekitar 75% dari massa total.',
+        difficulty: 'sedang',
+        hint: 'Unsur ini adalah yang paling ringan.'
+    },
+    {
+        question: 'Bagian terkecil dari suatu unsur adalah?',
+        options: ['Atom', 'Proton', 'Elektron', 'Neutron'],
+        correctIndex: 0,
+        explanation: 'Atom adalah bagian terkecil dari suatu unsur yang masih memiliki sifat-sifat unsur tersebut.',
+        difficulty: 'sedang',
+        hint: 'Kata ini berasal dari bahasa Yunani yang berarti "tidak dapat dibagi".'
+    },
+    {
+        question: 'Berapa kecepatan cahaya dalam ruang hampa?',
+        options: ['300.000 km/s', '150.000 km/s', '450.000 km/s', '600.000 km/s'],
+        correctIndex: 0,
+        explanation: 'Kecepatan cahaya dalam ruang hampa adalah sekitar 299.792.458 meter per detik atau 300.000 km/s.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah konstanta universal.'
+    },
+    {
+        question: 'Apa nama satelit alami Bumi?',
+        options: ['Bulan', 'Matahari', 'Mars', 'Venus'],
+        correctIndex: 0,
+        explanation: 'Bulan adalah satelit alami Bumi yang mengorbit pada jarak sekitar 384.400 km.',
+        difficulty: 'sedang',
+        hint: 'Satelit ini terlihat di langit malam.'
+    },
+    {
+        question: 'Siapa penemu telepon?',
+        options: ['Alexander Graham Bell', 'Thomas Edison', 'Guglielmo Marconi', 'Nikola Tesla'],
+        correctIndex: 0,
+        explanation: 'Alexander Graham Bell mendapatkan paten untuk telepon pada tahun 1876.',
+        difficulty: 'sedang',
+        hint: 'Penemu ini berasal dari Skotlandia.'
+    },
+    {
+        question: 'Apa nama virus yang menyebabkan COVID-19?',
+        options: ['SARS-CoV-2', 'MERS-CoV', 'H1N1', 'Ebola'],
+        correctIndex: 0,
+        explanation: 'COVID-19 disebabkan oleh virus SARS-CoV-2 yang pertama kali terdeteksi pada tahun 2019.',
+        difficulty: 'sedang',
+        hint: 'Virus ini pertama kali muncul di Wuhan, China.'
+    },
+    {
+        question: 'Siapa penemu mesin uap?',
+        options: ['James Watt', 'Thomas Newcomen', 'George Stephenson', 'Richard Arkwright'],
+        correctIndex: 0,
+        explanation: 'James Watt mengembangkan mesin uap yang efisien pada tahun 1769, menjadi motor revolusi industri.',
+        difficulty: 'sedang',
+        hint: 'Penemu ini berasal dari Skotlandia.'
+    },
+    {
+        question: 'Planet yang memiliki cincin adalah?',
+        options: ['Saturnus', 'Jupiter', 'Uranus', 'Neptunus'],
+        correctIndex: 0,
+        explanation: 'Saturnus adalah planet yang paling terkenal dengan sistem cincinnya, yang terdiri dari es dan batuan.',
+        difficulty: 'sedang',
+        hint: 'Planet ini adalah planet terbesar kedua di tata surya.'
+    },
+    {
+        question: 'Berapa jumlah tulang pada manusia dewasa?',
+        options: ['206', '205', '207', '208'],
+        correctIndex: 0,
+        explanation: 'Manusia dewasa memiliki 206 tulang, yang menyusun kerangka tubuh manusia.',
+        difficulty: 'sedang',
+        hint: 'Jumlah tulang bayi lebih banyak, sekitar 270.'
+    },
+    {
+        question: 'Siapa penemu listrik (arus bolak-balik)?',
+        options: ['Nikola Tesla', 'Thomas Edison', 'Benjamin Franklin', 'Michael Faraday'],
+        correctIndex: 0,
+        explanation: 'Nikola Tesla adalah penemu sistem arus bolak-balik (AC) yang digunakan secara luas hingga saat ini.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah ilmuwan asal Serbia.'
+    },
+
+    // ===== INDONESIA =====
+    {
+        question: 'Siapa pahlawan nasional dari Maluku?',
+        options: ['Thomas Matulessy', 'Cut Nyak Dien', 'Kartini', 'Sukarno'],
+        correctIndex: 0,
+        explanation: 'Thomas Matulessy, dikenal sebagai Kapitan Pattimura, adalah pahlawan nasional dari Maluku.',
+        difficulty: 'sedang',
+        hint: 'Beliau dijuluki "Pattimura".'
+    },
+    {
+        question: 'Danau vulkanik terbesar di Indonesia adalah?',
+        options: ['Toba', 'Kerinci', 'Batur', 'Maninjau'],
+        correctIndex: 0,
+        explanation: 'Danau Toba di Sumatra Utara adalah danau vulkanik terbesar di Indonesia dan juga di dunia.',
+        difficulty: 'sedang',
+        hint: 'Danau ini terbentuk dari letusan supervolcano.'
+    },
+    {
+        question: 'Suku asli Papua adalah?',
+        options: ['Suku Dani', 'Suku Dayak', 'Suku Asmat', 'Suku Toraja'],
+        correctIndex: 0,
+        explanation: 'Suku Dani adalah salah satu suku asli Papua yang tinggal di Lembah Baliem.',
+        difficulty: 'sedang',
+        hint: 'Suku ini terkenal dengan tradisi perangnya.'
+    },
+    {
+        question: 'Alat musik tradisional dari Kalimantan adalah?',
+        options: ['Sape', 'Angklung', 'Gamelan', 'Sasando'],
+        correctIndex: 0,
+        explanation: 'Sape adalah alat musik tradisional dari Kalimantan yang terbuat dari kayu dan dimainkan dengan cara dipetik.',
+        difficulty: 'sedang',
+        hint: 'Alat musik ini berasal dari Kalimantan Timur.'
+    },
+    {
+        question: 'Siapa pencipta lagu "Bengawan Solo"?',
+        options: ['Gesang', 'Ismail Marzuki', 'W.R. Supratman', 'Ibu Soed'],
+        correctIndex: 0,
+        explanation: 'Gesang menciptakan lagu Bengawan Solo pada tahun 1940 yang menjadi salah satu lagu daerah terkenal.',
+        difficulty: 'sedang',
+        hint: 'Lagu ini bercerita tentang sungai di Jawa Tengah.'
+    },
+    {
+        question: 'Tarian tradisional dari Sulawesi Selatan adalah?',
+        options: ['Tari Pakarena', 'Tari Saman', 'Tari Kecak', 'Tari Pendet'],
+        correctIndex: 0,
+        explanation: 'Tari Pakarena adalah tarian tradisional dari Sulawesi Selatan yang berasal dari Gowa.',
+        difficulty: 'sedang',
+        hint: 'Tarian ini biasanya dibawakan dengan gerakan lembut.'
+    },
+    {
+        question: 'Siapa presiden ke-3 Indonesia?',
+        options: ['B.J. Habibie', 'Abdurrahman Wahid', 'Megawati Soekarnoputri', 'Susilo Bambang Yudhoyono'],
+        correctIndex: 0,
+        explanation: 'B.J. Habibie adalah presiden ke-3 Indonesia yang menjabat dari tahun 1998-1999.',
+        difficulty: 'sedang',
+        hint: 'Beliau adalah presiden dengan masa jabatan terpendek.'
+    },
+    {
+        question: 'Rumah adat dari Sumatra Utara adalah?',
+        options: ['Rumah Bolon', 'Rumah Gadang', 'Rumah Joglo', 'Rumah Lamin'],
+        correctIndex: 0,
+        explanation: 'Rumah Bolon adalah rumah adat dari Sumatra Utara yang menjadi tempat tinggal raja-raja Batak.',
+        difficulty: 'sedang',
+        hint: 'Rumah ini berbentuk panggung.'
+    },
+    {
+        question: 'Kota mana yang dijuluki "Kota Intan"?',
+        options: ['Surabaya', 'Medan', 'Makassar', 'Palembang'],
+        correctIndex: 0,
+        explanation: 'Surabaya dijuluki "Kota Pahlawan" dan "Kota Intan" karena merupakan kota pahlawan 10 November 1945.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah kota terbesar kedua di Indonesia.'
+    },
+    {
+        question: 'Pahlawan wanita dari Sulawesi adalah?',
+        options: ['Martha Christina Tiahahu', 'Cut Nyak Dien', 'Kartini', 'Nyai Ahmad Dahlan'],
+        correctIndex: 0,
+        explanation: 'Martha Christina Tiahahu adalah pahlawan wanita dari Sulawesi yang berjuang melawan Belanda.',
+        difficulty: 'sedang',
+        hint: 'Beliau berasal dari Nusa Tenggara Timur.'
+    },
+
+    // ===== SENI & OLAHRAGA =====
+    {
+        question: 'Siapa pelukis "The Scream"?',
+        options: ['Edvard Munch', 'Vincent van Gogh', 'Pablo Picasso', 'Claude Monet'],
+        correctIndex: 0,
+        explanation: 'Edvard Munch melukis "The Scream" pada tahun 1893, salah satu karya ekspresionis terkenal.',
+        difficulty: 'sedang',
+        hint: 'Pelukis ini berasal dari Norwegia.'
+    },
+    {
+        question: 'Di mana Olimpiade modern pertama diadakan?',
+        options: ['Athena', 'Paris', 'London', 'Berlin'],
+        correctIndex: 0,
+        explanation: 'Olimpiade modern pertama diadakan di Athena, Yunani, pada tahun 1896.',
+        difficulty: 'sedang',
+        hint: 'Kota ini adalah ibu kota Yunani.'
+    },
+    {
+        question: 'Alat musik dengan 88 tuts adalah?',
+        options: ['Piano', 'Organ', 'Harpsichord', 'Sintesiser'],
+        correctIndex: 0,
+        explanation: 'Piano memiliki 88 tuts yang terdiri dari 52 tuts putih dan 36 tuts hitam.',
+        difficulty: 'sedang',
+        hint: 'Alat musik ini sering disebut "raja alat musik".'
+    },
+    {
+        question: 'Siapa legenda sepak bola Brasil?',
+        options: ['Pelé', 'Maradona', 'Zidane', 'Ronaldo'],
+        correctIndex: 0,
+        explanation: 'Pelé adalah legenda sepak bola Brasil yang dianggap sebagai salah satu pemain terbaik sepanjang masa.',
+        difficulty: 'sedang',
+        hint: 'Beliau dijuluki "Raja Sepak Bola".'
+    },
+    {
+        question: 'Siapa pelukis aliran kubisme?',
+        options: ['Pablo Picasso', 'Vincent van Gogh', 'Claude Monet', 'Edvard Munch'],
+        correctIndex: 0,
+        explanation: 'Pablo Picasso adalah salah satu pelukis aliran kubisme yang paling terkenal.',
+        difficulty: 'sedang',
+        hint: 'Beliau berasal dari Spanyol.'
+    },
+
+    // ===== PENGETAHUAN UMUM LAINNYA =====
+    {
+        question: 'Bahasa yang paling banyak digunakan di dunia?',
+        options: ['Inggris', 'Mandarin', 'Hindi', 'Spanyol'],
+        correctIndex: 1,
+        explanation: 'Bahasa Mandarin adalah bahasa yang paling banyak digunakan di dunia dengan lebih dari 1,1 miliar penutur.',
+        difficulty: 'sedang',
+        hint: 'Bahasa ini digunakan di negara dengan populasi terbesar di dunia.'
+    },
+    {
+        question: 'Negara dengan populasi terbanyak kedua di dunia adalah?',
+        options: ['India', 'Amerika Serikat', 'Indonesia', 'Pakistan'],
+        correctIndex: 0,
+        explanation: 'India adalah negara dengan populasi terbanyak kedua di dunia setelah China.',
+        difficulty: 'sedang',
+        hint: 'Negara ini berada di Asia Selatan.'
+    },
+    {
+        question: 'Siapa penemu mikroskop?',
+        options: ['Antonie van Leeuwenhoek', 'Galileo Galilei', 'Robert Hooke', 'Isaac Newton'],
+        correctIndex: 0,
+        explanation: 'Antonie van Leeuwenhoek adalah penemu mikroskop dan dianggap sebagai "Bapak Mikrobiologi".',
+        difficulty: 'sulit',
+        hint: 'Beliau berasal dari Belanda.'
+    },
+    {
+        question: 'Berapa titik didih air dalam Celsius?',
+        options: ['100°C', '90°C', '110°C', '80°C'],
+        correctIndex: 0,
+        explanation: 'Air mendidih pada suhu 100°C pada tekanan atmosfer standar.',
+        difficulty: 'sedang',
+        hint: 'Ini adalah titik didih air.'
+    },
+    {
+        question: 'Ilmuwan yang menemukan hukum gravitasi adalah?',
+        options: ['Isaac Newton', 'Albert Einstein', 'Galileo Galilei', 'Johannes Kepler'],
+        correctIndex: 0,
+        explanation: 'Isaac Newton menemukan hukum gravitasi universal pada tahun 1687.',
+        difficulty: 'sedang',
+        hint: 'Beliau dikatakan terinspirasi oleh apel yang jatuh.'
+    },
+
+    // ===== SOAL ASLI 50 PERTAMA (DIPERTAHANKAN) =====
+    {
+        question: 'Berapa jumlah provinsi di Indonesia saat ini?',
+        options: ['35', '36', '37', '38'],
+        correctIndex: 3,
+        explanation: 'Indonesia memiliki 38 provinsi saat ini setelah pemekaran Papua.',
         difficulty: 'sulit',
         hint: 'Jumlah ini terus bertambah seiring dengan pemekaran wilayah.'
     },
@@ -224,14 +629,6 @@ const pengetahuanUmumQuestions = [
         explanation: 'Tempe adalah makanan khas Indonesia yang terbuat dari kedelai yang difermentasi dengan kapang Rhizopus.',
         difficulty: 'sedang',
         hint: 'Makanan ini kaya akan protein.'
-    },
-    {
-        question: 'Siapa penemu telepon?',
-        options: ['Alexander Graham Bell', 'Thomas Edison', 'Guglielmo Marconi', 'Nikola Tesla'],
-        correctIndex: 0,
-        explanation: 'Alexander Graham Bell mendapatkan paten untuk telepon pada tahun 1876.',
-        difficulty: 'sedang',
-        hint: 'Penemu ini berasal dari Skotlandia.'
     },
     {
         question: 'Apa planet terkecil di tata surya?',
@@ -4380,14 +4777,14 @@ const sejarahIndonesiaQuestions = [
         difficulty: 'sedang',
         hint: 'Beliau dikenal dengan program "100 Hari Kerja".'
     },
-    {
-        question: 'Siapa presiden Indonesia saat ini (2024)?',
-        options: ['Joko Widodo', 'Prabowo Subianto', 'Susilo Bambang Yudhoyono', 'Megawati Soekarnoputri'],
-        correctIndex: 0,
-        explanation: 'Joko Widodo (Jokowi) adalah presiden ke-7 Indonesia yang menjabat sejak 2014 hingga saat ini (2024).',
-        difficulty: 'sedang',
-        hint: 'Beliau adalah presiden dari Partai PDI-P.'
-    },
+{
+    question: 'Siapa presiden Indonesia pada tahun 2026?',
+    options: ['Joko Widodo', 'Prabowo Subianto', 'Susilo Bambang Yudhoyono', 'Megawati Soekarnoputri'],
+    correctIndex: 1,
+    explanation: 'Prabowo Subianto menjabat sebagai Presiden ke-8 Republik Indonesia setelah dilantik pada Oktober 2024.',
+    difficulty: 'sedang',
+    hint: 'Beliau adalah Menteri Pertahanan sebelum terpilih menjadi presiden.'
+},
     {
         question: 'Apa nama ibu kota baru Indonesia yang sedang dibangun?',
         options: ['Nusantara', 'Palangkaraya', 'Balikpapan', 'Samarinda'],
