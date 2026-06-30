@@ -10,7 +10,7 @@ const AppState = {
     questions: [],
     currentIndex: 0,
     score: 0,
-    totalQuestions: 15, // Default 15, akan diupdate dinamis
+    totalQuestions: 15,
     correctAnswers: 0,
     wrongAnswers: 0,
     answered: false,
@@ -23,8 +23,8 @@ const AppState = {
     hintUsed: false,
     isQuizActive: false,
     isLoading: false,
-    usedQuestions: {}, // Untuk melacak soal yang sudah pernah keluar per kategori
-    currentUsedIndices: [], // Indeks soal yang sedang dipakai di quiz ini
+    usedQuestions: {},
+    currentUsedIndices: [],
 };
 
 // ============================================
@@ -122,6 +122,76 @@ function getPercentageClass(percentage) {
 }
 
 // ============================================
+// RESULT MESSAGE - BERDASARKAN SKOR (BUKAN PERSENTASE)
+// ============================================
+function getResultMessage(score, total) {
+    const messages = [
+        {
+            range: [0, 0],
+            emoji: "💀",
+            text: "Anjir kosong 😭"
+        },
+        {
+            range: [1, 1],
+            emoji: "🗿",
+            text: "Yang penting nyentuh."
+        },
+        {
+            range: [2, 2],
+            emoji: "😭",
+            text: "Dikit amat bjir."
+        },
+        {
+            range: [3, 3],
+            emoji: "😂",
+            text: "Masih mending lah."
+        },
+        {
+            range: [4, 4],
+            emoji: "🤏",
+            text: "Tipis banget."
+        },
+        {
+            range: [5, 5],
+            emoji: "😎",
+            text: "Ya lumayan."
+        },
+        {
+            range: [6, 7],
+            emoji: "🔥",
+            text: "Mulai gacor."
+        },
+        {
+            range: [8, 9],
+            emoji: "🧠",
+            text: "Buset gacor juga."
+        },
+        {
+            range: [10, 12],
+            emoji: "🚀",
+            text: "Si paling ngerti."
+        },
+        {
+            range: [13, 14],
+            emoji: "👑",
+            text: "WOI SANTAI WOI 😭"
+        },
+        {
+            range: [15, 15],
+            emoji: "🏆",
+            text: "FIX LU ADMIN 😭"
+        }
+    ];;
+
+    for (const msg of messages) {
+        if (score >= msg.range[0] && score <= msg.range[1]) {
+            return `${msg.emoji} ${msg.text}`;
+        }
+    }
+    return `💪 Gas lagi! (${score}/${total})`;
+}
+
+// ============================================
 // USED QUESTIONS TRACKING - UNTUK SOAL TIDAK BERULANG
 // ============================================
 function getUsedQuestionsKey(category) {
@@ -161,49 +231,35 @@ function resetUsedQuestions(category) {
 function getRandomQuestions(allQuestions, category, count = 15) {
     const totalAvailable = allQuestions.length;
     
-    // Jika jumlah soal kurang dari count, kembalikan semua
     if (totalAvailable <= count) {
         return shuffleArray([...allQuestions]);
     }
     
-    // Load daftar indeks yang sudah pernah keluar
     let usedIndices = loadUsedQuestions(category);
     
-    // Buat set indeks yang tersedia (belum pernah keluar)
     const allIndices = Array.from({ length: totalAvailable }, (_, i) => i);
     const usedSet = new Set(usedIndices);
     const availableIndices = allIndices.filter(i => !usedSet.has(i));
     
     let selectedIndices = [];
     
-    // Jika masih ada cukup soal yang belum pernah keluar
     if (availableIndices.length >= count) {
-        // Acak dan ambil 'count' dari yang belum pernah keluar
         const shuffledAvailable = shuffleArray(availableIndices);
         selectedIndices = shuffledAvailable.slice(0, count);
     } else {
-        // Jika sisa soal yang belum pernah keluar < count
-        // Ambil semua yang tersisa + acak dari yang sudah pernah keluar
         const remaining = shuffleArray(availableIndices);
         const needed = count - remaining.length;
         
-        // Acak indeks yang sudah pernah keluar
         const shuffledUsed = shuffleArray(usedIndices);
         const additional = shuffledUsed.slice(0, needed);
         
         selectedIndices = [...remaining, ...additional];
-        
-        // Reset used questions karena sudah hampir habis
-        // Kita tetap simpan yang baru dipakai setelah quiz selesai
     }
     
-    // Acak hasil akhir
     selectedIndices = shuffleArray(selectedIndices);
     
-    // Simpan indeks yang dipilih untuk digunakan di quiz ini
     AppState.currentUsedIndices = selectedIndices;
     
-    // Ambil soal berdasarkan indeks yang dipilih
     const selectedQuestions = selectedIndices.map(i => allQuestions[i]);
     
     return selectedQuestions;
@@ -501,13 +557,10 @@ class QuizEngine {
 
         sound.initAudioContext();
 
-        // Ambil semua soal dari kategori
         let allQuestions = this.getQuestionsForCategory(category);
 
-        // Filter berdasarkan difficulty jika tidak 'all'
         if (difficulty !== 'all') {
             allQuestions = allQuestions.filter(q => q.difficulty === difficulty);
-            // Jika hasil filter kurang dari 15, tambahkan dari soal lain
             if (allQuestions.length < 15) {
                 const backupQuestions = this.getAllQuestions().filter(q => q.difficulty === difficulty);
                 const shuffled = shuffleArray(backupQuestions);
@@ -517,13 +570,11 @@ class QuizEngine {
             }
         }
 
-        // Jika total soal masih kurang dari 15, gunakan semua yang ada
         if (allQuestions.length < 15) {
             this.state.questions = shuffleArray([...allQuestions]);
             this.state.totalQuestions = this.state.questions.length;
             console.log(`⚠️ Hanya ${this.state.totalQuestions} soal tersedia untuk kategori ini`);
         } else {
-            // Ambil 15 soal acak dengan mekanisme tidak berulang
             const selectedQuestions = getRandomQuestions(allQuestions, category, 15);
             this.state.questions = selectedQuestions;
             this.state.totalQuestions = this.state.questions.length;
@@ -703,16 +754,16 @@ class QuizEngine {
     }
 
     finishQuiz() {
+        console.log('🏁 finishQuiz() dipanggil!');
+        
         this.state.isQuizActive = false;
         this.state.endTime = Date.now();
         this.stopTimer();
 
-        // Simpan indeks soal yang sudah dipakai ke used questions
         const category = this.state.currentCategory;
         if (this.state.currentUsedIndices && this.state.currentUsedIndices.length > 0) {
             const existingUsed = loadUsedQuestions(category);
             const newUsed = [...existingUsed, ...this.state.currentUsedIndices];
-            // Hapus duplikat
             const uniqueUsed = [...new Set(newUsed)];
             saveUsedQuestions(category, uniqueUsed);
             console.log(`✅ ${this.state.currentUsedIndices.length} soal ditandai sebagai sudah pernah keluar`);
@@ -726,55 +777,12 @@ class QuizEngine {
         const percentage = Math.round((correct / total) * 100);
         const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
 
+        // Emoji berdasarkan persentase (tetap)
         DOM.resultEmoji.textContent = getScoreEmoji(percentage);
         
-        // === GENERATE RESULT MESSAGE ===
-function getResultMessage(percentage) {
-    const messages = [
-        {
-            range: [0, 20],
-            emoji: "💀",
-            text: "HP doang yang mahal, jawaban kagak ada yang bener 😭"
-        },
-        {
-            range: [21, 40],
-            emoji: "🗿",
-            text: "Gapapa... yang penting udah nyoba 😭🙏"
-        },
-        {
-            range: [41, 60],
-            emoji: "😂",
-            text: "Tipis-tipis lah... dikit lagi jadi manusia berguna 😭"
-        },
-        {
-            range: [61, 80],
-            emoji: "😎",
-            text: "Nah gini dong, mulai keliatan isi kepalanya 🔥"
-        },
-        {
-            range: [81, 90],
-            emoji: "🧠",
-            text: "Buset... ternyata bukan NPC 😭👏"
-        },
-        {
-            range: [91, 100],
-            emoji: "👑",
-            text: "FIX INI MAH MONSTER QUIZ 😭🏆"
-        }
-    ];
-
-    return messages.find(msg =>
-        percentage >= msg.range[0] &&
-        percentage <= msg.range[1]
-    ) || {
-        emoji: "💪",
-        text: "Gas lagi!"
-    };
-}
-
-// Di dalam finishQuiz():
-const result = getResultMessage(percentage);
-DOM.resultTitle.textContent = `${result.emoji} ${result.text}`;
+        // === TEKS BERDASARKAN SKOR (BUKAN PERSENTASE) ===
+        const resultMessage = getResultMessage(correct, total);
+        DOM.resultTitle.textContent = resultMessage;
         
         DOM.resultTotalLabel.textContent = `dari ${total}`;
         DOM.resultScore.textContent = `${correct}/${total}`;
@@ -1438,10 +1446,11 @@ window.ZaxQuiz = {
     shuffleArray,
     formatTime,
     getScoreEmoji,
+    getResultMessage,
     getRandomQuestions,
     loadUsedQuestions,
     saveUsedQuestions,
     resetUsedQuestions
 };
 
-console.log('🚀 ZaxQuiz v4.0.0 - 15 Soal Acak per Quiz loaded successfully!');
+console.log('🚀 ZaxQuiz v5.0.0 - Result Message berdasarkan SKOR loaded successfully!');
