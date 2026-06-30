@@ -199,12 +199,12 @@ function getResultMessageData(score, total) {
         { range: [2, 2], emoji: "😭", text: "Skor kayak biji pler." },
         { range: [3, 3], emoji: "😂", text: "Masih mending lah." },
         { range: [4, 4], emoji: "🤭", text: "Jari aja ada lima." },
-        { range: [5, 5], emoji: "😁", text: "Ya lumayan." },
-        { range: [6, 7], emoji: "🔥", text: "Mulai gacor." },
+        { range: [5, 5], emoji: "😢", text: "Belajar lagi dek." },
+        { range: [6, 7], emoji: "😁", text: "Usaha bagus diddy." },
         { range: [8, 9], emoji: "🧠", text: "Einstein pun sujud." },
         { range: [10, 12], emoji: "😍", text: "Idaman banget." },
-        { range: [13, 14], emoji: "👑", text: "Mahkotamu king." },
-        { range: [15, 15], emoji: "🏆", text: "FIX LU ADMIN." }
+        { range: [13, 14], emoji: "👑", text: "Mahkotamu lagi dilas." },
+        { range: [15, 15], emoji: "🏆", text: "Pialamu king." }
     ];
 
     for (const msg of messages) {
