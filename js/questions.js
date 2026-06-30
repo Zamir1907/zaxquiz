@@ -401,9 +401,9 @@ const pengetahuanUmumQuestions = [
     },
     {
         question: 'Negara dengan populasi terbanyak kedua di dunia adalah?',
-        options: ['India', 'Amerika Serikat', 'Indonesia', 'Pakistan'],
+        options: ['China', 'Amerika Serikat', 'Indonesia', 'India'],
         correctIndex: 0,
-        explanation: 'India adalah negara dengan populasi terbanyak kedua di dunia setelah China.',
+        explanation: 'China adalah negara dengan populasi terbanyak kedua di dunia setelah India.',
         difficulty: 'sedang',
         hint: 'Negara ini berada di Asia Selatan.'
     },
