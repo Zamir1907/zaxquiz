@@ -1,4 +1,11 @@
 // ============================================
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v7)
+// ============================================
+// FIX: Back di home normal kembali ke browser history
+// FIX: Semua alert/confirm diganti custom dialog
+// FIX: History management hanya untuk quiz aktif
+
+// ============================================
 // APP STATE
 // ============================================
 const AppState = {
@@ -38,13 +45,9 @@ function showCustomDialog(message, options = {}) {
         const cancelBtn = document.getElementById('dialogCancelBtn');
         const closeBtn = document.getElementById('dialogCloseBtn');
         
-        // Set pesan
         msgEl.textContent = message;
-        
-        // Tampilkan dialog
         dialog.style.display = 'flex';
         
-        // Sembunyikan tombol yang tidak diperlukan
         if (options.type === 'alert') {
             cancelBtn.style.display = 'none';
             confirmBtn.textContent = 'OK';
@@ -54,39 +57,37 @@ function showCustomDialog(message, options = {}) {
             cancelBtn.textContent = options.cancelText || 'Batal';
         }
         
-        // Fungsi close
         function close(result) {
             dialog.style.display = 'none';
             resolve(result);
         }
         
-        // Event listeners
         confirmBtn.onclick = () => {
-    sound.playClick();
-    close(true);
-};
-
-cancelBtn.onclick = () => {
-    sound.playClick();
-    close(false);
-};
-
-closeBtn.onclick = () => {
-    sound.playClick();
-    close(false);
-};
+            sound.playClick();
+            close(true);
+        };
         
-        // Klik di luar overlay (opsional)
+        cancelBtn.onclick = () => {
+            sound.playClick();
+            close(false);
+        };
+        
+        closeBtn.onclick = () => {
+            sound.playClick();
+            close(false);
+        };
+        
         const overlay = dialog.querySelector('.custom-dialog-overlay');
         overlay.onclick = () => {
             if (options.type !== 'alert') {
+                sound.playClick();
                 close(false);
             }
         };
         
-        // Escape key
         const escHandler = (e) => {
             if (e.key === 'Escape') {
+                sound.playClick();
                 close(false);
                 document.removeEventListener('keydown', escHandler);
             }
@@ -560,12 +561,12 @@ class QuizEngine {
         this.theme = theme;
     }
 
-    initQuiz(category, difficulty, timerEnabled) {
+    async initQuiz(category, difficulty, timerEnabled) {
         console.log('🚀 Initiating quiz...', { category, difficulty, timerEnabled });
         
         if (!window.questionsByCategory || !window.questionsByCategory[category]) {
             console.error(`❌ KATEGORI "${category}" TIDAK DITEMUKAN!`);
-            alert(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`);
+            await showCustomDialog(`❌ Maaf, kategori "${category}" tidak ditemukan.\n\nSilakan refresh halaman dan coba lagi.`, { type: 'alert' });
             return;
         }
         
@@ -622,6 +623,7 @@ class QuizEngine {
         saveQuizState();
         this.sound.playClick();
         
+        // HANYA push state jika quiz aktif
         history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
     }
 
@@ -806,7 +808,6 @@ class QuizEngine {
         const percentage = Math.round((correct / total) * 100);
         const timeSpent = Math.floor((this.state.endTime - this.state.startTime) / 1000);
 
-        // === AMBIL EMOJI & TEKS BERDASARKAN SKOR ===
         const resultData = getResultMessageData(correct, total);
         DOM.resultEmoji.textContent = resultData.emoji;
         DOM.resultTitle.textContent = resultData.text;
@@ -845,7 +846,9 @@ class QuizEngine {
         });
 
         this.updateHomeStats();
-        history.pushState({ source: 'zaxquiz', page: 'result', timestamp: Date.now() }, '', window.location.href);
+        
+        // REPLACE state di result agar back ke home (bukan result sebelumnya)
+        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
     }
 
     updateProgress() {
@@ -978,7 +981,7 @@ class QuizEngine {
         this.showScreen('homeScreen');
         this.sound.playClick();
         
-        history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
+        // HAPUS pushState di home - biarkan browser back normal
     }
 
     showScreen(screenId) {
@@ -997,6 +1000,12 @@ class QuizEngine {
 
         const header = document.querySelector('.app-header');
         if (header) header.style.display = 'flex';
+        
+        // HANYA update state jika quizScreen
+        if (screenId === 'quizScreen') {
+            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
+        }
+        // Home tidak perlu state
     }
 
     updateHomeStats() {
@@ -1046,7 +1055,7 @@ function setupEventListeners() {
         sound.playClick();
     });
 
-    DOM.startQuizBtn.addEventListener('click', function(e) {
+    DOM.startQuizBtn.addEventListener('click', async function(e) {
         console.log('🎯 Start Quiz clicked!');
         sound.playClick();
         
@@ -1056,19 +1065,19 @@ function setupEventListeners() {
 
         if (!window.questionsByCategory) {
             console.error('❌ questionsByCategory tidak ditemukan!');
-            alert('❌ Data soal belum dimuat. Silakan refresh halaman.');
+            await showCustomDialog('❌ Data soal belum dimuat. Silakan refresh halaman.', { type: 'alert' });
             return;
         }
 
         if (!window.questionsByCategory[category]) {
             console.error('❌ Kategori tidak ditemukan:', category);
-            alert(`❌ Kategori "${category}" tidak ditemukan.\n\nSilakan pilih kategori lain.`);
+            await showCustomDialog(`❌ Kategori "${category}" tidak ditemukan.\n\nSilakan pilih kategori lain.`, { type: 'alert' });
             return;
         }
 
         const questions = window.questionsByCategory[category];
         if (!questions || questions.length === 0) {
-            alert(`❌ Kategori "${category}" tidak memiliki soal.\n\nSilakan pilih kategori lain.`);
+            await showCustomDialog(`❌ Kategori "${category}" tidak memiliki soal.\n\nSilakan pilih kategori lain.`, { type: 'alert' });
             return;
         }
 
@@ -1076,14 +1085,14 @@ function setupEventListeners() {
     });
 
     DOM.exitQuizBtn.addEventListener('click', async () => {
-    sound.playClick();
-    if (await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
         sound.playClick();
-        quizEngine.resetQuiz();
-    } else {
-        sound.playClick();
-    }
-});
+        if (await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang.')) {
+            sound.playClick();
+            quizEngine.resetQuiz();
+        } else {
+            sound.playClick();
+        }
+    });
 
     DOM.continueBtn.addEventListener('click', () => {
         sound.playClick();
@@ -1118,7 +1127,7 @@ function setupEventListeners() {
         sound.playClick();
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
-        history.pushState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
+        // HAPUS pushState - home tidak perlu state
     });
 
     DOM.clearHistoryBtn.addEventListener('click', async () => {
@@ -1135,18 +1144,18 @@ function setupEventListeners() {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-       if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
-    e.preventDefault();
-    sound.playClick();
-    (async () => {
-        if (await showCustomDialog('Yakin ingin keluar dari quiz?')) {
+        if (e.key === 'Escape' && quizEngine.state.isQuizActive) {
+            e.preventDefault();
             sound.playClick();
-            quizEngine.resetQuiz();
-        } else {
-            sound.playClick();
+            (async () => {
+                if (await showCustomDialog('Yakin ingin keluar dari quiz?')) {
+                    sound.playClick();
+                    quizEngine.resetQuiz();
+                } else {
+                    sound.playClick();
+                }
+            })();
         }
-    })();
-}
         if (e.key === 'h' && quizEngine.state.isQuizActive) {
             quizEngine.showHint();
             e.preventDefault();
@@ -1162,30 +1171,31 @@ function setupEventListeners() {
         }
     });
 
-// Sound saat ganti kategori
-DOM.categorySelect.addEventListener('change', function() {
-    sound.playClick();
-});
+    // Sound saat ganti kategori
+    DOM.categorySelect.addEventListener('change', function() {
+        sound.playClick();
+    });
 
-// Sound saat ganti tingkat kesulitan
-DOM.difficultySelect.addEventListener('change', function() {
-    sound.playClick();
-});
+    // Sound saat ganti tingkat kesulitan
+    DOM.difficultySelect.addEventListener('change', function() {
+        sound.playClick();
+    });
 
-// Sound saat timer toggle
-DOM.timerToggle.addEventListener('change', function() {
-    sound.playClick();
-});
+    // Sound saat timer toggle
+    DOM.timerToggle.addEventListener('change', function() {
+        sound.playClick();
+    });
 
     // ============================================
-    // BACK NAVIGATION
+    // BACK NAVIGATION - FIX UNTUK HOME
     // ============================================
-    window.addEventListener('popstate', function(e) {
+    window.addEventListener('popstate', async function(e) {
         console.log('🔙 Back button pressed! State:', e.state);
         
+        // Jika quiz aktif, tanyakan konfirmasi
         if (quizEngine.state.isQuizActive) {
             sound.playClick();
-            const confirmed = confirm('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.');
+            const confirmed = await showCustomDialog('Yakin ingin keluar dari quiz? Progress akan hilang dan tidak akan tersimpan di riwayat.');
             
             if (confirmed) {
                 sound.playClick();
@@ -1198,14 +1208,11 @@ DOM.timerToggle.addEventListener('change', function() {
             return;
         }
         
+        // Jika ada state dari ZaxQuiz
         if (e.state && e.state.source === 'zaxquiz') {
             const page = e.state.page;
             
             switch(page) {
-                case 'home':
-                    quizEngine.showScreen('homeScreen');
-                    quizEngine.updateHomeStats();
-                    break;
                 case 'quiz':
                     const savedState = loadQuizState();
                     if (savedState && savedState.isQuizActive) {
@@ -1250,9 +1257,10 @@ DOM.timerToggle.addEventListener('change', function() {
                     quizEngine.showScreen('homeScreen');
             }
         } else {
+            // Tidak ada state, biarkan browser back normal
+            // Hanya pindah ke home jika perlu
             quizEngine.showScreen('homeScreen');
             quizEngine.updateHomeStats();
-            history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
         }
     });
 
@@ -1469,7 +1477,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ State restored from refresh!');
     } else {
         quizEngine.showScreen('homeScreen');
-        history.replaceState({ source: 'zaxquiz', page: 'home', timestamp: Date.now() }, '', window.location.href);
+        // HAPUS replaceState untuk home - biarkan browser normal
     }
 
     theme.applyTheme();
@@ -1499,4 +1507,4 @@ window.ZaxQuiz = {
     resetUsedQuestions
 };
 
-console.log('🚀 ZaxQuiz v6.0.0 - Result Emoji & Message berdasarkan SKOR loaded successfully!');
+console.log('🚀 ZaxQuiz v7.0.0 - Back Home Normal & Custom Dialog FULL loaded successfully!');
