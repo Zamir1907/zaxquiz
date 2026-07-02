@@ -1,4 +1,11 @@
 // ============================================
+// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v8)
+// ============================================
+// FIX: Back di home 100% normal (tanpa state)
+// FIX: Semua alert/confirm diganti custom dialog
+// FIX: Hanya quiz yang punya state
+
+// ============================================
 // APP STATE
 // ============================================
 const AppState = {
@@ -616,7 +623,7 @@ class QuizEngine {
         saveQuizState();
         this.sound.playClick();
         
-        // HANYA push state jika quiz aktif
+        // HANYA push state saat quiz dimulai (untuk back ke home)
         history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
     }
 
@@ -839,7 +846,8 @@ class QuizEngine {
         });
 
         this.updateHomeStats();
-       
+        
+        // HAPUS semua history management di finish - biarkan browser normal
     }
 
     updateProgress() {
@@ -972,7 +980,7 @@ class QuizEngine {
         this.showScreen('homeScreen');
         this.sound.playClick();
         
-        // HAPUS pushState di home - biarkan browser back normal
+        // HAPUS semua history management di reset - biarkan browser normal
     }
 
     showScreen(screenId) {
@@ -992,11 +1000,7 @@ class QuizEngine {
         const header = document.querySelector('.app-header');
         if (header) header.style.display = 'flex';
         
-        // HANYA update state jika quizScreen
-        if (screenId === 'quizScreen') {
-            history.replaceState({ source: 'zaxquiz', page: 'quiz' }, '', window.location.href);
-        }
-        // Home tidak perlu state
+        // HAPUS semua history management di showScreen
     }
 
     updateHomeStats() {
@@ -1111,14 +1115,14 @@ function setupEventListeners() {
         sound.playClick();
         renderHistory();
         quizEngine.showScreen('historyScreen');
-        history.pushState({ source: 'zaxquiz', page: 'history', timestamp: Date.now() }, '', window.location.href);
+        // HAPUS pushState - biarkan browser normal
     });
 
     DOM.backFromHistoryBtn.addEventListener('click', () => {
         sound.playClick();
         quizEngine.showScreen('homeScreen');
         quizEngine.updateHomeStats();
-        // HAPUS pushState - home tidak perlu state
+        // HAPUS pushState - biarkan browser normal
     });
 
     DOM.clearHistoryBtn.addEventListener('click', async () => {
@@ -1178,7 +1182,7 @@ function setupEventListeners() {
     });
 
     // ============================================
-    // BACK NAVIGATION - FIX UNTUK HOME
+    // BACK NAVIGATION - FIX TOTAL
     // ============================================
     window.addEventListener('popstate', async function(e) {
         console.log('🔙 Back button pressed! State:', e.state);
@@ -1194,65 +1198,50 @@ function setupEventListeners() {
                 quizEngine.resetQuiz();
             } else {
                 sound.playClick();
+                // Kembalikan state quiz agar back tetap di quiz
                 history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
             }
             return;
         }
         
-        // Jika ada state dari ZaxQuiz
-        if (e.state && e.state.source === 'zaxquiz') {
-            const page = e.state.page;
-            
-            switch(page) {
-                case 'quiz':
-                    const savedState = loadQuizState();
-                    if (savedState && savedState.isQuizActive) {
-                        AppState.currentCategory = savedState.currentCategory;
-                        AppState.currentDifficulty = savedState.currentDifficulty;
-                        AppState.timerEnabled = savedState.timerEnabled;
-                        AppState.questions = savedState.questions;
-                        AppState.currentIndex = savedState.currentIndex;
-                        AppState.score = savedState.score;
-                        AppState.totalQuestions = savedState.totalQuestions;
-                        AppState.correctAnswers = savedState.correctAnswers;
-                        AppState.wrongAnswers = savedState.wrongAnswers;
-                        AppState.answered = savedState.answered;
-                        AppState.startTime = savedState.startTime;
-                        AppState.hintUsed = savedState.hintUsed;
-                        AppState.isQuizActive = savedState.isQuizActive;
-                        AppState.timeLeft = savedState.timeLeft;
-                        AppState.currentUsedIndices = savedState.currentUsedIndices || [];
-                        
-                        quizEngine.updateUI();
-                        quizEngine.updateProgress();
-                        quizEngine.updateScore();
-                        quizEngine.updateTimerVisibility();
-                        quizEngine.showScreen('quizScreen');
-                        quizEngine.showQuestion();
-                        
-                        if (AppState.timerEnabled && AppState.isQuizActive) {
-                            quizEngine.updateTimerUI();
-                            quizEngine.startTimer();
-                        }
-                        console.log('✅ Quiz state restored from back button');
-                    }
-                    break;
-                case 'history':
-                    renderHistory();
-                    quizEngine.showScreen('historyScreen');
-                    break;
-                case 'result':
-                    quizEngine.showScreen('resultScreen');
-                    break;
-                default:
-                    quizEngine.showScreen('homeScreen');
+        // Jika state dari ZaxQuiz dan page = quiz (restore dari refresh)
+        if (e.state && e.state.source === 'zaxquiz' && e.state.page === 'quiz') {
+            const savedState = loadQuizState();
+            if (savedState && savedState.isQuizActive) {
+                AppState.currentCategory = savedState.currentCategory;
+                AppState.currentDifficulty = savedState.currentDifficulty;
+                AppState.timerEnabled = savedState.timerEnabled;
+                AppState.questions = savedState.questions;
+                AppState.currentIndex = savedState.currentIndex;
+                AppState.score = savedState.score;
+                AppState.totalQuestions = savedState.totalQuestions;
+                AppState.correctAnswers = savedState.correctAnswers;
+                AppState.wrongAnswers = savedState.wrongAnswers;
+                AppState.answered = savedState.answered;
+                AppState.startTime = savedState.startTime;
+                AppState.hintUsed = savedState.hintUsed;
+                AppState.isQuizActive = savedState.isQuizActive;
+                AppState.timeLeft = savedState.timeLeft;
+                AppState.currentUsedIndices = savedState.currentUsedIndices || [];
+                
+                quizEngine.updateUI();
+                quizEngine.updateProgress();
+                quizEngine.updateScore();
+                quizEngine.updateTimerVisibility();
+                quizEngine.showScreen('quizScreen');
+                quizEngine.showQuestion();
+                
+                if (AppState.timerEnabled && AppState.isQuizActive) {
+                    quizEngine.updateTimerUI();
+                    quizEngine.startTimer();
+                }
+                console.log('✅ Quiz state restored from back button');
             }
-        } else {
-            // Tidak ada state, biarkan browser back normal
-            // Hanya pindah ke home jika perlu
-            quizEngine.showScreen('homeScreen');
-            quizEngine.updateHomeStats();
+            return;
         }
+        
+        // Tidak ada state atau bukan dari ZaxQuiz, biarkan browser normal
+        console.log('✅ Back to previous page (normal browser behavior)');
     });
 
     document.addEventListener('mousedown', function(e) {
@@ -1464,11 +1453,13 @@ document.addEventListener('DOMContentLoaded', function() {
             quizEngine.startTimer();
         }
         
+        // HANYA push state quiz saat restore
         history.replaceState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
         console.log('✅ State restored from refresh!');
     } else {
         quizEngine.showScreen('homeScreen');
-        // HAPUS replaceState untuk home - biarkan browser normal
+        // HAPUS replaceState - home tidak perlu state
+        console.log('✅ Home screen loaded (no state)');
     }
 
     theme.applyTheme();
@@ -1498,4 +1489,4 @@ window.ZaxQuiz = {
     resetUsedQuestions
 };
 
-console.log('🚀 ZaxQuiz v7.0.0 - Back Home Normal & Custom Dialog FULL loaded successfully!');
+console.log('🚀 ZaxQuiz v8.0.0 - Back Home 100% Normal!');
