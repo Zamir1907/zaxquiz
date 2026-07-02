@@ -1,11 +1,4 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v8)
-// ============================================
-// FIX: Back di home 100% normal (tanpa state)
-// FIX: Semua alert/confirm diganti custom dialog
-// FIX: Hanya quiz yang punya state
-
-// ============================================
 // APP STATE
 // ============================================
 const AppState = {
@@ -624,7 +617,7 @@ class QuizEngine {
         this.sound.playClick();
         
         // HANYA push state saat quiz dimulai (untuk back ke home)
-        history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
+        history.replaceState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
     }
 
     getAllQuestions() {
@@ -1199,7 +1192,7 @@ function setupEventListeners() {
             } else {
                 sound.playClick();
                 // Kembalikan state quiz agar back tetap di quiz
-                history.pushState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
+                history.replaceState({ source: 'zaxquiz', page: 'quiz', timestamp: Date.now() }, '', window.location.href);
             }
             return;
         }
