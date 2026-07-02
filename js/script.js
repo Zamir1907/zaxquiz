@@ -1,11 +1,4 @@
 // ============================================
-// ZAXQUIZ - MAIN APPLICATION SCRIPT (FULL FIX v7)
-// ============================================
-// FIX: Back di home normal kembali ke browser history
-// FIX: Semua alert/confirm diganti custom dialog
-// FIX: History management hanya untuk quiz aktif
-
-// ============================================
 // APP STATE
 // ============================================
 const AppState = {
@@ -846,9 +839,7 @@ class QuizEngine {
         });
 
         this.updateHomeStats();
-        
-        // REPLACE state di result agar back ke home (bukan result sebelumnya)
-        history.replaceState({ source: 'zaxquiz', page: 'home' }, '', window.location.href);
+       
     }
 
     updateProgress() {
